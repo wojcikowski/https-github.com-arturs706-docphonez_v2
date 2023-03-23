@@ -1,0 +1,65 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:13.2
+    restart: always
+    volumes:
+      - data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    networks:
+      - app_network
+
+  pg-admin:
+    image: dpage/pgadmin4:latest
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - 5050:80
+    networks:
+      - app_network
+
+  # server:
+  #   build:
+  #     context: ./server
+  #     dockerfile: Dockerfile
+  #   container_name: stripe-server
+  #   restart: always
+  #   ports:
+  #     - 10000:10000
+  #   volumes:
+  #     - stripe-data:/usr/src/stripeserver/data
+  #     - ./stripeserver:/usr/src/stripeserver
+  #     - /usr/src/stripeserver/node_modules
+  #   networks:
+  #     - app_network
+  #   environment:
+  #     - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}
+  #     - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+  #     - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+  #     - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
+  #     - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
+  #     - RESET_PASSWORD_SECRET=${RESET_PASSWORD_SECRET}
+  #     - EMAIL_VERIFICATION_SECRET=${EMAIL_VERIFICATION_SECRET}
+  #     - DATABASE_URL=${DATABASE_URL}
+  #   depends_on:
+  #     - postgres
+
+
+networks:
+  app_network:
+    driver: bridge
+    
+
+volumes:
+  data:
+  stripe-data:
+
+
+

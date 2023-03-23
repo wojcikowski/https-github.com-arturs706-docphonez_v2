@@ -1,0 +1,15 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 32vh;
+    width: 100%;
+    background-color: #000235;
+    color: white;
+  }
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
