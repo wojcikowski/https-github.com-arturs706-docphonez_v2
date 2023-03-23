@@ -11,7 +11,6 @@ import { useSelector } from 'react-redux'
 export default function Nav() {
     const [isOpen, setIsOpen] = useState(false);
     const cart = useSelector(state => state.counter);
-    const isAuth = useSelector(state => state.login.isAuth);
     const [totalItems, setTotalItems] = useState(0)
     useEffect(() => {
       const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
@@ -44,7 +43,7 @@ export default function Nav() {
           </div>
           <div className={styles.linetwoicons}>
             <Image className={styles.img} src="/search.svg" alt="Search" width={25} height={25} />
-            {isAuth ? <Link href="/account"><Image className={styles.img} src="/user.svg" alt="User" width={25} height={25} /></Link> : <Link href="/account/login"><Image className={styles.img} src="/user.svg" alt="User" width={25} height={25} /></Link>}
+            <Link href="/account"><Image className={styles.img} src="/user.svg" alt="User" width={25} height={25} /></Link> 
             <div className={styles.cartstatus}>
               <Link href="/cart">
                 <Image className={styles.img} src="/cart.svg" alt="Cart" width={25} height={25}/>

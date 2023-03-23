@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import counterReducer from '../redux/reducers/cartSlice'
 import authReducer from '../redux/reducers/authSlice'
-import loginReducer from '../redux/reducers/loginSlice'
+// import profileReducer from '../redux/reducers/profileSlice'
 import { HYDRATE } from 'next-redux-wrapper'
 
 
@@ -9,7 +9,7 @@ export const store = configureStore({
   reducer: {
     counter: counterReducer,
     auth: authReducer,
-    login: loginReducer,
+    // profile: profileReducer
   },
   devTools: true,
   middleware: (getDefaultMiddleware) =>

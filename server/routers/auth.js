@@ -28,13 +28,14 @@ router.post('/login', bodyParser.json(), async (req, res) => {
         if (!validPassword) {return res.status(401).json({error : 'Incorrect email or password'})}
         const tokens = generateToken(user.rows[0]);
         const accessToken = tokens.accessToken;
-        const serialized = serialize('accessToken', accessToken, {
+        const refreshToken = tokens.refreshToken;
+        const serialized = serialize('refreshToken', refreshToken, {
             httpOnly: true,
             maxAge: 60 * 60 * 24 * 7,
             path: '/',
         });
         res.setHeader('Set-Cookie', serialized);
-        res.status(200).json({message : 'Logged in successfully', "status": "success"});
+        res.status(200).json({message : 'Logged in successfully', "status": "success", "accessToken": accessToken});
     } catch (error) {
         res.status(401).json({error : error.message});
     } 

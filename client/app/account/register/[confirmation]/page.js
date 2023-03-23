@@ -7,14 +7,14 @@ import styles from './page.module.css'
 export default function Page() {
     const pathname = usePathname();
     const tokenSplit = pathname.split("/")[3]
-    console.log(tokenSplit)
+    // console.log(tokenSplit)
     const [dataretrvieved, setDataretrvieved] = useState(null)
     const [isLoading, setLoading] = useState(false)
 
   useEffect(() => {
     setLoading(true)
     //fetch data from api using PUT method
-      fetch(`http://localhost:10000/api/v1/register/${tokenSplit}` , {
+      fetch(`http://localhost:10000/api/v1/register/success/${tokenSplit}` , {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -31,8 +31,6 @@ export default function Page() {
         })
     }, [tokenSplit])
 
-    
-    console.log(dataretrvieved)
     if (isLoading) return <div className={styles.main}><p>Loading...</p></div>
     if (!dataretrvieved) return <div className={styles.main}><p>No profile data</p></div>
 
