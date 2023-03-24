@@ -5,7 +5,8 @@ const initialState = {
     token: null,
     email: null,
     role : null,
-    tokenExp: null
+    tokenExp: null,
+    userid: null
 };
 
 export const profileSlice = createSlice({
@@ -23,10 +24,13 @@ export const profileSlice = createSlice({
         }, 
         setTokenExp: (state, action) => {
             state.tokenExp = action.payload;
-        }
+        },
+        setUserId: (state, action) => {
+            state.userid = action.payload;
+        }   
     }
 });
 
-export const { setProfile, setEmailAdd, setUserRole, setTokenExp } = profileSlice.actions;
+export const { setProfile, setEmailAdd, setUserRole, setTokenExp, setUserId } = profileSlice.actions;
 
 export default profileSlice.reducer;

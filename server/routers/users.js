@@ -163,7 +163,7 @@ router.post('/resendemail', bodyParser.json(), async (req, res) => {
 
 
 //create a protected route for a single user to view their profile
-router.get('/profile', authenticateToken, async (req, res) => {
+router.get('/profile', bodyParser.json(), authenticateToken, async (req, res) => {
     try {
         const user = await client.query('SELECT * FROM users WHERE email = $1', [req.user.email]);
         if (user.rows.length > 0) {
@@ -175,9 +175,6 @@ router.get('/profile', authenticateToken, async (req, res) => {
         res.status(500).json({error : error.message});
     }
 });
-
-
-
 
 
 module.exports = router;

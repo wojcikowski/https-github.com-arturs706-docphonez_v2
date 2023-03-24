@@ -47,7 +47,6 @@ router.post('/refresh_token', bodyParser.json(), (req, res) => {
    try {
     const refreshToken = req.cookies.refreshToken;
     // const refreshToken = res.cookie('refresh_token');
-    console.log(refreshToken)
     if(refreshToken === null) {return res.status(401).json({error : 'No token provided'})}
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
         if (err) {return res.status(403).json({err: err.message})}

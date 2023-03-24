@@ -6,7 +6,6 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import CheckoutForm from './CheckoutForm'
 import { useSelector } from 'react-redux'
-import { getCookie, hasCookie } from 'cookies-next';
 import axios from 'axios';
 
 
@@ -22,30 +21,32 @@ export default function Page() {
 
 
     useEffect(() => {
-      if (hasCookie('userisloggedin')) {
+      if (token) {
         const fetchUser = async () => {
           try {
-            const res = await axios.get(`http://0.0.0.0:10000/api/v1/users/${user}`, {
+            const res = await axios.get(`http://0.0.0.0:10000/api/v1/profile`, {
               headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
               },
+              withCredentials: true
             });
             const { data } = res;
-            setFullname(data.user[0].fullname);
-            setEmail(data.user[0].email);
-            setPhone(data.user[0].phone);
+            console.log(data.data.fullname)
+            setFullname(data.data.fullname);
+            setEmail(data.data.email);
+            setPhone(data.data.mob_phone);
     
             const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-            console.log(email, fullname, phone, total)
             fetch("https://pm.doctorphonez.co.uk/api/v1/create-payment-intent", {
+            // fetch("http://localhost:10000/api/v1/create-payment-intent", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               amount: total,
-              email: data.user[0].email,
-              fullname: data.user[0].fullname,
-              phone: data.user[0].phone
+              email: data.data.email,
+              fullname: data.data.fullname,
+              phone: data.data.mob_phone
             }),
           })
             .then((res) => res.json())
