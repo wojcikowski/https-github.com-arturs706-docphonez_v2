@@ -59,6 +59,9 @@ export default function Home() {
               <h2>{dataretrvieved.product.memory}</h2>
               <h2>{dataretrvieved.product.color}</h2>
             </div>
+            <h3>{dataretrvieved.product.prodname}</h3>
+
+            <h2 className={styles.hiddh2}>{dataretrvieved.product.proddescr}</h2>
             <div className={styles.actionbutton} onClick={() => dispatch(addToCart(dataretrvieved.product), console.log(dataretrvieved.product.prodname))}>
               Add to cart
             </div>

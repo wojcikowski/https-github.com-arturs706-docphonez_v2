@@ -34,9 +34,9 @@ services:
     ports:
       - 10000:10000
     volumes:
-      - stripe-data:/usr/src/stripeserver/data
-      - ./stripeserver:/usr/src/stripeserver
-      - /usr/src/stripeserver/node_modules
+      - stripe-data:/usr/src/server/data
+      - ./server:/usr/src/server
+      - /usr/src/server/node_modules
     networks:
       - app_network
     environment:
@@ -53,7 +53,6 @@ services:
     depends_on:
       - postgres
 
-
 networks:
   app_network:
     driver: bridge
@@ -62,6 +61,41 @@ networks:
 volumes:
   data:
   stripe-data:
+
+
+
+  # client:
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile
+  #   container_name: client
+  #   restart: always
+  #   ports:
+  #     - 3000:3000
+  #   volumes:
+  #     - .:/app
+  #     - /app/node_modules
+  #     - /app/.next/cache
+  #     - /app/.next/build-manifest.json
+  #     - /app/.next/prerender-manifest.json
+  #     - /app/.next/routes-manifest.json
+  #   networks:
+  #     - app_network
+  #   environment:
+  #     - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}
+  #     - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+  #     - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+  #     - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
+  #     - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
+  #     - RESET_PASSWORD_SECRET=${RESET_PASSWORD_SECRET}
+  #     - EMAIL_VERIFICATION_SECRET=${EMAIL_VERIFICATION_SECRET}
+  #     - SMTP_USERNAME=${SMTP_USERNAME}
+  #     - SMTP_PASSWORD=${SMTP_PASSWORD}
+  #     - DATABASE_URL_HOST=${DATABASE_URL_HOST}
+  #   depends_on:
+  #     - postgres
+  #     - server
+
 
 
 

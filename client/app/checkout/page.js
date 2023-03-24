@@ -32,7 +32,6 @@ export default function Page() {
               withCredentials: true
             });
             const { data } = res;
-            console.log(data.data.fullname)
             setFullname(data.data.fullname);
             setEmail(data.data.email);
             setPhone(data.data.mob_phone);

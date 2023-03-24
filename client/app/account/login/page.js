@@ -43,8 +43,7 @@ export default function Page() {
   
         if (response.data.status === 'success') {
           const token = response.data.accessToken
-          console.log(token)
-          const { email, exp, role } = jwt_decode(token)
+          const { email, exp, role, id } = jwt_decode(token)
           dispatch(setProfile(token))
           dispatch(setEmailAdd(email))
           dispatch(setUserRole(role))
@@ -124,7 +123,13 @@ export default function Page() {
         <label>Confirm Password</label>
         <input className={styles.password} onChange={handleConfPasswd} type="password" placeholder="Confirm your password" value={confirmPasswd} />
         <Link href="/account/recover"><h6>Forgot password?</h6></Link>
+
         <button type="submit" className={styles.button}>Login</button>
+        <div className={styles.notamember}>
+          <h5>Not a member?</h5>
+          <Link href="/account/register" className={styles.signupp}><h5>Signup</h5></Link>
+        </div>
+
       </form>
 
       <div className={styles.ovalblur}></div>

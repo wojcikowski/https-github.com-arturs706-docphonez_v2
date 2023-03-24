@@ -66,6 +66,7 @@ export default function Page() {
 
   return (
     <div className={styles.main}>
+      <h1>Register Now</h1>
       <form className={styles.form} onSubmit={handleSubmit}>
         <input onChange={handleName} type="text" placeholder="Full Name" value={fullname}  />
         <input onChange={handleDob} type="text" placeholder="Date of Birth" value={dob}  />
@@ -75,9 +76,10 @@ export default function Page() {
         <input onChange={handleConfirmEmail} type="email" placeholder="Confirm Email" value={confirmEmail} />
         <input onChange={handlePasswd} type="Password" placeholder="Password" value={passwd} />
         <input onChange={handleConfirmPasswd} type="Password" placeholder="Confirm Password" value={confirmPasswd} />
-        <button type="submit">Register</button>
+        <button className={styles.button} type="submit">Register</button>
         
       </form>
+      <div className={styles.ovalblur}></div>
     </div>
   )
 }

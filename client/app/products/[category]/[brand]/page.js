@@ -15,9 +15,10 @@ export default function Home() {
   useEffect(() => {
     setLoading(true)
     //fetch data from api using a dynamic path
-      fetch(`http://localhost:10010/api/v1/products/${categorysplit}/${brand}`)
+      fetch(`http://localhost:10000/api/v1/products/${categorysplit}/${brand}`)
       .then(res => res.json())
       .then(data => {
+        console.log(data)
         setDataretrvieved(data)
         setLoading(false)
       })

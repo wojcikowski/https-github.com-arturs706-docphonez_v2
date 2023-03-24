@@ -3,9 +3,11 @@
 import styles from './cartpage.module.css'
 import { useState, useEffect } from 'react'
 import { removeFromCart, incrementQuantity, decrementQuantity } from '../../redux/reducers/cartSlice'
+import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../redux/reducers/profileSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import Image from 'next/image'
 import Link from 'next/link'
+import jwt_decode from "jwt-decode";
 
 export default function Page() {
     const cart = useSelector(state => state.counter);
@@ -14,6 +16,29 @@ export default function Page() {
     const [total, setTotal] = useState(0)
     const dispatch = useDispatch()
     const [message, setMessage] = useState('')
+
+    useEffect(() => {
+        async function checkRefreshToken() {
+          const result = await (await fetch('http://localhost:10000/api/v1/refresh_token', {
+            method: 'POST',
+            credentials: 'include', // Needed to include the cookie
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          })).json();
+          if (result.err !== "jwt must be provided")
+          {
+            const { email, exp, role } = jwt_decode(result.accessToken)
+            dispatch(setProfile(result.accessToken))
+            dispatch(setEmailAdd(email))
+            dispatch(setUserRole(role))
+            const isExpired = (exp * 1000) < new Date().getTime()
+            dispatch(setTokenExp(isExpired))
+          }
+        }
+        checkRefreshToken();
+      }, []);
+      
 
 
 
@@ -57,10 +82,11 @@ export default function Page() {
 
     return (
         <div className={styles.cartmain}>
+            <h1>My Cart Items</h1>
             <div className={styles.cartpage}>
                 {data.map((item, index) => (
-                    <div key={index}>
-                        <div className={styles.cartitem}><h4>{item.prodname}</h4></div>
+                    <div key={index} className={styles.cartitem}>
+                        <div><h4>{item.prodname}</h4></div>
                         <Image 
                             src = {item.productimage}
                             alt = {item.prodname}

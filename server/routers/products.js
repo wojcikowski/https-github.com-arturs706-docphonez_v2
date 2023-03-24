@@ -47,7 +47,7 @@ ORDER BY random()
 router.get('/', bodyParser.json(), async (req, res) => {
     try {
         const allproducts = await client.query(query_allproducts);
-        res.status(200).json({ products: allproducts.rows });
+        res.status(200).json({ products: allproducts.rows, "status": "success" });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Something went wrong' });
@@ -72,7 +72,7 @@ router.get('/:category', bodyParser.json(), async (req, res) => {
     const category = req.params.category;
     try {
         const products = await client.query(query_category, [category]);
-        res.status(200).json({ products: products.rows });
+        res.status(200).json({ products: products.rows, "status": "success"  });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Something went wrong' });

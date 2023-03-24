@@ -20,7 +20,7 @@
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  width: 30%;
+  width: 34rem;
   height: 30rem;
   position: relative;
   z-index: 2;
@@ -28,7 +28,6 @@
   margin: 0rem 0rem;
   margin-bottom: 2rem;
   flex-direction: column;
-
 }
 
 .form input {
@@ -114,4 +113,34 @@
   border: none;
   cursor: pointer;
   
+}
+.notamember{
+  width: 35%;
+  display: flex;
+  margin-top: 1rem;
+  align-items: center;
+}
+.notamember h5{
+  width: 100%;
+}
+.signupp h5{
+  font-size: 1.2rem;
+  color: rgb(255, 5, 5);
+  font-weight: 700;
+}
+
+@media screen and (max-width: 600px) {
+  .form {
+    width: 28rem;
+  }
+}
+@media screen and (max-width: 525px) {
+  .form {
+    width: 25rem;
+  }
+}
+@media screen and (max-width: 450px) {
+  .form {
+    width: 22rem;
+  }
 }

@@ -32,8 +32,9 @@ router.post('/login', bodyParser.json(), async (req, res) => {
         const serialized = serialize('refreshToken', refreshToken, {
             httpOnly: true,
             maxAge: 60 * 60 * 24 * 7,
-            path: '/',
+            path: '/'        
         });
+
         res.setHeader('Set-Cookie', serialized);
         res.status(200).json({message : 'Logged in successfully', "status": "success", "accessToken": accessToken});
     } catch (error) {
@@ -46,7 +47,7 @@ router.post('/login', bodyParser.json(), async (req, res) => {
 router.post('/refresh_token', bodyParser.json(), (req, res) => {
    try {
     const refreshToken = req.cookies.refreshToken;
-    // const refreshToken = res.cookie('refresh_token');
+    
     if(refreshToken === null) {return res.status(401).json({error : 'No token provided'})}
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
         if (err) {return res.status(403).json({err: err.message})}

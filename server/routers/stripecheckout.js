@@ -106,10 +106,7 @@ res.status(500).json({ error: 'Failed to send email' });
 }
 });
 
-router.post(
-"/webhooks",
-express.raw({ type: "application/json" }),
-async(request, response) => {
+router.post("/webhooks", express.raw({ type: "application/json" }), async(request, response) => {
 const sig = request.headers["stripe-signature"];
 // stripe
 let event;
@@ -131,7 +128,6 @@ switch (event.type) {
 }
 // Return a 200 response to acknowledge receipt of the event
 response.send();
-}
-);
+});
 
 module.exports = router;

@@ -35,13 +35,15 @@ export default function Home() {
           'Content-Type': 'application/json',
         }
       })).json();
-        console.log(result.accessToken)
+      if (result.err !== "jwt must be provided")
+      {
         const { email, exp, role } = jwt_decode(result.accessToken)
         dispatch(setProfile(result.accessToken))
         dispatch(setEmailAdd(email))
         dispatch(setUserRole(role))
         const isExpired = (exp * 1000) < new Date().getTime()
         dispatch(setTokenExp(isExpired))
+      }
     }
     checkRefreshToken();
   }, []);
