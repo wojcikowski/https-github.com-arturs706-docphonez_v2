@@ -43,16 +43,17 @@ router.post('/login', bodyParser.json(), async (req, res) => {
 
 
 
-router.get('/refresh_token', bodyParser.json(), (req, res) => {
+router.post('/refresh_token', bodyParser.json(), (req, res) => {
    try {
     const refreshToken = req.cookies.refreshToken;
-    console.log(refreshToken);
+    // const refreshToken = res.cookie('refresh_token');
+    console.log(refreshToken)
     if(refreshToken === null) {return res.status(401).json({error : 'No token provided'})}
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
         if (err) {return res.status(403).json({err: err.message})}
         let tokens = generateToken(user);
         res.cookie('refresh_token', tokens.refreshToken, {httpOnly: true});
-        res.json(tokens);
+        res.json({accessToken: tokens.accessToken});
         })
         } catch (err) {
             res.status(401).json({err: err.message});

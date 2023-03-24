@@ -1,12 +1,15 @@
 "use client"
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './page.module.css'
 import { useRouter } from 'next/navigation';
 import Link from 'next/link'
 import axios from 'axios'
 import Loader from '../Loader'
-
+import { useDispatch } from 'react-redux';
+import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../../redux/reducers/profileSlice'
+import jwt_decode from "jwt-decode";
+import { useSelector } from 'react-redux';
 
 
 export default function Page() {
@@ -19,6 +22,9 @@ export default function Page() {
   const [userPasswd, setUserPasswd] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [showButton, setShowButton] = useState(true);
+  const dispatch = useDispatch()
+  const token = useSelector(state => state.profile)
+
 
 
   const handleSubmit = async (e) => {
@@ -36,17 +42,27 @@ export default function Page() {
         })
   
         if (response.data.status === 'success') {
+          const token = response.data.accessToken
+          console.log(token)
+          const { email, exp, role } = jwt_decode(token)
+          dispatch(setProfile(token))
+          dispatch(setEmailAdd(email))
+          dispatch(setUserRole(role))
+          //check if token is expired and return true or false
+          const isExpired = (exp * 1000) < new Date().getTime()
+          dispatch(setTokenExp(isExpired))
+
           router.push('/account')
         }
       } catch (error) {
-        if (error.response.data.message = "Please verify your email address") {
+        if (error && error.response && error.response.data && error.response.data.message === "Please verify your email address") {
           setErrorMessage(error.response.data.message)
           setUserEmail(email)
           setUserPasswd(passwd)
         } else {
-          setErrorMessage(error.response.data.message)
+          setErrorMessage(error.message)
         }}
-
+        
     }
   }
 

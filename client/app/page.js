@@ -10,13 +10,41 @@ import Sectionsix from './sectionssix';
 import Sectionseven from './sectionseven';
 import Sectioneight from './sectioneight';
 import Sectionnine from './sectionnine';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../redux/reducers/profileSlice'
+import jwt_decode from "jwt-decode";
+
+
 
 export default function Home() {
   const sectionTwoRef = useRef(null);
   const sectionThreeRef = useRef(null);
   const sectionFiveRef = useRef(null);
   const sectionSevenRef = useRef(null);
+  const tokendetails = useSelector(state => state.profile);
+  
+  // middleware to check if token is expired and refresh it
+  const dispatch = useDispatch();
+  useEffect(() => {
+    async function checkRefreshToken() {
+      const result = await (await fetch('http://localhost:10000/api/v1/refresh_token', {
+        method: 'POST',
+        credentials: 'include', // Needed to include the cookie
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })).json();
+        console.log(result.accessToken)
+        const { email, exp, role } = jwt_decode(result.accessToken)
+        dispatch(setProfile(result.accessToken))
+        dispatch(setEmailAdd(email))
+        dispatch(setUserRole(role))
+        const isExpired = (exp * 1000) < new Date().getTime()
+        dispatch(setTokenExp(isExpired))
+    }
+    checkRefreshToken();
+  }, []);
 
 
   return (

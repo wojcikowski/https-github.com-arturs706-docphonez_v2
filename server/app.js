@@ -24,7 +24,6 @@ app.use('/api/v1/', paymentIntent);
 app.use('/api/v1/', usersRouter);
 app.use('/api/v1', authRouter);
 app.use('/api/v1/products', productRouter);
-app.use(cookieParser());
 
 app.listen(PORT, () => {
     console.log(`Server running on port ` + PORT);

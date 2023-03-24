@@ -1,32 +1,55 @@
-// "use client"
-
+"use client"
 
 import styles from './page.module.css';
 import axios from 'axios';
 import Image from 'next/image';
-import { cookies } from 'next/headers';
-
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../redux/reducers/profileSlice'
+import jwt_decode from "jwt-decode";
 
 export default function Page() {
+  const dispatch = useDispatch();
+  const token = useSelector(state => state.profile.token);
+  // const tokenExp = useSelector(state => state.profile.tokenExp);
 
-  const cookieStore = cookies();
-  const token = cookieStore.get('refreshToken');
-  const uservalue = token.value;
-  //decode token and get user id
-  const base64Url = uservalue.split('.')[1];
-  console.log(base64Url);
+//middleware to check if token is expired and refresh it
+  useEffect(() => {
+    async function checkRefreshToken() {
+      const result = await (await fetch('http://localhost:10000/api/v1/refresh_token', {
+        method: 'POST',
+        credentials: 'include', // Needed to include the cookie
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })).json();
+        console.log(result.accessToken)
+        const { email, exp, role } = jwt_decode(result.accessToken)
+        dispatch(setProfile(result.accessToken))
+        dispatch(setEmailAdd(email))
+        dispatch(setUserRole(role))
+        const isExpired = (exp * 1000) < new Date().getTime()
+        dispatch(setTokenExp(isExpired))
+    }
+    checkRefreshToken();
+  }, []);
+
+
+
+
+
 
   const fetchUser = async () => {
     try {
       const response = await axios.get(`http://localhost:10000/api/v1/profile`, {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${uservalue}`
+          "Authorization": `Bearer ${token}`
         }
       });
-      console.log(response.data);
     } catch (error) {
-      console.log(error.response.data);
+      console.log(error.data);
     }
   }
   
@@ -64,17 +87,6 @@ export default function Page() {
         <br />
         <div>Hey! This is where you can check out all your old orders, tell us what kind of emails you want to receive, and update your account deets to make checkout a breeze.</div>
       </div>
-
-      {/* <div className={styles.form}>
-        <div>User: {userGot}</div>
-        <div>Role: {roleGot}</div>
-        <div>Fullname: {fullname}</div>
-        <div>Date of Birth: {dob}</div>
-        <div>Email: {email}</div>
-        <div>Phone: {phone}</div>
-        <p>Is Authenticated: {isAuthGot ? 'Yes' : 'No'}</p>
-      </div>
-      <button onClick={handleLogout}>Logout</button> */}
     </div>
   );
 }

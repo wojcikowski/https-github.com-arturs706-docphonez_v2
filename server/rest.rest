@@ -19,3 +19,8 @@ Content-Type: application/json
     "email": "21437262@student.uwl.ac.uk",
     "passwd": "1"
 }
+
+
+###
+GET http://localhost:10000/api/v1/refresh_token
+Content-Type: application/json

@@ -6,12 +6,32 @@ import Link from 'next/link'
 import Navpage from './navpage';
 import Image from 'next/image'
 import { useSelector } from 'react-redux'
+import jwt_decode from "jwt-decode";
 
 
 export default function Nav() {
     const [isOpen, setIsOpen] = useState(false);
     const cart = useSelector(state => state.counter);
     const [totalItems, setTotalItems] = useState(0)
+    const token = useSelector(state => state.profile.token);
+
+    //check if the token is valid
+    const checkToken = () => {
+      if (token) {
+        const { exp } = jwt_decode(token);
+        const currentTime = Date.now() / 1000;
+        if (exp < currentTime) {
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        return false;
+      }
+    };
+
+    
+
     useEffect(() => {
       const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
       setTotalItems(totalItems);
@@ -43,7 +63,7 @@ export default function Nav() {
           </div>
           <div className={styles.linetwoicons}>
             <Image className={styles.img} src="/search.svg" alt="Search" width={25} height={25} />
-            <Link href="/account"><Image className={styles.img} src="/user.svg" alt="User" width={25} height={25} /></Link> 
+            {checkToken() ? <Link href="/account"><Image className={styles.img} src="/user.svg" alt="User" width={25} height={25} /></Link> : <Link href="/account/login"><Image className={styles.img} src="/user.svg" alt="User" width={25} height={25} /></Link>}
             <div className={styles.cartstatus}>
               <Link href="/cart">
                 <Image className={styles.img} src="/cart.svg" alt="Cart" width={25} height={25}/>

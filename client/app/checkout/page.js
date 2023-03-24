@@ -15,18 +15,10 @@ const stripePromise = loadStripe("pk_test_51MfhShFrvj0XKeq0C4CoNcKSCcHgBSOKzDZBI
 export default function Page() {
     const [clientSecret, setClientSecret] = useState("");
     const cart = useSelector(state => state.counter)
-    const { user } = useSelector(state => state.login);
+    const token = useSelector(state => state.profile.token);
     const [fullname, setFullname] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
-    // const newCart = cart.map(item => ({
-    //   prodname: item.prodname,
-    //   quantity: item.quantity,
-    //   price: item.price,
-    //   totalPrice: item.quantity * item.price
-    // }));
-    // console.log(newCart)
-    
 
 
     useEffect(() => {
@@ -36,7 +28,7 @@ export default function Page() {
             const res = await axios.get(`http://0.0.0.0:10000/api/v1/users/${user}`, {
               headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${getCookie('userisloggedin')}`
+                "Authorization": `Bearer ${token}`
               },
             });
             const { data } = res;
@@ -66,7 +58,7 @@ export default function Page() {
       } else {
         window.location.href = '/account/login';
       }
-    }, [user, cart]);
+    }, [token, cart]);
     
 
 

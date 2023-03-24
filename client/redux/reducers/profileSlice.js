@@ -1,12 +1,32 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import jwt_decode from 'jwt-decode';
+import { createSlice } from '@reduxjs/toolkit';
 
 
 const initialState = {
-    user: user,
-    role: role,
-    isError: false,
-    isSuccess: false,
-    isLoading: false,
-    isAuth: getAuthFromCookie() ? getAuthFromCookie() : false
+    token: null,
+    email: null,
+    role : null,
+    tokenExp: null
 };
+
+export const profileSlice = createSlice({
+    name: 'profile',
+    initialState,
+    reducers: {
+        setProfile: (state, action) => {
+            state.token = action.payload;
+        },
+        setEmailAdd: (state, action) => {
+            state.email = action.payload;
+        },
+        setUserRole: (state, action) => {
+            state.role = action.payload;
+        }, 
+        setTokenExp: (state, action) => {
+            state.tokenExp = action.payload;
+        }
+    }
+});
+
+export const { setProfile, setEmailAdd, setUserRole, setTokenExp } = profileSlice.actions;
+
+export default profileSlice.reducer;
