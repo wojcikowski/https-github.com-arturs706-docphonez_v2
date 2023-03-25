@@ -50,9 +50,9 @@ export default function Nav() {
               <div className={styles.logo}><Link href="/"><h1>Doctor Phonez</h1></Link></div>
             </div>
             <div className={styles.linetwo}>
-              <Link href="/"><h3>Home</h3></Link>
-              <h3>Tablets</h3>
-              <h3>Accessories</h3>
+              <Link href="/products"><h3>Products</h3></Link>
+              <Link href="/products/tablets"><h3>Products</h3></Link>
+              <Link href="/products/accessories"><h3>Products</h3></Link>
             </div>
           </div>
         <div className={styles.wrappertwo}>
