@@ -1,0 +1,26 @@
+import { useDispatch } from 'react-redux';
+import jwt_decode from 'jwt-decode';
+import { setProfile, setEmailAdd, setUserRole, setTokenExp } from './actions';
+
+const refreshToken = async () => {
+  const dispatch = useDispatch();
+  const result = await (await fetch('http://localhost:10000/api/v1/refresh_token', {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })).json();
+
+  if (result.err !== "jwt must be provided")
+  {
+    const { email, exp, role } = jwt_decode(result.accessToken)
+    dispatch(setProfile(result.accessToken))
+    dispatch(setEmailAdd(email))
+    dispatch(setUserRole(role))
+    const isExpired = (exp * 1000) < new Date().getTime()
+    dispatch(setTokenExp(isExpired))
+  }
+}
+
+export default refreshToken;
