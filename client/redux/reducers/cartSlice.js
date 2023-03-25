@@ -52,6 +52,11 @@ export const cartSlice = createSlice({
         return newState;
       }
     },
+    changeTheQuantity: (state, action) => {
+      const item = state.find((item) => item.prodname === action.payload.prodname);
+      item.quantity = action.payload.quantity;
+      setCartToCookie(state);
+    },
     clearCart: () => {
       setCartToCookie([]);
       return [];

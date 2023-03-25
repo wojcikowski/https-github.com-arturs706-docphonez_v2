@@ -82,25 +82,39 @@ export default function Page() {
 
     return (
         <div className={styles.cartmain}>
-            <h1>My Cart Items</h1>
             <div className={styles.cartpage}>
+            <div className={styles.wrapppline}>
+                <h4>Description</h4>
+                <h4>Name</h4>
+                <h4>Quantity</h4>
+                <h4>Remove</h4>
+                <h4>Price</h4>
+            </div>
+
+            <div className={styles.ovalblur}></div>
+            <div className={styles.ovalblurtow}></div>
+
+
                 {data.map((item, index) => (
+                    
                     <div key={index} className={styles.cartitem}>
-                        <div><h4>{item.prodname}</h4></div>
                         <Image 
                             src = {item.productimage}
                             alt = {item.prodname}
                             width = {100}
                             height = {100}
                         />
+                        <div className={styles.prodnamewraps}>
+                            <h4>{item.prodname}</h4>
+                        </div>
+                        
+                        <div className={styles.addminu} onClick={() => handleProductDecrement(item.prodname)}>-</div>
 
-                        <div className={styles.cartitem}><h4>{item.quantity}</h4></div>
-                        <div className={styles.cartitem}><h4>{totalItems}</h4></div>
-                        <div className={styles.actionbutton} onClick={() => handleProductAdd(item.prodname)}>+</div>
-                        <div className={styles.actionbutton} onClick={() => handleProductDecrement(item.prodname)}>-</div>
-                        <div className={styles.actionbutton} onClick={() => handleProductRemove(item.prodname)}>Remove</div>
-                        <div className={styles.cartitem}><h1>£{item.price}</h1></div>
-                        <div className={styles.cartitem}><h1>£{formatPrice(item.price * item.quantity)}</h1></div>
+                        <div className={styles.qty}><h4>{item.quantity}</h4></div>
+                        <div className={styles.addminu} onClick={() => handleProductAdd(item.prodname)}>+</div>
+                        <div className={styles.exempt} onClick={() => handleProductRemove(item.prodname)}>x</div>
+                        <div><h4>£{item.price}</h4></div>
+                        <div className={styles.exempt} ><h4>£{formatPrice(item.price * item.quantity)}</h4></div>
 
                     </div>
                 ))}
@@ -114,7 +128,7 @@ export default function Page() {
                 </>
                 : 
                 <>
-                    <div className={styles.cartitem}><h1>£{formatPrice(total)}</h1></div>
+                    <div><h1>£{formatPrice(total)}</h1></div>
                     <Link href="/checkout"><button className={styles.button}>Pay</button></Link>
                 </>
             }

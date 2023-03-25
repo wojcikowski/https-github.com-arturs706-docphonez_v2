@@ -6,9 +6,13 @@ import Image from 'next/image'
 
 export default function Footer() {
   return (
+    
     <div className={styles.footer}>
+      
       <div className={styles.wrapone}>
+        
       <div className={styles.leftdiv}>
+
         <div className={styles.wrappall}>
           <h3>Doctor Phonez</h3>
           <span>Doctor Phonez is an online mobile 
