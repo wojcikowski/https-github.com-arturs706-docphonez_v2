@@ -9,7 +9,7 @@ import Loader from '../Loader'
 import { useDispatch } from 'react-redux';
 import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../../redux/reducers/profileSlice'
 import jwt_decode from "jwt-decode";
-import { useSelector } from 'react-redux';
+import refreshToken from '../../../checkCr';
 
 
 export default function Page() {
@@ -23,9 +23,13 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(false)
   const [showButton, setShowButton] = useState(true);
   const dispatch = useDispatch()
-  const token = useSelector(state => state.profile)
 
-
+  useEffect(() => {
+      async function checkRefreshToken() {
+        await refreshToken(dispatch);
+      }
+      checkRefreshToken();
+    }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

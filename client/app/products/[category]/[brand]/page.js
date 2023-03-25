@@ -2,8 +2,8 @@
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styles from './page.module.css';
-import Image from 'next/image';
-
+import refreshToken from '../../../checkCr';
+import { useDispatch } from 'react-redux';
 
 export default function Home() {
   const pathname = usePathname();
@@ -11,6 +11,14 @@ export default function Home() {
   const [isLoading, setLoading] = useState(false)
   const brand = pathname.split("/")[3]
   const categorysplit = pathname.split("/")[2]
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+      async function checkRefreshToken() {
+        await refreshToken(dispatch);
+      }
+      checkRefreshToken();
+    }, []);
 
   useEffect(() => {
     setLoading(true)

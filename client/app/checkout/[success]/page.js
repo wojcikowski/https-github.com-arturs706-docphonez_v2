@@ -5,14 +5,19 @@ import styles from './success.module.css';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { clearCart } from '../../../redux/reducers/cartSlice';
+import refreshToken from '../../../checkCr';
+
 
 export default function Page() {
   const searchParams = useSearchParams();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(clearCart());
-  }, [dispatch]);
+      async function checkRefreshToken() {
+        await refreshToken(dispatch);
+      }
+      checkRefreshToken();
+    }, []);
 
   return (
     <div className={styles.successmain}>

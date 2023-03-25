@@ -5,6 +5,7 @@ import styles from './page.module.css';
 import jwt_decode from "jwt-decode";
 import { useDispatch } from 'react-redux';
 import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../../redux/reducers/profileSlice'
+import refreshToken from '../../../checkCr';
 
 export default function Home() {
   const category = usePathname();
@@ -14,6 +15,13 @@ export default function Home() {
   const brand = category.split("/")[3]
   const id = category.split("/")[4]
   const dispatch = useDispatch()
+
+  useEffect(() => {
+      async function checkRefreshToken() {
+        await refreshToken(dispatch);
+      }
+      checkRefreshToken();
+    }, []);
 
 
 

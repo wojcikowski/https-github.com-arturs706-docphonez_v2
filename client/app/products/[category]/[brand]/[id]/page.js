@@ -3,16 +3,21 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import Image from 'next/image';
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { addToCart } from '../../../../../redux/reducers/cartSlice'
 import Loader from './Loader';
-
-//import redux slice and actions
+import refreshToken from '../../../../../checkCr';
 
 
 export default function Home() {
-  // const addtoCart = useSelector((state) => state.counter)
   const dispatch = useDispatch()
+
+  useEffect(() => {
+      async function checkRefreshToken() {
+        await refreshToken(dispatch);
+      }
+      checkRefreshToken();
+    }, []);
 
   const category = usePathname();
   const [dataretrvieved, setDataretrvieved] = useState(null)

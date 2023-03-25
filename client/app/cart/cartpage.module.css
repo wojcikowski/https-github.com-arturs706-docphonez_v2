@@ -17,7 +17,6 @@
     justify-content: center;
     flex-direction: column;
     width: 100%;
-    margin-left: 6.3rem;
   }
 
   .cartitem {
@@ -29,6 +28,8 @@
     align-items: center;
     margin-top: 2rem;
     width: 100%;
+    padding-left: 6.3rem;
+
   }
 
   .prodnamewraps {
@@ -103,10 +104,4 @@
   margin: 1rem;
   border-radius: 5rem;
   cursor: pointer;
-}
-.wrapppline {
-  display: flex;
-  flex-direction: row;
-  width: 50rem;
-  justify-content: space-between;
 }

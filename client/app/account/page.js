@@ -6,38 +6,18 @@ import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../redux/reducers/profileSlice'
-import jwt_decode from "jwt-decode";
+import refreshToken from '../../checkCr';
 
 export default function Page() {
-  const dispatch = useDispatch();
   const token = useSelector(state => state.profile.token);
-  // const tokenExp = useSelector(state => state.profile.tokenExp);
+  const dispatch = useDispatch()
 
-//middleware to check if token is expired and refresh it
-useEffect(() => {
-  async function checkRefreshToken() {
-    const result = await (await fetch('http://localhost:10000/api/v1/refresh_token', {
-      method: 'POST',
-      credentials: 'include', // Needed to include the cookie
-      headers: {
-        'Content-Type': 'application/json',
+  useEffect(() => {
+      async function checkRefreshToken() {
+        await refreshToken(dispatch);
       }
-    })).json();
-    if (result.err !== "jwt must be provided")
-    {
-      const { email, exp, role } = jwt_decode(result.accessToken)
-      dispatch(setProfile(result.accessToken))
-      dispatch(setEmailAdd(email))
-      dispatch(setUserRole(role))
-      const isExpired = (exp * 1000) < new Date().getTime()
-      dispatch(setTokenExp(isExpired))
-    }
-  }
-  checkRefreshToken();
-}, []);
-
-
+      checkRefreshToken();
+    }, []);
 
 
 

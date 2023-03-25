@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation';
 import styles from './page.module.css'
+import refreshToken from '../../../checkCr';
+import { useDispatch } from 'react-redux';
 
 export default function Page() {
     const pathname = usePathname();
@@ -10,6 +12,14 @@ export default function Page() {
     // console.log(tokenSplit)
     const [dataretrvieved, setDataretrvieved] = useState(null)
     const [isLoading, setLoading] = useState(false)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        async function checkRefreshToken() {
+          await refreshToken(dispatch);
+        }
+        checkRefreshToken();
+      }, []);
 
   useEffect(() => {
     setLoading(true)

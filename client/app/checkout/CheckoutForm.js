@@ -5,7 +5,9 @@ import {
     useStripe,
     useElements
   } from "@stripe/react-stripe-js";
-  import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
+import refreshToken from '../../checkCr';
+import { useDispatch } from 'react-redux';
 
 
   export default function CheckoutForm() {
@@ -13,9 +15,16 @@ import {
     const cart = useSelector(state => state.counter);
     const stripe = useStripe();
     const elements = useElements();
-  
     const [message, setMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+      async function checkRefreshToken() {
+        await refreshToken(dispatch);
+      }
+      checkRefreshToken();
+    }, []);
   
 
     useEffect(() => {

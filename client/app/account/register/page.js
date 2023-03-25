@@ -6,6 +6,7 @@ import styles from './page.module.css'
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { register, reset } from '/redux/reducers/authSlice'
+import refreshToken from '../../../checkCr';
 
 export default function Page() {
   const [fullname, setFullname] = useState('')
@@ -18,6 +19,12 @@ export default function Page() {
   const [confirmPasswd, setConfirmPasswd] = useState('1')
   const dispatch = useDispatch()
 
+  useEffect(() => {
+      async function checkRefreshToken() {
+        await refreshToken(dispatch);
+      }
+      checkRefreshToken();
+    }, []);
   const { isLoading, isError, isSuccess, message} = useSelector(state => state.auth)
   
   const handleSubmit = async (e) => {
