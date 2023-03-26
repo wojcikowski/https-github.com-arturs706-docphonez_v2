@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import refreshToken from '../../checkCr';
 
-export default function page() {
+export default function Page() {
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function page() {
         await refreshToken(dispatch);
       }
       checkRefreshToken();
-    }, []);
+    }, [dispatch]);
 
 
   return (

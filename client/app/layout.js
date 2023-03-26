@@ -13,7 +13,7 @@ export const metadata = {
 }
 
 const roboto = Roboto({
-  weight: "300",
+  weight: ['300'],
   style: 'normal',
   display: 'swap',
   subsets: ['latin'] 

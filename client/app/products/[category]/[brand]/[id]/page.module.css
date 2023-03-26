@@ -91,6 +91,8 @@
   .pagedyn {
     flex-direction: column;
     height: 137vh;
+    margin-top: 2rem;
+    
   }
   .phoneprice img {
     margin: 3rem 0rem;
@@ -123,3 +125,19 @@
   }
 
 }
+
+@media screen and (max-width: 564px) {
+  .pagedyn {
+    width: 26.2rem;
+    margin-top: 1rem;
+
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .pagedyn {
+    width: 25rem;
+  }
+}
+
+

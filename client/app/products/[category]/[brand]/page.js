@@ -2,7 +2,7 @@
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styles from './page.module.css';
-import refreshToken from '../../../checkCr';
+import refreshToken from '../../../../checkCr'
 import { useDispatch } from 'react-redux';
 
 export default function Home() {
@@ -18,7 +18,7 @@ export default function Home() {
         await refreshToken(dispatch);
       }
       checkRefreshToken();
-    }, []);
+    }, [dispatch]);
 
   useEffect(() => {
     setLoading(true)

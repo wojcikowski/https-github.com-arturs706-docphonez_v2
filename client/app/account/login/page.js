@@ -17,11 +17,13 @@ export default function Page() {
   const [passwd, setPasswd] = useState('1')
   const [confirmPasswd, setConfirmPasswd] = useState('1')
   const router = useRouter()
+  
   const [errormessage, setErrorMessage] = useState('')
   const [userEmail, setUserEmail] = useState('')
   const [userPasswd, setUserPasswd] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [showButton, setShowButton] = useState(true);
+  const [buttonBackToEmail, setButtonBackToEmail] = useState(true);
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -29,7 +31,7 @@ export default function Page() {
         await refreshToken(dispatch);
       }
       checkRefreshToken();
-    }, []);
+    }, [dispatch]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,15 +57,23 @@ export default function Page() {
           const isExpired = (exp * 1000) < new Date().getTime()
           dispatch(setTokenExp(isExpired))
 
-          router.push('/account')
+          router.push('/products')
         }
       } catch (error) {
         if (error && error.response && error.response.data && error.response.data.message === "Please verify your email address") {
           setErrorMessage(error.response.data.message)
           setUserEmail(email)
           setUserPasswd(passwd)
+
         } else {
-          setErrorMessage(error.message)
+          if (error.message === "Request failed with status code 401") {
+            setErrorMessage("Incorrect email or password")
+            setShowButton(false)
+            setButtonBackToEmail(true)
+          } else {
+            setErrorMessage(error.message)
+            setShowButton(false)
+          }     
         }}
         
     }
@@ -113,6 +123,26 @@ export default function Page() {
         )}
       </div>
     );
+  }
+
+  if (buttonBackToEmail) {
+      <form className={styles.form} onSubmit={handleSubmit}>
+      <h1>Login Now</h1>
+      <label>Email address</label>
+      <input className={styles.emailinput} onChange={handleEmail} type="email" placeholder="Type your email" value={email}/>
+      <label>Password</label>
+      <input className={styles.password} onChange={handlePasswd} type="password" placeholder="Type your password" value={passwd} />
+      <label>Confirm Password</label>
+      <input className={styles.password} onChange={handleConfPasswd} type="password" placeholder="Confirm your password" value={confirmPasswd} />
+      <Link href="/account/recover"><h6>Forgot password?</h6></Link>
+
+      <button type="submit" className={styles.button}>Login</button>
+      <div className={styles.notamember}>
+        <h5>Not a member?</h5>
+        <Link href="/account/register" className={styles.signupp}><h5>Signup</h5></Link>
+      </div>
+
+    </form>
   }
 
 

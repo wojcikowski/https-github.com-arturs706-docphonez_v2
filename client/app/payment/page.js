@@ -1,6 +1,6 @@
 "use client"; // this is a client component 👈🏽
 
-import styles from './cartpage.module.css'
+import styles from './page.module.css'
 import { useState, useEffect } from 'react'
 import { removeFromCart, incrementQuantity, decrementQuantity } from '../../redux/reducers/cartSlice'
 import { useSelector, useDispatch } from 'react-redux'
@@ -8,6 +8,12 @@ import Image from 'next/image'
 import refreshToken from '../../checkCr';
 import { setCurrentStep } from '../../redux/reducers/stepperSlice';
 import { useRouter } from 'next/navigation';
+import { loadStripe } from '@stripe/stripe-js';
+import CheckoutForm from './CheckoutForm'
+import axios from 'axios';
+import { Elements } from '@stripe/react-stripe-js';
+
+const stripePromise = loadStripe("pk_test_51MfhShFrvj0XKeq0C4CoNcKSCcHgBSOKzDZBIkNmuoNdtwRifkT6Y7Nl9Ky53fABvIC2A2kqIb0sFNhZ9xUCspT600lW4FNBcc");
 
 
 export default function Page() {
@@ -17,12 +23,9 @@ export default function Page() {
     const [message, setMessage] = useState('')
     const dispatch = useDispatch()
     const router = useRouter()
+    const [clientSecret, setClientSecret] = useState("");
+    const token = useSelector(state => state.profile.token);
 
-
-    const handleClick = () => {
-        dispatch(setCurrentStep(1));
-        router.push('/payment');
-      };
     
 
     useEffect(() => {
@@ -43,6 +46,57 @@ export default function Page() {
             setMessage('No items in cart')
         }
     }, [cart])
+
+    useEffect(() => {
+        if (token) {
+          const fetchUser = async () => {
+            try {
+              const res = await axios.get(`http://0.0.0.0:10000/api/v1/profile`, {
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${token}`
+                },
+                withCredentials: true
+              });
+              const { data } = res;
+      
+              const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+              fetch("https://pm.doctorphonez.co.uk/api/v1/create-payment-intent", {
+              // fetch("http://localhost:10000/api/v1/create-payment-intent", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                amount: total,
+                email: data.data.email,
+                fullname: data.data.fullname,
+                phone: data.data.mob_phone
+              }),
+            })
+              .then((res) => res.json())
+              .then((data) => setClientSecret(data.clientSecret));
+            } catch (error) {
+              console.error(error);
+            }
+          }
+          fetchUser();
+        } else {
+          window.location.href = '/account/login';
+        }
+      }, [token, cart]);
+
+      const appearance = {
+        theme: 'night',
+        variables: {
+          colorPrimary: '#000235',
+          colorBackground: '#ffffff',
+          colorText: '#000235',
+        },
+      };
+      const options = {
+        clientSecret,
+        appearance,
+      };
+      
 
 
 
@@ -121,14 +175,14 @@ export default function Page() {
                         width = {40}
                         height = {40}
                         onClick = {handleBack}
-                        priority = {true}
                     />
                     <h1>Checkout</h1>
                 </div>
                 <div className={styles.links}>
                     <h5>Homepage&nbsp;/&nbsp;</h5>
                     <h5>Products&nbsp;/&nbsp;</h5>
-                    <h5 className={styles.checkoutpg}>Checkout</h5>
+                    <h5>Checkout&nbsp;/&nbsp;</h5>
+                    <h5 className={styles.checkoutpg}>Payment</h5>
                 </div>
             </div>
             <div className={styles.divwrapper}>
@@ -140,38 +194,30 @@ export default function Page() {
                             alt = "1"
                             width = {60}
                             height = {60}
-                            priority = {true}
-
                         />
                         <div className={styles.nameof}>Delivery</div>
                         </div>
                         <Image
-                            src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1679855139/etc/inactive_pdvuzq.svg"
+                            src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1679855139/etc/active_qbtztb.svg"
                             alt = "2"
                             width = {100}
                             height = {60}
-                            priority = {true}
-
                         />
                         
                         <div className={styles.imgwrap}>
                         <Image 
-                            src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1679855139/etc/middle_vsveth.svg"
+                            src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1679855139/etc/2_tgnnar.svg"
                             alt = "1"
                             width = {60}
                             height = {60}
-                            priority = {true}
-
                         />
-                        <div className={styles.nameoftow}>Payment</div>
+                        <div className={styles.nameof}>Payment</div>
                         </div>
                         <Image
                             src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1679855139/etc/inactive_pdvuzq.svg"
                             alt = "2"
                             width = {100}
                             height = {60}
-                            priority = {true}
-
                         />
                        <div className={styles.imgwrap}>
                         <Image 
@@ -179,184 +225,19 @@ export default function Page() {
                             alt = "1"
                             width = {60}
                             height = {60}
-                            priority = {true}
-
                         />
                         <div className={styles.nameofthree}>Confirmation</div>
                         </div>
                     </div>
-                    <div className={styles.cartpage}>
-                        <h2>Contact Information</h2>
-                        <div className={styles.form}>
-                            <div className={styles.frminputs}>
-                            <div className={styles.forminputs}>
-                                <label>First Name</label>
-                                <input type="text" placeholder="First Name"/>
-                            </div>
-                            <div className={styles.forminputs}>
-                                <label>Last Name</label>
-                                <input type="text" placeholder="Last Name"/>
-                            </div>
-                            </div>
-                            <div className={styles.frminputs}>
-                            <div className={styles.forminputs}>
-                                <label>Email address</label>
-                                <input type="email" placeholder="Email address"/>
-                            </div>
-                            <div className={styles.forminputs}>
-                                <label>Mobile phone</label>
-                                <input type="number" placeholder="Mobile phone"/>
-                            </div>
-                            </div>
-                  
-
-                        </div>
-                        
-                    </div>
-                    <div className={styles.cartpage}>
-                        <h2>Delivery Information</h2>
-                        <div className={styles.form}>
-                            <div className={styles.frminputs}>
-                            <div className={styles.forminputs}>
-                                <label>First line of the address</label>
-                                <input type="text" placeholder="First line of the address"/>
-                            </div>
-                            <div className={styles.forminputs}>
-                                <label>Second line of the address</label>
-                                <input type="text" placeholder="Second line of the address"/>
-                            </div>
-                            </div>
-                            <div className={styles.frminputs}>
-                            <div className={styles.forminputs}>
-                                <label>City</label>
-                                <input type="text" placeholder="City"/>
-                            </div>
-                            <div className={styles.forminputs}>
-                                <label>Post code</label>
-                                <input type="text" placeholder="Post code"/>
-                            </div>
-                            </div>
-                  
-
-                        </div>
-                        
-                    </div>
-                    <button className={styles.btn} onClick={handleClick}>Proceed to Payment</button>
+                    {clientSecret && (
+                        <Elements options={options} stripe={stripePromise}>
+                            <CheckoutForm />
+                        </Elements>
+                    )}
                 </div>
 
                 <div className={styles.divright}>
-                <div className={styles.divleftsmallsize}>
-                    <div className={styles.stepper}>
-                        <div className={styles.imgwrap}>
-                        <Image 
-                            src = "1.svg"
-                            alt = "1"
-                            width = {60}
-                            height = {60}
-                        />
-                        <div className={styles.nameof}>Delivery</div>
-                        </div>
-                        <Image
-                            src = "inactive.svg"
-                            alt = "2"
-                            width = {100}
-                            height = {60}
-                        />
-                        
-                        <div className={styles.imgwrap}>
-                        <Image 
-                            src = "middle.svg"
-                            alt = "1"
-                            width = {60}
-                            height = {60}
-                        />
-                        <div className={styles.nameoftow}>Payment</div>
-                        </div>
-                        <Image
-                            src = "inactive.svg"
-                            alt = "2"
-                            width = {100}
-                            height = {60}
-                        />
-                       <div className={styles.imgwrap}>
-                        <Image 
-                            src = "last.svg"
-                            alt = "1"
-                            width = {60}
-                            height = {60}
-                        />
-                        <div className={styles.nameofthree}>Confirmation</div>
-                        </div>
-                    </div>
-
-                    <div className={styles.cartpage}>
-                        <h2>Contact Information</h2>
-                        <div className={styles.form}>
-                            <div className={styles.frminputs}>
-                            <div className={styles.forminputs}>
-                                <label>First Name</label>
-                                <input type="text" placeholder="First Name"/>
-                            </div>
-                            <div className={styles.forminputs}>
-                                <label>Last Name</label>
-                                <input type="text" placeholder="Last Name"/>
-                            </div>
-                            </div>
-                            <div className={styles.frminputs}>
-                            <div className={styles.forminputs}>
-                                <label>Email address</label>
-                                <input type="email" placeholder="Email address"/>
-                            </div>
-                            <div className={styles.forminputs}>
-                                <label>Mobile phone</label>
-                                <input type="number" placeholder="Mobile phone"/>
-                            </div>
-                            </div>
-                  
-
-                        </div>
-                        
-                    </div>
-                    <div className={styles.cartpage}>
-                        <h2>Delivery Information</h2>
-                        <div className={styles.form}>
-                            <div className={styles.frminputs}>
-                            <div className={styles.forminputs}>
-                                <label>First line of the address</label>
-                                <input type="text" placeholder="First line of the address"/>
-                            </div>
-                            <div className={styles.forminputs}>
-                                <label>Second line of the address</label>
-                                <input type="text" placeholder="Second line of the address"/>
-                            </div>
-                            </div>
-                            <div className={styles.frminputs}>
-                            <div className={styles.forminputs}>
-                                <label>City</label>
-                                <input type="text" placeholder="City"/>
-                            </div>
-                            <div className={styles.forminputs}>
-                                <label>Post code</label>
-                                <input type="text" placeholder="Post code"/>
-                            </div>
-                            </div>
-                  
-
-                        </div>
-                        
-                    </div>
-
-
-
-
-
-
-
-
-
-                    
-                  
-                </div>
+  
 
 
 
@@ -428,12 +309,56 @@ export default function Page() {
 
                             <h5>{printFifthDay()}</h5>
                         </div>
-                        <button className={styles.btn} onClick={handleClick}>Proceed to Payment</button>
-
                     </div>
-  
-
-
+                    <div className={styles.divleftsmall}>
+                    <div className={styles.stepper}>
+                        <div className={styles.imgwrap}>
+                        <Image 
+                            src = "1.svg"
+                            alt = "1"
+                            width = {60}
+                            height = {60}
+                        />
+                        <div className={styles.nameof}>Delivery</div>
+                        </div>
+                        <Image
+                            src = "active.svg"
+                            alt = "2"
+                            width = {100}
+                            height = {60}
+                        />
+                        
+                        <div className={styles.imgwrap}>
+                        <Image 
+                            src = "2.svg"
+                            alt = "1"
+                            width = {60}
+                            height = {60}
+                        />
+                        <div className={styles.nameof}>Payment</div>
+                        </div>
+                        <Image
+                            src = "inactive.svg"
+                            alt = "2"
+                            width = {100}
+                            height = {60}
+                        />
+                       <div className={styles.imgwrap}>
+                        <Image 
+                            src = "last.svg"
+                            alt = "1"
+                            width = {60}
+                            height = {60}
+                        />
+                        <div className={styles.nameofthree}>Confirmation</div>
+                        </div>
+                    </div>
+                    {clientSecret && (
+                        <Elements options={options} stripe={stripePromise}>
+                            <CheckoutForm />
+                        </Elements>
+                    )}
+                </div>
                 </div>
             </div>
         </div>

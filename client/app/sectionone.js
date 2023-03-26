@@ -1,13 +1,12 @@
 "use client"; // This is a client-side file 
 
 import useEmblaCarousel from 'embla-carousel-react'
-import { useEffect, useState} from "react";
+import { useEffect, useState, useCallback} from "react";
 import styles from './sectionone.module.css';
 import Image from 'next/image'
 import Dots from './dots'
 import CarouselControls from './carouselcontrol'
 import Loader from './Loader';
-
 
 export default function Sectionone(props) {
   const [itemKey, setItemKey] = useState('01')
@@ -45,17 +44,17 @@ export default function Sectionone(props) {
 
 
 
-  const checkFormatedTextg = () => {
+  const checkFormatedTextg = useCallback(() => {
     const swiper = selectedIndex;
     const index = swiper + 1;
     const formattedIndex = String(index).padStart(2, '0');
     setItemKey(formattedIndex);
     setTextId(swiper)
-  }
-
+  }, [selectedIndex]);
+  
   useEffect(() => {
-    checkFormatedTextg()
-  }, [selectedIndex, checkFormatedTextg])
+    checkFormatedTextg();
+  }, [checkFormatedTextg]);
 
   const checktheWidth = () => {
     setReadWidth(window.innerWidth)
@@ -136,6 +135,7 @@ export default function Sectionone(props) {
             <div className={styles.maindivh1}>
               <h3>Unbox the Future with the new</h3>
               <h1>Samsung S23 Series</h1>
+
 
             </div>
             <div className={styles.maindivh1024}>

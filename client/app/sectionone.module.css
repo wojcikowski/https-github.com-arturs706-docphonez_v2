@@ -454,8 +454,10 @@
     .ovalblur {
       background: radial-gradient(ellipse at center, rgba(102, 246, 255) 45%, rgba(102, 246, 255,0.2) 45%, rgba(102, 246, 255,0) 100%);
       filter: blur(100px);
-      -webkit-background: radial-gradient(ellipse at center, rgba(102, 246, 255) 45%, rgba(102, 246, 255,0.2) 45%, rgba(102, 246, 255,0) 100%);
-      -webkit-filter: blur(100px);
+      -webkit-backface-visibility: hidden;
+      -moz-backface-visibility: hidden;
+      -webkit-transform: translate3d(0, 0, 0);
+      -moz-transform: translate3d(0, 0, 0);
       z-index: 1;
     }
   }

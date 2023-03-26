@@ -13,8 +13,9 @@
     border: none;
     border-radius: 0.4rem;
     background: linear-gradient(to bottom right, #66F6FF, #143DA9);
-    cursor: pointer;
     color: var(--main-font-color);
+    cursor: pointer;
+    color: #000235;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -105,50 +106,10 @@
     position: relative;
     right: 0.9rem;
   }
-  .cartpage h2 {
-    font-size: 1.5rem;
-    padding-left: 3rem;
-    padding-top: 3rem;
-  }
-  .cartpage label {
-    font-size: 0.8rem;
-    padding-bottom: 1rem;
 
-  }
-  .forminputs {
-    display: flex;
-    flex-direction: column;
-  }
-  .forminputs input {
-    height: 2rem;
-    border-radius: 0.4rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border: none;
-    width: 12rem;
-  }
-  .frminputs {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 33rem;
-    padding-left: 3rem;
-    padding-right: 3rem;
-    padding-top: 1rem;
-  }
-  .btn {
-    padding: 0.92rem;
-    margin-top: 6.94rem;
-    margin-left: 2.9rem;
-    width: 70%;
-    border: none;
-    border-radius: 0.4rem;
-    background: linear-gradient(to bottom right, #66F6FF, #143DA9);
-    color: var(--main-font-color);
-    cursor: pointer;
-  }
+
+
+
   /* .btn.clicked {
     background-color: #f2f2f2;
   } */
@@ -229,7 +190,7 @@
     position: absolute;
     width: 100%;
     height: 90vh;
-    background: radial-gradient(ellipse at right, rgba(102, 246, 255) 15%, rgba(102, 246, 255,0.2) 15%, rgba(102, 246, 255,0) 100%);
+    background: radial-gradient(ellipse at center, rgba(102, 246, 255) 15%, rgba(102, 246, 255,0.2) 15%, rgba(102, 246, 255,0) 100%);
     filter: blur(100px);
     z-index: 0;
     -webkit-backface-visibility: hidden;
@@ -244,44 +205,37 @@
   .divleftsmallsize {
     display: none;
   }
+  .divleftsmall {
+    display: none;
+  }
+
+  /* STRIPE */
+
+.form {
+    margin-top: 4.7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    padding: 0 3rem;
+}
 
   @media screen and (max-width: 990px) {
-    .divleftsmallsize {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .frminputs {
-      padding: 1rem;
-      
-    }
-    .forminputs {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
 
     .divright .btn {
       display: block;
       margin-top: 3rem;
-      width: 70%;
       margin-left: 0;
+    }
 
-    }
-    .frminputs input {
-      width: 14rem;
-    }
     .cartmain {
-      height: 280vh;
+      height: 120vh;
     }
-    .divleft {
-      display: none;
-    }
+
     .divright {
-      width: 100%;
+      width: 54%;
       flex-direction: column;
       align-items: center;
     }
@@ -292,10 +246,13 @@
     }
     .btntwo {
       width: 90%;
+      margin-top: 3.6rem;
     }
     .total {
-      width: 36rem;
-      padding-left: 0;
+      width: 24rem;
+      padding-left: 3rem;
+      padding-top: 3rem;
+
     }
     .tiyle {
       padding-bottom: 2rem;
@@ -311,26 +268,31 @@
     .quantity {
       padding-right: 3.3rem;
     }
-    .total {
-      padding-left: 3rem;
-    }
-  }
-  @media screen and (max-width: 600px) {
-    .frminputs input {
-      width: 12rem;
-    }
-    .frminputs {
-      padding: 0.75rem 1rem;
-    }
 
   }
+
+  @media screen and (max-width: 840px) {
+    .divleft {
+        display: none;
+    }
+    .divright {
+      width: 100%;
+    }
+    .cartmain {
+        height: 280vh;
+      }
+    .divleftsmall {
+      display: block;
+    }
+    .stepper {
+        width: 100%;
+        justify-content: center;
+    }
+  }
+
+
   @media screen and (max-width: 550px) {
-    .frminputs input {
-      width: 12rem;
-    }
-    .frminputs {
-      padding: 0.75rem 2.9rem;
-    }
+
     .total {
       width: 96%;
     }
@@ -338,30 +300,26 @@
 
 
   @media screen and (max-width: 475px) {
-    .frminputs {
-      flex-direction: column;
-      width: 100%;
-      align-items: center;
-    }
-    .frminputs input {
-      width: 22rem;
-    }
-    .frminputs label {
-      padding-top: 0.5rem;
-    }
+
     .divleft h2 {
       text-align: center;
     }
     .stepper {
       display: none;
     }
-    .cartpage h2 {
-      margin-top: 0;
-      padding-top: 0;
+    .form {
+        margin-top: 4rem;
     }
-    .cartpage:nth-child(3) h2 {
-      margin-top: 2rem;
+    .divleftsmall {
+        height: 90rem;
     }
+    .cartmain {
+        height: 180vh;
+      }
+
+
   }
+
+
 
 

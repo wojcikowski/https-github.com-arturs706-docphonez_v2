@@ -52,7 +52,7 @@ router.post('/refresh_token', bodyParser.json(), (req, res) => {
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
         if (err) {return res.status(403).json({err: err.message})}
         let tokens = generateToken(user);
-        res.cookie('refresh_token', tokens.refreshToken, {httpOnly: true});
+        res.cookie('refreshToken', tokens.refreshToken, {httpOnly: true});
         res.json({accessToken: tokens.accessToken});
         })
         } catch (err) {

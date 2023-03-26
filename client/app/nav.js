@@ -51,8 +51,8 @@ export default function Nav() {
             </div>
             <div className={styles.linetwo}>
               <Link href="/products"><h3>Products</h3></Link>
-              <Link href="/products/tablets"><h3>Products</h3></Link>
-              <Link href="/products/accessories"><h3>Products</h3></Link>
+              <Link href="/products/tablets"><h3>Tablets</h3></Link>
+              <Link href="/products/accessories"><h3>Accessories</h3></Link>
             </div>
           </div>
         <div className={styles.wrappertwo}>

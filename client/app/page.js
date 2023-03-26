@@ -28,7 +28,7 @@ export default function Home() {
       await refreshToken(dispatch);
     }
     checkRefreshToken();
-  }, []);
+  }, [dispatch]);
 
 
   return (

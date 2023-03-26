@@ -17,7 +17,7 @@ export default function Page() {
         await refreshToken(dispatch);
       }
       checkRefreshToken();
-    }, []);
+    }, [dispatch]);
 
 
 
@@ -40,6 +40,7 @@ export default function Page() {
   
   return (
     <div className={styles.main}>
+      <div className={styles.ovalblur}></div>
       <div className={styles.divleft}>
         <div className={styles.profileH}>Profile</div>
         <div className={styles.divwrap}>

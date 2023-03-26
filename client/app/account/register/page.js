@@ -4,9 +4,9 @@
 import { useState, useEffect } from 'react'
 import styles from './page.module.css'
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { register, reset } from '/redux/reducers/authSlice'
+import { useDispatch } from 'react-redux'
 import refreshToken from '../../../checkCr';
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
   const [fullname, setFullname] = useState('')
@@ -18,14 +18,16 @@ export default function Page() {
   const [passwd, setPasswd] = useState('')
   const [confirmPasswd, setConfirmPasswd] = useState('1')
   const dispatch = useDispatch()
+  const [message, setMessage] = useState('')
+  const router = useRouter()
 
   useEffect(() => {
       async function checkRefreshToken() {
         await refreshToken(dispatch);
       }
       checkRefreshToken();
-    }, []);
-  const { isLoading, isError, isSuccess, message} = useSelector(state => state.auth)
+    }, [dispatch]);
+    
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,15 +35,37 @@ export default function Page() {
     if(passwd !== confirmPasswd || email !== confirmEmail) {
       alert('Passwords or emails do not match')
     } else {
-      const userData = {
-        fullname,
-        dob,
-        gender,
-        mob_phone: mobPhone,
-        email,
-        passwd
-      }
-      dispatch(register(userData))
+      console.log(fullname, dob, gender, mobPhone, confirmEmail, setConfirmPasswd)
+      fetch(`http://localhost:10000/api/v1/register` , {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            fullname: fullname,
+            dob: dob,
+            gender: gender,
+            mob_phone: mobPhone,
+            email: confirmEmail,
+            passwd: confirmPasswd
+        })
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.status === "success") {
+                setMessage(data.message)
+                //redirect to login page after 3 seconds
+                setTimeout(() => {
+                    router.push('/account/login')
+                }, 3000)
+
+            } else {
+                setMessage(data.message)
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
   }
 
@@ -70,6 +94,14 @@ export default function Page() {
   const handleConfirmPasswd = (e) => {
     setConfirmPasswd(e.target.value);
     };
+
+    if (message) {
+    return (
+      <div className={styles.main}>
+        <h1>{message}</h1>
+      </div>
+    )
+    }
 
   return (
     <div className={styles.main}>

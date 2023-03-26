@@ -17,7 +17,7 @@ export default function Home() {
         await refreshToken(dispatch);
       }
       checkRefreshToken();
-    }, []);
+    }, [dispatch]);
 
   const category = usePathname();
   const [dataretrvieved, setDataretrvieved] = useState(null)

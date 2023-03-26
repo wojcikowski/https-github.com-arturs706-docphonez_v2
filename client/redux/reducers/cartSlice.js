@@ -1,25 +1,24 @@
 "use client"; // this is a client component 👈🏽
 
 import { createSlice } from '@reduxjs/toolkit';
-import { getCookie, hasCookie, setCookie } from 'cookies-next';
 
-export const getCartFromCookie = () => {
-  if (hasCookie('cart')) {
-    return JSON.parse(getCookie('cart'));
-  } else {
-    return [];
+
+
+const getCartFromStorage = () => {
+  if (typeof localStorage !== 'undefined') {
+    const cart = localStorage.getItem('cart');
+    return cart ? JSON.parse(cart) : [];
   }
+  return [];
 };
 
-//create a function to set the cart to the cookie
-export const setCartToCookie = (cart) => {
-  setCookie('cart', JSON.stringify(cart));
+const setCartToStorage = (cart) => {
+  localStorage.setItem('cart', JSON.stringify(cart));
 };
-
 
 export const cartSlice = createSlice({
   name: 'cart',
-  initialState: getCartFromCookie(),
+  initialState: getCartFromStorage(),
   reducers: {
     addToCart: (state, action) => {
       const itemExists = state.find((item) => item.prodname === action.payload.prodname);
@@ -28,37 +27,36 @@ export const cartSlice = createSlice({
       } else {
         state.push({ ...action.payload, quantity: 1 });
       }
-      setCartToCookie(state);
+      setCartToStorage(state);
     },
     removeFromCart: (state, action) => {
       const newState = state.filter((item) => item.prodname !== action.payload);
-      setCartToCookie(newState);
+      setCartToStorage(newState);
       return newState;
     },
     incrementQuantity: (state, action) => {
       const item = state.find((item) => item.prodname === action.payload);
       item.quantity += 1;
-      setCartToCookie(state);
+      setCartToStorage(state);
     },
     decrementQuantity: (state, action) => {
       const item = state.find((item) => item.prodname === action.payload);
       if (item.quantity > 1) {
         item.quantity -= 1;
-        setCartToCookie(state);
+        setCartToStorage(state);
       } else if (item.quantity === 1) {
         const newState = state.filter((item) => item.prodname !== action.payload);
-        //set the cart to the cookie
-        setCartToCookie(newState);
+        setCartToStorage(newState);
         return newState;
       }
     },
     changeTheQuantity: (state, action) => {
       const item = state.find((item) => item.prodname === action.payload.prodname);
       item.quantity = action.payload.quantity;
-      setCartToCookie(state);
+      setCartToStorage(state);
     },
     clearCart: () => {
-      setCartToCookie([]);
+      setCartToStorage([]);
       return [];
     }
   }

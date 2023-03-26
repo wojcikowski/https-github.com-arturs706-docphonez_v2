@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from './checkout.module.css'
+import styles from './page.module.css'
 import {
     PaymentElement,
     useStripe,
@@ -24,7 +24,7 @@ import { useDispatch } from 'react-redux';
         await refreshToken(dispatch);
       }
       checkRefreshToken();
-    }, []);
+    }, [dispatch]);
   
 
     useEffect(() => {
@@ -77,7 +77,7 @@ import { useDispatch } from 'react-redux';
         const { error } = await stripe.confirmPayment({
           elements,
           confirmParams: {
-            return_url: "http://localhost:3000/checkout/success/",
+            return_url: "http://localhost:3000/payment/success/",
           },
           
         });
@@ -98,9 +98,8 @@ import { useDispatch } from 'react-redux';
     
   
     return (
-        <div className={styles.checkoutform}>
-            <div className={styles.blurpatch}></div>
-            <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.form}>
+            <form onSubmit={handleSubmit}>
             <PaymentElement id="payment-element" options={paymentElementOptions} />
                 <button disabled={isLoading || !stripe || !elements} id="submit">
                     <span id="button-text">
@@ -111,7 +110,6 @@ import { useDispatch } from 'react-redux';
                 {message && <div id="payment-message">{message}</div>}
             </form>
         </div>
-      
     );
   }
     

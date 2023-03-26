@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation';
 import styles from './page.module.css'
-import refreshToken from '../../../checkCr';
+import refreshToken from '../../../../checkCr'
 import { useDispatch } from 'react-redux';
 
 export default function Page() {
@@ -19,7 +19,7 @@ export default function Page() {
           await refreshToken(dispatch);
         }
         checkRefreshToken();
-      }, []);
+      }, [dispatch]);
 
   useEffect(() => {
     setLoading(true)
