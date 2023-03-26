@@ -31,6 +31,7 @@ router.post('/login', bodyParser.json(), async (req, res) => {
         const refreshToken = tokens.refreshToken;
         const serialized = serialize('refreshToken', refreshToken, {
             httpOnly: true,
+            secure: true,
             maxAge: 60 * 60 * 24 * 7,
             path: '/'        
         });
@@ -54,6 +55,7 @@ router.post('/refresh_token', bodyParser.json(), (req, res) => {
         let tokens = generateToken(user);
         const serialized = serialize('refreshToken', refreshToken, {
             httpOnly: true,
+            secure: true,
             maxAge: 60 * 60 * 24 * 7,
             path: '/'        
         });
