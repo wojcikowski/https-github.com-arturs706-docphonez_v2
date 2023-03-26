@@ -77,7 +77,9 @@ import { useDispatch } from 'react-redux';
         const { error } = await stripe.confirmPayment({
           elements,
           confirmParams: {
-            return_url: "http://localhost:3000/payment/success/",
+            // return_url: "http://localhost:3000/payment/success/",
+            return_url: "https://doctorphonez.co.uk/payment/success/",
+
           },
           
         });

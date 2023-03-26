@@ -51,7 +51,8 @@ export default function Page() {
         if (token) {
           const fetchUser = async () => {
             try {
-              const res = await axios.get(`http://0.0.0.0:10000/api/v1/profile`, {
+            //   const res = await axios.get(`http://0.0.0.0:10000/api/v1/profile`, {
+                const res = await axios.get(`https://pm.doctorphonez.co.uk/api/v1/profile`, {
                 headers: {
                   "Content-Type": "application/json",
                   "Authorization": `Bearer ${token}`

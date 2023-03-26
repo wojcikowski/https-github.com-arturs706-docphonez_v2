@@ -52,7 +52,12 @@ router.post('/refresh_token', bodyParser.json(), (req, res) => {
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
         if (err) {return res.status(403).json({err: err.message})}
         let tokens = generateToken(user);
-        res.cookie('refreshToken', tokens.refreshToken, {httpOnly: true});
+        const serialized = serialize('refreshToken', refreshToken, {
+            httpOnly: true,
+            maxAge: 60 * 60 * 24 * 7,
+            path: '/'        
+        });
+        res.setHeader('Set-Cookie', serialized);
         res.json({accessToken: tokens.accessToken});
         })
         } catch (err) {
@@ -62,7 +67,7 @@ router.post('/refresh_token', bodyParser.json(), (req, res) => {
 
 router.delete('/logout', bodyParser.json(), (req, res) => {
     try {
-        res.clearCookie('refresh_token');
+        res.clearCookie('refreshToken');
         return res.status(200).json({message : 'Logged out successfully'});
     } catch (err) {
         res.status(401).json({err : err.message});
