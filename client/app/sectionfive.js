@@ -9,7 +9,8 @@ import Autoplay from 'embla-carousel-autoplay'
 
 
 async function getAppleItems() {
-    return await (await fetch ("http://localhost:10000/api/v1/products/mobilephones/apple")).json();
+    // return await (await fetch ("http://localhost:10000/api/v1/products/mobilephones/apple")).json();
+    return await (await fetch ("https://pm.doctorphonez.co.uk/api/v1/products/mobilephones/apple")).json();
   }
 
   

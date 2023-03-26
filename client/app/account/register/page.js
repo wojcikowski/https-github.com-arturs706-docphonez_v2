@@ -36,7 +36,8 @@ export default function Page() {
       alert('Passwords or emails do not match')
     } else {
       console.log(fullname, dob, gender, mobPhone, confirmEmail, setConfirmPasswd)
-      fetch(`http://localhost:10000/api/v1/register` , {
+      // fetch(`http://localhost:10000/api/v1/register` , {
+      fetch(`https://pm.doctorphonez.co.uk/api/v1/register` , {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

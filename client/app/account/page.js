@@ -24,7 +24,8 @@ export default function Page() {
 
   const fetchUser = async () => {
     try {
-      const response = await axios.get(`http://localhost:10000/api/v1/profile`, {
+      // const response = await axios.get(`http://localhost:10000/api/v1/profile`, {
+      const response = await axios.get(`https://pm.doctorphonez.co.uk/api/v1/profile`, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`

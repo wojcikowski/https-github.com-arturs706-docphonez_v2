@@ -8,7 +8,8 @@ import {use} from 'react'
 
 
 async function getRecentIphone() {
-  return await (await fetch ("http://localhost:10000/api/v1/products/apple/featured")).json();
+  // return await (await fetch ("http://localhost:10000/api/v1/products/apple/featured")).json();
+  return await (await fetch ("https://pm.doctorphonez.co.uk/api/v1/products/apple/featured")).json();
 }
 
 
