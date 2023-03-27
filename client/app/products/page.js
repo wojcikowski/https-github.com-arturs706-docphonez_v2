@@ -23,7 +23,8 @@ function Page() {
   }, [dispatch]);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}api/v1/products`)
+    // fetch(`${process.env.NEXT_PUBLIC_API_URL}api/v1/products`)
+    fetch("https://pm.doctorphonez.co.uk/api/v1/products")
       .then(res => res.json())
       .then(data => setProducts(data.products));
   }, []);

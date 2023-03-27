@@ -14,7 +14,7 @@ export default function Page() {
   const [gender, setGender] = useState('')
   const [mobPhone, setMobPhone] = useState('')
   const [email, setEmail] = useState('')
-  const [confirmEmail, setConfirmEmail] = useState('aradionovs@yahoo.com')
+  const [confirmEmail, setConfirmEmail] = useState('')
   const [passwd, setPasswd] = useState('')
   const [confirmPasswd, setConfirmPasswd] = useState('1')
   const dispatch = useDispatch()

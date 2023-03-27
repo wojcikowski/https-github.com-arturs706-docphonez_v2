@@ -30,6 +30,8 @@ router.post('/login', bodyParser.json(), async (req, res) => {
         const accessToken = tokens.accessToken;
         const refreshToken = tokens.refreshToken;
         const serialized = serialize('refreshToken', refreshToken, {
+            secure: true,
+            sameSite: 'strict',
             httpOnly: true,
             maxAge: 60 * 60 * 24 * 7,
             path: '/'
@@ -53,6 +55,8 @@ router.post('/refresh_token', bodyParser.json(), (req, res) => {
         if (err) {return res.status(403).json({err: err.message})}
         let tokens = generateToken(user);
         const serialized = serialize('refreshToken', refreshToken, {
+            secure: true,
+            sameSite: 'strict',
             httpOnly: true,
             maxAge: 60 * 60 * 24 * 7,
             path: '/'

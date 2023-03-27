@@ -2,7 +2,8 @@ import jwt_decode from 'jwt-decode';
 import { setProfile, setEmailAdd, setUserRole, setTokenExp } from './redux/reducers/profileSlice'
 
 const refreshToken = async (dispatch) => {
-    const result = await (await fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/refresh_token', {
+    // const result = await (await fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/refresh_token', {
+    const result = await (await fetch("https://pm.doctorphonez.co.uk/api/v1/refresh_token", {
     method: 'POST',
     credentials: 'include',
     headers: {

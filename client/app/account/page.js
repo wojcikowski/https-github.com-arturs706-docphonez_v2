@@ -28,7 +28,8 @@ export default function Page() {
     useEffect(() => {
       async function fetchUser() {
         try {
-            const dataretr = await axios.get(process.env.NEXT_PUBLIC_API_URL + "api/v1/profile", {
+            // const dataretr = await axios.get(process.env.NEXT_PUBLIC_API_URL + "api/v1/profile", {
+              const dataretr = await axios.get("https://pm.doctorphonez.co.uk/api/v1/profile", {
             headers: {
               "Content-Type": "application/json",
               "Authorization": `Bearer ${token}`

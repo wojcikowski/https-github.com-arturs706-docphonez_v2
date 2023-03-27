@@ -13,9 +13,9 @@ import refreshToken from '../../../checkCr';
 
 
 export default function Page() {
-  const [email, setEmail] = useState('aradionovs@yahoo.com')
-  const [passwd, setPasswd] = useState('1')
-  const [confirmPasswd, setConfirmPasswd] = useState('1')
+  const [email, setEmail] = useState('')
+  const [passwd, setPasswd] = useState('')
+  const [confirmPasswd, setConfirmPasswd] = useState('')
   const router = useRouter()
   
   const [errormessage, setErrorMessage] = useState('')
@@ -40,7 +40,8 @@ export default function Page() {
       alert('Passwords do not match')
     } else {
       try {
-          const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + 'api/v1/login', {
+          // const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + 'api/v1/login', {
+          const response = await axios.post("https://pm.doctorphonez.co.uk/api/v1/login", {
           email: email,
           passwd: passwd
         }, {
@@ -82,7 +83,8 @@ export default function Page() {
 
   const handleresendemail = async () => {
     try {
-        const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + '/api/v1/resendemail', {
+        // const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + '/api/v1/resendemail', {
+        const response = await axios.post("https://pm.doctorphonez.co.uk/api/v1/resendemail", {
         email: userEmail,
         passwd: userPasswd
       }, {
