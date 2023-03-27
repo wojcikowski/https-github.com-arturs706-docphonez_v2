@@ -4,13 +4,17 @@ import styles from './page.module.css';
 import axios from 'axios';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import refreshToken from '../../checkCr';
 
 export default function Page() {
   const token = useSelector(state => state.profile.token);
   const dispatch = useDispatch()
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    phone: ""});
 
   useEffect(() => {
       async function checkRefreshToken() {
@@ -21,24 +25,25 @@ export default function Page() {
 
 
 
-
-  const fetchUser = async () => {
-    try {
-      // await axios.get(`http://localhost:10000/api/v1/profile`, {
-      const response = await axios.get(`https://pm.doctorphonez.co.uk/api/v1/profile`, {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+    useEffect(() => {
+      async function fetchUser() {
+        try {
+            const dataretr = await axios.get(process.env.NEXT_PUBLIC_API_URL + "api/v1/profile", {
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            }
+          });
+          setUser(dataretr.data.data);
+        } catch (error) {
+          console.log(error.data);
         }
-      });
-    } catch (error) {
-      console.log(error.data);
-    }
-  }
-  
-  fetchUser();
+      }
+      fetchUser();
+    }, [token]);
 
-  
+
+
   return (
     <div className={styles.main}>
       <div className={styles.ovalblur}></div>
@@ -66,7 +71,7 @@ export default function Page() {
         </div>
       </div>
       <div className={styles.divright}>
-        <h1>Welcome</h1>
+        <h1>Welcome {user.fullname}</h1>
         <h2>Account Page</h2>
         <br />
         <div>Hey! This is where you can check out all your old orders, tell us what kind of emails you want to receive, and update your account deets to make checkout a breeze.</div>

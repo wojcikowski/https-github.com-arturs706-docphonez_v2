@@ -3,13 +3,11 @@ import styles from './sectionthree.module.css';
 import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-// import getRecentIphone from '@/lib/getRecentIphones';
-import {use} from 'react'
 
 
 async function getRecentIphone() {
-  // return await (await fetch ("http://localhost:10000/api/v1/products/apple/featured")).json();
-  return await (await fetch ("https://pm.doctorphonez.co.uk/api/v1/products/apple/featured")).json();
+  return await (await fetch (process.env.NEXT_PUBLIC_API_URL + `api/v1/products/apple/featured`)).json();
+
 }
 
 
@@ -45,8 +43,8 @@ export default function Sectionthree() {
       setW(355);
       setH(438);
     } else {
-      setW(355); 
-      setH(438); 
+      setW(324); 
+      setH(400); 
     }
   }, [widthSize]);
 

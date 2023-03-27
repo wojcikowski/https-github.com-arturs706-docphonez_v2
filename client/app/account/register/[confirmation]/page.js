@@ -23,9 +23,7 @@ export default function Page() {
 
   useEffect(() => {
     setLoading(true)
-    //fetch data from api using PUT method
-    //   fetch(`http://localhost:10000/api/v1/register/success/${tokenSplit}` , {
-    fetch(`https://pm.doctorphonez.co.uk/api/v1/register/success/${tokenSplit}` , {
+        fetch(process.env.NEXT_PUBLIC_API_URL + `api/v1/register/success/${tokenSplit}` , {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'

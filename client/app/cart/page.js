@@ -6,7 +6,6 @@ import { removeFromCart, incrementQuantity, decrementQuantity } from '../../redu
 import { useSelector, useDispatch } from 'react-redux'
 import Image from 'next/image'
 import refreshToken from '../../checkCr';
-import { setCurrentStep } from '../../redux/reducers/stepperSlice';
 import { useRouter } from 'next/navigation';
 
 
@@ -116,7 +115,7 @@ export default function Page() {
             <div className={styles.top}>
                 <div className={styles.wrapp}>
                     <Image 
-                        src = "arrowgrad.svg"
+                        src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1679916575/etc/arrowgrad_acndpe.svg"
                         alt = "arrowgrad"
                         width = {40}
                         height = {40}

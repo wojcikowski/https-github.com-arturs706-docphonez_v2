@@ -130,3 +130,19 @@
   }
 
   }
+
+  @media screen and (max-width: 500px) {
+    .sectionthreediv {
+      flex-wrap: wrap;
+      margin-top: 15rem;
+    }
+
+    .glassmorphdiv {
+      width : 20rem;
+      height : 27rem;
+      margin-right: 1rem;
+      margin-left: 3rem;
+      margin-bottom: 15rem;
+    }
+  
+    }

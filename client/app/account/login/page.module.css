@@ -40,7 +40,6 @@
   align-items: center;
   text-align: center;
   border: none;
-
 }
 
 .emailinput {
@@ -55,6 +54,7 @@
   background-size: 16px;
   background-color: var(--main-font-color)
 }
+
 
 .form input:focus {
   background: var(--main-font-color)

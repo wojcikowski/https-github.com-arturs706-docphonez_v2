@@ -5,13 +5,12 @@ import { useState, useEffect } from 'react'
 import { removeFromCart, incrementQuantity, decrementQuantity } from '../../redux/reducers/cartSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import Image from 'next/image'
-import refreshToken from '../../checkCr';
-import { setCurrentStep } from '../../redux/reducers/stepperSlice';
 import { useRouter } from 'next/navigation';
 import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from './CheckoutForm'
-import axios from 'axios';
 import { Elements } from '@stripe/react-stripe-js';
+import jwt_decode from 'jwt-decode';
+import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../redux/reducers/profileSlice'
 
 const stripePromise = loadStripe("pk_test_51MfhShFrvj0XKeq0C4CoNcKSCcHgBSOKzDZBIkNmuoNdtwRifkT6Y7Nl9Ky53fABvIC2A2kqIb0sFNhZ9xUCspT600lW4FNBcc");
 
@@ -24,66 +23,65 @@ export default function Page() {
     const dispatch = useDispatch()
     const router = useRouter()
     const [clientSecret, setClientSecret] = useState("");
-    const token = useSelector(state => state.profile.token);
 
-    
+    const handleBack = () => {
+        router.back();
+    }
 
-    useEffect(() => {
-        async function checkRefreshToken() {
-          await refreshToken(dispatch);
-        }
-        checkRefreshToken();
-      }, [dispatch]);
-
-      //create a function that returns user back to the previous page when they click on the back button
-        const handleBack = () => {
-            router.back();
-        }
-
-    //create a function that returns no items in the cart when the cart is empty
     useEffect(() => {
         if (cart.length === 0) {
             setMessage('No items in cart')
         }
     }, [cart])
 
-    useEffect(() => {
-        if (token) {
-          const fetchUser = async () => {
-            try {
-            //   const res = await axios.get(`http://0.0.0.0:10000/api/v1/profile`, {
-                const res = await axios.get(`https://pm.doctorphonez.co.uk/api/v1/profile`, {
-                headers: {
-                  "Content-Type": "application/json",
-                  "Authorization": `Bearer ${token}`
-                },
-                withCredentials: true
-              });
-              const { data } = res;
-      
-              const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-              fetch("https://pm.doctorphonez.co.uk/api/v1/create-payment-intent", {
-              // fetch("http://localhost:10000/api/v1/create-payment-intent", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                amount: total,
-                email: data.data.email,
-                fullname: data.data.fullname,
-                phone: data.data.mob_phone
-              }),
-            })
-              .then((res) => res.json())
-              .then((data) => setClientSecret(data.clientSecret));
-            } catch (error) {
-              console.error(error);
-            }
-          }
-          fetchUser();
+useEffect(() => {
+    fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/refresh_token', {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+    })
+    .then((res) => res.json())
+    .then((data) => {
+        if (data.err === "jwt must be provided") {
+            router.push('/login')
         } else {
-          window.location.href = '/account/login';
+            const { email, exp, role } = jwt_decode(data.accessToken)
+            dispatch(setProfile(data.accessToken))
+            dispatch(setEmailAdd(email))
+            dispatch(setUserRole(role))
+            const isExpired = (exp * 1000) < new Date().getTime()
+            dispatch(setTokenExp(isExpired))
+            fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/profile', {
+                method: "GET",
+                headers: { "Content-Type": "application/json", "Authorization": `Bearer ${data.accessToken}` },
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.status === "success") {
+                        const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+                        fetch("https://pm.doctorphonez.co.uk/api/v1/create-payment-intent", {
+                            
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            amount: total,
+                            email: data.data.email,
+                            fullname: data.data.fullname,
+                            phone: data.data.mob_phone
+                        }),
+                        })
+                        .then((res) => res.json())
+                        .then((data) => setClientSecret(data.clientSecret));
+                    }
+                });
         }
-      }, [token, cart]);
+    })
+}, [cart])
+
+
+
 
       const appearance = {
         theme: 'night',
@@ -98,9 +96,6 @@ export default function Page() {
         appearance,
       };
       
-
-
-
       function printFifthDay() {
         const monthsOfYear = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         const today = new Date();
@@ -171,7 +166,7 @@ export default function Page() {
             <div className={styles.top}>
                 <div className={styles.wrapp}>
                     <Image 
-                        src = "arrowgrad.svg"
+                        src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1679916575/etc/arrowgrad_acndpe.svg"
                         alt = "arrowgrad"
                         width = {40}
                         height = {40}

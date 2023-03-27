@@ -1,3 +1,6 @@
+"use client"; // this is a client component 👈🏽
+
+
 import { createSlice } from '@reduxjs/toolkit';
 
 

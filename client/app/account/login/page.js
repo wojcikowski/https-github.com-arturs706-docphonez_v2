@@ -40,8 +40,7 @@ export default function Page() {
       alert('Passwords do not match')
     } else {
       try {
-        // const response = await axios.post('http://localhost:10000/api/v1/login', {
-          const response = await axios.post('https://pm.doctorphonez.co.uk/api/v1/login', {
+          const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + 'api/v1/login', {
           email: email,
           passwd: passwd
         }, {
@@ -83,8 +82,7 @@ export default function Page() {
 
   const handleresendemail = async () => {
     try {
-      // const response = await axios.post('http://localhost:10000/api/v1/resendemail', {
-        const response = await axios.post('https://pm.doctorphonez.co.uk/api/v1/resendemail', {
+        const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + '/api/v1/resendemail', {
         email: userEmail,
         passwd: userPasswd
       }, {

@@ -25,9 +25,7 @@ export default function Home() {
 
   useEffect(() => {
     setLoading(true)
-    //fetch data from api using a dynamic path
-      // fetch(`http://localhost:10000/api/v1/products/${categorysplit}`)
-      fetch(`https://pm.doctorphonez.co.uk/api/v1/products/${categorysplit}`)
+      fetch(process.env.NEXT_PUBLIC_API_URL + `api/v1/products/${categorysplit}`)
       .then(res => res.json())
       .then(data => {
         console.log(data)

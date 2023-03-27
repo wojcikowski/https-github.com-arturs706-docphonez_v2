@@ -136,6 +136,7 @@
         font-size: 0.8rem;
         padding-right: 1rem;
         margin-top: 1.2rem;
+        
     }
     .wrappertwo {
         margin-top: 0rem;
@@ -150,6 +151,7 @@
     }
     .nav {
         height: 8vh;
+        padding-top: 0.4rem;
     }
     .wrappertwo {
         display: flex;
@@ -163,8 +165,10 @@
         flex-direction: row;
         color: white;
         font-size: 0.8rem;
-        padding-right: 1rem;
+        padding-right: 0.1rem;
         margin-top: 1.2rem;
+        position: relative;
+        z-index: 4;
     }
     .logo:nth-child(1) {
         display: none;  
