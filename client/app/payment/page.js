@@ -78,7 +78,7 @@ useEffect(() => {
                 });
         }
     })
-}, [cart])
+}, [cart, dispatch, router])
 
 
 

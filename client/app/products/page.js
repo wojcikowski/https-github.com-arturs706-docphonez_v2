@@ -59,8 +59,8 @@ function Page() {
       {filteredProducts.length > 0 && (
         <div className>
           {filteredProducts.map(product => (
-            <Link href={`/products/${product.category}/${product.brand}/${product.productid}`}>
-            <div key={product.id} className={styles.searchsdiv}>
+            <Link key={product.id} href={`/products/${product.category}/${product.brand}/${product.productid}` }>
+            <div className={styles.searchsdiv}>
               <Image 
                 src={product.imagetwo}
                 alt={product.prodname}
