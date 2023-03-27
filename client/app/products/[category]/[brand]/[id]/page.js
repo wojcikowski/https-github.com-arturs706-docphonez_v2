@@ -27,7 +27,8 @@ export default function Home() {
   const id = category.split("/")[4]
   useEffect(() => {
     setLoading(true)
-      fetch(process.env.NEXT_PUBLIC_API_URL + `api/v1/products/${categorysplit}/${brand}/${id}`)
+      // fetch(process.env.NEXT_PUBLIC_API_URL + `api/v1/products/${categorysplit}/${brand}/${id}`)
+      fetch(`https://pm.doctorphonez.co.uk/api/v1/products/${categorysplit}/${brand}/${id}`)
       .then(res => res.json())
       .then(data => {
         console.log(data.product.prodname)

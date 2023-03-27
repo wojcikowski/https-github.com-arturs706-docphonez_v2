@@ -19,7 +19,6 @@ export default function Page() {
 
 
     const handleClick = () => {
-        dispatch(setCurrentStep(1));
         router.push('/payment');
       };
     

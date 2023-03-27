@@ -16,10 +16,10 @@ services:
 
   pg-admin:
     image: dpage/pgadmin4:latest
-    restart: always
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - PGADMIN_LISTEN_PORT = 5050
     ports:
       - 5050:80
     networks:
@@ -29,7 +29,7 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
-    container_name: stripe-server
+    container_name: server
     restart: always
     ports:
       - 10000:10000
@@ -50,8 +50,22 @@ services:
       - SMTP_USERNAME=${SMTP_USERNAME}
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - DATABASE_URL_HOST=${DATABASE_URL_HOST}
-    depends_on:
-      - postgres
+
+
+  nextjs-app:
+    build: 
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: nextjs-app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - NEXT_PUBLIC_API_URL_RETURN=${NEXT_PUBLIC_API_URL_RETURN}
+    ports:
+      - 3000:3000
+    networks:
+      - app_network
+
 
 networks:
   app_network:
@@ -61,41 +75,3 @@ networks:
 volumes:
   data:
   stripe-data:
-
-
-
-  client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-    container_name: client
-    restart: always
-    ports:
-      - 3000:3000
-    volumes:
-      - .:/app
-      - /app/node_modules
-      - /app/.next/cache
-      - /app/.next/build-manifest.json
-      - /app/.next/prerender-manifest.json
-      - /app/.next/routes-manifest.json
-    networks:
-      - app_network
-    environment:
-      - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}
-      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
-      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
-      - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
-      - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
-      - RESET_PASSWORD_SECRET=${RESET_PASSWORD_SECRET}
-      - EMAIL_VERIFICATION_SECRET=${EMAIL_VERIFICATION_SECRET}
-      - SMTP_USERNAME=${SMTP_USERNAME}
-      - SMTP_PASSWORD=${SMTP_PASSWORD}
-      - DATABASE_URL_HOST=${DATABASE_URL_HOST}
-    depends_on:
-      - postgres
-      - server
-
-
-
-

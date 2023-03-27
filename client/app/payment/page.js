@@ -46,7 +46,7 @@ useEffect(() => {
     .then((res) => res.json())
     .then((data) => {
         if (data.err === "jwt must be provided") {
-            router.push('/login')
+            router.push('/account/login')
         } else {
             const { email, exp, role } = jwt_decode(data.accessToken)
             dispatch(setProfile(data.accessToken))
