@@ -40,8 +40,8 @@ export default function Page() {
       alert('Passwords do not match')
     } else {
       try {
-          // const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + 'api/v1/login', {
-          const response = await axios.post("https://pm.doctorphonez.co.uk/api/v1/login", {
+          const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + 'api/v1/login', {
+          // const response = await axios.post("https://pm.doctorphonez.co.uk/api/v1/login", {
           email: email,
           passwd: passwd
         }, {
@@ -58,7 +58,7 @@ export default function Page() {
           const isExpired = (exp * 1000) < new Date().getTime()
           dispatch(setTokenExp(isExpired))
 
-          router.push('/products')
+          router.push('/')
         }
       } catch (error) {
         if (error && error.response && error.response.data && error.response.data.message === "Please verify your email address") {
@@ -67,6 +67,7 @@ export default function Page() {
           setUserPasswd(passwd)
 
         } else {
+          console.log(error)
           if (error.message === "Request failed with status code 401") {
             setErrorMessage("Incorrect email or password")
             setShowButton(false)
@@ -83,8 +84,8 @@ export default function Page() {
 
   const handleresendemail = async () => {
     try {
-        // const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + '/api/v1/resendemail', {
-        const response = await axios.post("https://pm.doctorphonez.co.uk/api/v1/resendemail", {
+        const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + '/api/v1/resendemail', {
+        // const response = await axios.post("https://pm.doctorphonez.co.uk/api/v1/resendemail", {
         email: userEmail,
         passwd: userPasswd
       }, {

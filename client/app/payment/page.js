@@ -35,8 +35,8 @@ export default function Page() {
     }, [cart])
 
 useEffect(() => {
-    // fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/refresh_token', {
-    fetch("https://pm.doctorphonez.co.uk/api/v1/refresh_token", {
+    fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/refresh_token', {
+    // fetch("https://pm.doctorphonez.co.uk/api/v1/refresh_token", {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -54,8 +54,8 @@ useEffect(() => {
             dispatch(setUserRole(role))
             const isExpired = (exp * 1000) < new Date().getTime()
             dispatch(setTokenExp(isExpired))
-            // fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/profile', {
-            fetch("https://pm.doctorphonez.co.uk/api/v1/profile", {
+            fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/profile', {
+            // fetch("https://pm.doctorphonez.co.uk/api/v1/profile", {
                 method: "GET",
                 headers: { "Content-Type": "application/json", "Authorization": `Bearer ${data.accessToken}` },
             })

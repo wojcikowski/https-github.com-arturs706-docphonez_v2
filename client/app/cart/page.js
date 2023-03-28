@@ -5,8 +5,9 @@ import { useState, useEffect } from 'react'
 import { removeFromCart, incrementQuantity, decrementQuantity } from '../../redux/reducers/cartSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import Image from 'next/image'
-import refreshToken from '../../checkCr';
 import { useRouter } from 'next/navigation';
+import jwt_decode from 'jwt-decode';
+import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../redux/reducers/profileSlice'
 
 
 export default function Page() {
@@ -16,19 +17,48 @@ export default function Page() {
     const [message, setMessage] = useState('')
     const dispatch = useDispatch()
     const router = useRouter()
-
+    const [user, setUser] = useState({
+        fullname: "",
+        email: "",
+        mob_phone: ""});
 
     const handleClick = () => {
         router.push('/payment');
       };
     
 
-    useEffect(() => {
-        async function checkRefreshToken() {
-          await refreshToken(dispatch);
+      useEffect(() => {
+        fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/refresh_token', {
+        // fetch("https://pm.doctorphonez.co.uk/api/v1/refresh_token", {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
         }
-        checkRefreshToken();
-      }, [dispatch]);
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.err === "jwt must be provided") {
+                router.push('/account/login')
+            } else {
+                const { email, exp, role } = jwt_decode(data.accessToken)
+                dispatch(setProfile(data.accessToken))
+                dispatch(setEmailAdd(email))
+                dispatch(setUserRole(role))
+                const isExpired = (exp * 1000) < new Date().getTime()
+                dispatch(setTokenExp(isExpired))
+                fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/profile', {
+                // fetch("https://pm.doctorphonez.co.uk/api/v1/profile", {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${data.accessToken}` },
+                })
+                .then((res) => res.json())
+                .then((userdata) => {
+                    setUser(userdata.data)
+                })
+            }
+        })
+    }, [dispatch, router]);
 
       //create a function that returns user back to the previous page when they click on the back button
         const handleBack = () => {
@@ -36,11 +66,11 @@ export default function Page() {
         }
 
     //create a function that returns no items in the cart when the cart is empty
-    useEffect(() => {
-        if (cart.length === 0) {
-            setMessage('No items in cart')
-        }
-    }, [cart])
+        useEffect(() => {
+            if (cart.length === 0) {
+                setMessage('No items in cart')
+            }
+        }, [cart])
 
 
 

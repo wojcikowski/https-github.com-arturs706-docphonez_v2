@@ -7,7 +7,6 @@ import Image from 'next/image'
 import Dots from './dots'
 import CarouselControls from './carouselcontrol'
 import Loader from './Loader';
-import { fetchProducts } from '@/redux/reducers/productSlice';
 
 export default function Sectionone(props) {
   const [itemKey, setItemKey] = useState('01')
@@ -23,10 +22,6 @@ export default function Sectionone(props) {
   useEffect(() => {
     setDomLoaded(true);
   }, []);
-
-  const handleImageEnter = () => {
-    dispatch(fetchProducts());
-  };
 
   const handleClick = () => {
     sectionOneRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -61,12 +56,14 @@ export default function Sectionone(props) {
     checkFormatedTextg();
   }, [checkFormatedTextg]);
 
-  const checktheWidth = () => {
-    setReadWidth(window.innerWidth)
-  }
+
 
   const canScrollNext = !!emblaApi?.canScrollNext();
   const canScrollPrev = !!emblaApi?.canScrollPrev();
+
+  const checktheWidth = () => {
+    setReadWidth(window.innerWidth)
+  }
 
   useEffect(() => {
     checktheWidth()
@@ -134,7 +131,7 @@ export default function Sectionone(props) {
     <>
     {
       domLoaded && (
-        <div className={styles.wraptwosection} >
+        <div className={styles.wraptwosection}>
         <div className={styles.sectionone}>
           <div className={styles.divone}>
             <div className={styles.maindivh1}>
@@ -162,7 +159,7 @@ export default function Sectionone(props) {
               height={37}
               onClick={() => emblaApi?.scrollNext()}
               priority={true}
-              onMouseEnter={handleImageEnter}
+    
             />
             <div className={styles.embla} ref={emblaRef}>
               <div className={`embla__container ${styles.emblacontainer}`}>

@@ -136,7 +136,28 @@
 
 @media screen and (max-width: 450px) {
   .pagedyn {
-    width: 25rem;
+    width: 23rem;
+    min-width: 300px;
+      
+  }
+  .pagedyn img{
+    padding-right: 1rem;
+    margin-left: 0rem;
+  }
+  .phoneprice {
+    padding-left: 1rem;
+  }
+  
+}
+@media screen and (max-width: 428px) {
+  .pagedyn {
+    width: 22.3rem;
+    padding-top: 0rem;
+    height: 160vh;
+
+  }
+  .pagemaindyn {
+    height: 173vh;
   }
 }
 

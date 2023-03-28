@@ -475,7 +475,28 @@
       font-size: 1.3rem;
     }
   }
-  
+
+  @media screen and (max-width: 428px) {
+    .maindivh1 {
+      line-height: 1;
+      text-align: center;
+      font-size: 1.2rem;
+      line-height: 1.8;
+      padding-top: 6rem;
+    }
+    .maindivh1 h3{
+      color: #ffffff65;
+      font-size: 1.2rem;
+    }
+    .divone {
+      width: 25rem;
+  }
+  .divthree {
+    width: 23.8rem;
+    font-size: 0.8rem;        
+}
+  }
+
   
   
   @media (pointer: coarse) and (min-width: 768px) and (max-height: 1024px) and (orientation: landscape) {

@@ -36,6 +36,7 @@ export default function Page() {
       alert('Passwords or emails do not match')
     } else {
         fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/register' , {
+        // fetch("https://pm.doctorphonez.co.uk/api/v1/register" , {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

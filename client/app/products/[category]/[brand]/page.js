@@ -22,8 +22,8 @@ export default function Home() {
 
   useEffect(() => {
     setLoading(true)
-      // fetch(process.env.NEXT_PUBLIC_API_URL + `api/v1/products/${categorysplit}/${brand}`)
-      fetch("https://pm.doctorphonez.co.uk/api/v1/products/" + categorysplit + "/" + brand)
+      fetch(process.env.NEXT_PUBLIC_API_URL + `api/v1/products/${categorysplit}/${brand}`)
+      // fetch("https://pm.doctorphonez.co.uk/api/v1/products/" + categorysplit + "/" + brand)
       .then(res => res.json())
       .then(data => {
         console.log(data)

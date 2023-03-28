@@ -27,8 +27,8 @@ export default function Home() {
   const id = category.split("/")[4]
   useEffect(() => {
     setLoading(true)
-      // fetch(process.env.NEXT_PUBLIC_API_URL + `api/v1/products/${categorysplit}/${brand}/${id}`)
-      fetch(`https://pm.doctorphonez.co.uk/api/v1/products/${categorysplit}/${brand}/${id}`)
+      fetch(process.env.NEXT_PUBLIC_API_URL + `api/v1/products/${categorysplit}/${brand}/${id}`)
+      // fetch(`https://pm.doctorphonez.co.uk/api/v1/products/${categorysplit}/${brand}/${id}`)
       .then(res => res.json())
       .then(data => {
         console.log(data.product.prodname)
@@ -62,12 +62,18 @@ export default function Home() {
             <span>{dataretrvieved.product.proddescr}</span>
             <div className={styles.descripttwo}>            
               <h2>{dataretrvieved.product.memory}</h2>
-              <h2>{dataretrvieved.product.color}</h2>
+              <Image 
+                src={`https://res.cloudinary.com/dyvgcv5se/image/upload/v1679991563/etc/${dataretrvieved.product.color}active.svg`}
+                alt="Main image"
+                width={32}
+                height={31}
+              />
+
             </div>
             <h3>{dataretrvieved.product.prodname}</h3>
 
             <h2 className={styles.hiddh2}>{dataretrvieved.product.proddescr}</h2>
-            <div className={styles.actionbutton} onClick={() => dispatch(addToCart(dataretrvieved.product), console.log(dataretrvieved.product.prodname))}>
+            <div className={styles.actionbutton} onClick={() => dispatch(addToCart(dataretrvieved.product))}>
               Add to cart
             </div>
           </div>

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import jwt_decode from 'jwt-decode';
-import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../redux/reducers/profileSlice'
+import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../../redux/reducers/profileSlice'
 import Link from 'next/link';
 
 
@@ -72,7 +72,7 @@ export default function Page() {
         <Link href="/account">
           <div className={styles.divwrap}>
             <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1679950884/etc/homeicon_xfx8h8.svg" alt="icon" width={30} height={30} />
-            <h5 className={styles.activeh5}>General</h5>
+            <h5 className={styles.inactiveh5}>General</h5>
           </div>
         </Link>
         <Link href="/account/orders">
@@ -90,7 +90,7 @@ export default function Page() {
         <Link href="/account/deliveries">
           <div className={styles.divwrap}>
             <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1679950827/etc/deliveries_zzqyjk.svg"alt="icon" width={30} height={30} />
-            <h5 className={styles.inactiveh5}>Delivery Addresses</h5>
+            <h5 className={styles.activeh5}>Delivery Addresses</h5>
           </div>
         </Link>
         <Link href="/account/settings">
@@ -101,13 +101,6 @@ export default function Page() {
         </Link>
       </div>
       <div className={styles.divright}>
-        <h1>Welcome {user.fullname}</h1>
-        <h2>Account Page</h2>
-        <br />
-        <div className={styles.messagerightdiv}>Hey! This is where you can check out all your old orders, tell us what kind of emails you want to receive, and update your account deets to make checkout a breeze.</div>
-        <br/>
-        <div></div>
-        {/* {width} */}
       </div>
     </div>
   );

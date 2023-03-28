@@ -65,6 +65,7 @@ import { useDispatch } from 'react-redux';
     
       const handleSubmit = async (e) => {
         e.preventDefault();
+        
     
         if (!stripe || !elements) {
           // Stripe.js has not yet loaded.
@@ -77,12 +78,12 @@ import { useDispatch } from 'react-redux';
         const { error } = await stripe.confirmPayment({
           elements,
           confirmParams: {
-            // return_url: process.env.NEXT_PUBLIC_API_URL + `payment/success/`
-            return_url: "https://doctorphonez.co.uk/payment/success/"
-
+            return_url: process.env.NEXT_PUBLIC_API_URL_INTERNAL + `payment/success/`
+            // return_url: "http://localhost:3000/payment/success/"
           },
           
         });
+        
 
 
         if (error.type === "card_error" || error.type === "validation_error") {

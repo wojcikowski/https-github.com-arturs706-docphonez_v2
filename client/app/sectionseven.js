@@ -10,8 +10,8 @@ import Autoplay from 'embla-carousel-autoplay'
 
 
 async function getSamsungItems() {
-    // return await (await fetch (process.env.NEXT_PUBLIC_API_URL + `api/v1/products/mobilephones/samsung`)).json();
-    return await (await fetch ("https://pm.doctorphonez.co.uk/api/v1/products/mobilephones/samsung")).json();
+    return await (await fetch (process.env.NEXT_PUBLIC_API_URL + `api/v1/products/mobilephones/samsung`)).json();
+    // return await (await fetch ("https://pm.doctorphonez.co.uk/api/v1/products/mobilephones/samsung")).json();
   }
 
   

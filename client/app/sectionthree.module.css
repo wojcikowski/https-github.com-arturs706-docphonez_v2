@@ -144,5 +144,24 @@
       margin-left: 3rem;
       margin-bottom: 15rem;
     }
+  }
+
+  @media screen and (max-width: 428px) {
+    .sectionthreediv {
+      flex-wrap: wrap;
+      margin-top: 15rem;
+    }
+
+    .glassmorphdiv {
+      width : 22rem;
+      height : 27rem;
+      margin-right: 0rem;
+      margin-left: 0rem;
+      margin-bottom: 15rem;
+      min-width: 300px; 
+      margin-left: 1rem;
+    }
+  
+   
   
     }

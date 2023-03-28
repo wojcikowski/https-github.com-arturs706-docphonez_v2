@@ -30,10 +30,17 @@ export const profileSlice = createSlice({
         },
         setUserId: (state, action) => {
             state.userid = action.payload;
-        }   
+        },
+        clearProfile: (state) => {
+            state.token = null;
+            state.email = null;
+            state.role = null;
+            state.tokenExp = null;
+            state.userid = null;
+        },
     }
 });
 
-export const { setProfile, setEmailAdd, setUserRole, setTokenExp, setUserId } = profileSlice.actions;
+export const { setProfile, setEmailAdd, setUserRole, setTokenExp, setUserId, clearProfile } = profileSlice.actions;
 
 export default profileSlice.reducer;

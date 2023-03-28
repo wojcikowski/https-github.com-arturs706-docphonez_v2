@@ -116,14 +116,6 @@ color: var(--main-font-color);
   height: 90%;
   }
   
-  .divright h1 {
-    font-size: 2.4rem;
-    font-weight: 600;
-    padding: 1.2rem;
-    color: var(--main-font-color);
-    text-align: center;
-  }
-  
   .profileH {
     font-size: 1.6rem;
     font-weight: 600;
@@ -148,6 +140,10 @@ color: var(--main-font-color);
     width: 9.9rem;
     margin-top: 0.1rem;
   }}
+  .logout {
+      position: relative;
+      z-index: 4;
+  }
 
   @media screen and (max-width: 950px) {
     .divwrap {
@@ -165,52 +161,51 @@ color: var(--main-font-color);
       width: 88%;
       }
   }
-  @media screen and (max-width: 810px) {
-    .divwrap {
-      width: 8.5rem;
-    }
-    .divleft {
-      width: 86%;
-      }
-  }
 
-  @media screen and (max-width: 695px) {
-    .divwrap {
-      width: 8.2rem;
-    }
-    .divleft {
-      width: 84%;
-      }
-  }
-
-  @media screen and (max-width: 645px) {
-    .divwrap h5{
-      display: none;
-    }
-    .divleft {
-      width: 82%;
-      }
-    .messagerightdiv{
-      display: none;
-    }
-    .divright h2 {
-      text-align: center;
-    }
-  }
-
-  @media screen and (max-width: 428px) {
-    .divleft {
-      width: 88%;
-      margin-top: 1rem;
-      margin-left: 1.3rem;
-      position: relative;
-      z-index: 4;
-      }
+    @media screen and (max-width: 810px) {
       .divwrap {
-        width: 3rem;
+        width: 8.5rem;
       }
-      .divwrap img {
-        margin: 1rem;
+      .divleft {
+        width: 86%;
+        }
+    }
+  
+    @media screen and (max-width: 695px) {
+      .divwrap {
+        width: 8.2rem;
       }
-  }
-
+      .divleft {
+        width: 84%;
+        }
+    }
+  
+    @media screen and (max-width: 645px) {
+      .divwrap h5{
+        display: none;
+      }
+      .divleft {
+        width: 82%;
+        }
+      .messagerightdiv{
+        display: none;
+      }
+    }
+  
+    @media screen and (max-width: 428px) {
+      .divleft {
+        width: 88%;
+        margin-top: 1rem;
+        margin-left: 1.3rem;
+        position: relative;
+        z-index: 4;
+        }
+        .divwrap {
+          width: 3rem;
+        }
+        .divwrap img {
+          margin: 1rem;
+        }
+    }
+  
+  

@@ -11,9 +11,20 @@
   
 }
 
+/* #submit {
+    padding: 0.92rem;
+    margin-top: 59%;
+    width: 30rem;
+    border: none;
+    border-radius: 0.4rem;
+    background: linear-gradient(to bottom right, #66F6FF, #143DA9);
+    color: var(--main-font-color);
+    cursor: pointer;
+} */
 #submit {
     padding: 0.92rem;
-    margin-top: 17.75rem;
+    position: absolute;
+    top: 45.1rem;
     width: 30rem;
     border: none;
     border-radius: 0.4rem;
@@ -22,10 +33,12 @@
     cursor: pointer;
 }
 
+
 @media screen and (max-width: 1110px) {
   #submit {
     width: 25rem;
-    margin-top: 12.85rem;
+    top: 45.1rem;
+
 
   }
 }
@@ -34,6 +47,8 @@
   #submit {
     width: 30rem;
     margin-top: 5rem;
+    position: relative;
+    top: 0rem;
 
   }
 }

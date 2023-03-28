@@ -25,8 +25,8 @@ export default function Home() {
 
   useEffect(() => {
     setLoading(true)
-      // fetch(process.env.NEXT_PUBLIC_API_URL + `api/v1/products/${categorysplit}`)
-      fetch("https://pm.doctorphonez.co.uk/api/v1/products/" + categorysplit)
+      fetch(process.env.NEXT_PUBLIC_API_URL + `api/v1/products/${categorysplit}`)
+      // fetch("https://pm.doctorphonez.co.uk/api/v1/products/" + categorysplit)
       .then(res => res.json())
       .then(data => {
         console.log(data)
@@ -45,7 +45,4 @@ export default function Home() {
       <div className={styles.pagemaindyn}>
         <h1>Category</h1>
       </div>
-
-    )
-  }
-}
+    )}}

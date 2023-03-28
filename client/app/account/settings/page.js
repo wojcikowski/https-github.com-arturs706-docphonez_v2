@@ -6,19 +6,24 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import jwt_decode from 'jwt-decode';
-import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../redux/reducers/profileSlice'
+import { setProfile, setEmailAdd, setUserRole, setTokenExp, clearProfile } from '../../../redux/reducers/profileSlice'
 import Link from 'next/link';
+import { clearCart } from '../../../redux/reducers/cartSlice';
+
 
 
 
 export default function Page() {
-  const dispatch = useDispatch()
-  const router = useRouter()
-  const [user, setUser] = useState({
-    fullname: "",
-    email: "",
-    mob_phone: ""});
-  const [width, setWidth] = useState(0);
+    const dispatch = useDispatch()
+    const router = useRouter()
+    const [profileToken, setProfileToken] = useState('');
+    const [emailAdd, setEmailAdd] = useState('');
+    const [userRole, setUserRole] = useState('');
+    const [tokenExp, setTokenExp] = useState(false);
+    const [user, setUser] = useState({
+        fullname: "",
+        email: "",
+        mob_phone: ""});
 
   useEffect(() => {
     fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/refresh_token', {
@@ -34,12 +39,8 @@ export default function Page() {
         if (data.err === "jwt must be provided") {
             router.push('/account/login')
         } else {
-            const { email, exp, role } = jwt_decode(data.accessToken)
-            dispatch(setProfile(data.accessToken))
-            dispatch(setEmailAdd(email))
-            dispatch(setUserRole(role))
+            const { token, email, exp, role } = jwt_decode(data.accessToken)
             const isExpired = (exp * 1000) < new Date().getTime()
-            dispatch(setTokenExp(isExpired))
             fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/profile', {
             // fetch("https://pm.doctorphonez.co.uk/api/v1/profile", {
                 method: "GET",
@@ -48,20 +49,34 @@ export default function Page() {
             .then((res) => res.json())
             .then((userdata) => {
                 setUser(userdata.data)
+                setProfileToken(token)
+                dispatch(setProfile(data.accessToken))
             })
-        }
-    })
-  }, [dispatch, router]);
 
-    // create a function to get the width of the window
-    useEffect(() => {
-      function handleResize() {
-        setWidth(window.innerWidth);
-      }
-      window.addEventListener("resize", handleResize);
-      handleResize();
-      return () => window.removeEventListener("resize", handleResize);
-    }, []);
+        }
+        
+    })
+}, [dispatch, router]);
+
+
+
+    const logout = () => {
+        fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/logout', {
+        // fetch("https://pm.doctorphonez.co.uk/api/v1/logout", {
+            method: "DELETE",
+            credentials: 'include',
+            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${profileToken}` },
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.message === "Logged out successfully") {
+                dispatch(clearProfile())
+                dispatch(clearCart())
+                router.push('/')
+            }
+        })
+    }
+
 
   return (
     <div className={styles.main}>
@@ -72,7 +87,7 @@ export default function Page() {
         <Link href="/account">
           <div className={styles.divwrap}>
             <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1679950884/etc/homeicon_xfx8h8.svg" alt="icon" width={30} height={30} />
-            <h5 className={styles.activeh5}>General</h5>
+            <h5 className={styles.inactiveh5}>General</h5>
           </div>
         </Link>
         <Link href="/account/orders">
@@ -96,18 +111,13 @@ export default function Page() {
         <Link href="/account/settings">
           <div className={styles.divwrap}>
             <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1679950789/etc/account_isgany.svg" alt="icon" width={30} height={30} />
-            <h5 className={styles.inactiveh5}>Account details</h5>
+            <h5 className={styles.activeh5}>Account details</h5>
           </div>
         </Link>
       </div>
       <div className={styles.divright}>
-        <h1>Welcome {user.fullname}</h1>
-        <h2>Account Page</h2>
-        <br />
-        <div className={styles.messagerightdiv}>Hey! This is where you can check out all your old orders, tell us what kind of emails you want to receive, and update your account deets to make checkout a breeze.</div>
-        <br/>
-        <div></div>
-        {/* {width} */}
+        <div className={styles.logout}>Logout</div>
+        <button className={styles.logout} onClick={logout}>x</button>
       </div>
     </div>
   );

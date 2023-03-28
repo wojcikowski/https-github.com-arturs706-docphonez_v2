@@ -32,8 +32,8 @@ export const { fetchProductsStart, fetchProductsSuccess, fetchProductsFailure } 
 export const fetchProducts = () => async (dispatch) => {
     try {
       dispatch(fetchProductsStart());
-    //   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/products');
-      const response = await fetch("https://pm.doctorphonez.co.uk/api/v1/products");
+      const response = await fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/products');
+    //   const response = await fetch("https://pm.doctorphonez.co.uk/api/v1/products");
 
       const data = await response.json();
       dispatch(fetchProductsSuccess(data.products));
