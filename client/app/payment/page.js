@@ -63,7 +63,14 @@ useEffect(() => {
                 .then((data) => {
                     if (data.status === "success") {
                         const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-                        fetch("https://pm.doctorphonez.co.uk/api/v1/create-payment-intent", {
+                        const addtometadata = cart.map((item) => {
+                            return {
+                                modelnr: item.modelnr,
+                                quantity: item.quantity,
+                            }
+                        })
+                        // fetch("https://pm.doctorphonez.co.uk/api/v1/create-payment-intent", {
+                        fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/create-payment-intent', {
                             
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
@@ -71,7 +78,8 @@ useEffect(() => {
                             amount: total,
                             email: data.data.email,
                             fullname: data.data.fullname,
-                            phone: data.data.mob_phone
+                            phone: data.data.mob_phone,
+                            addtometadata: JSON.stringify(addtometadata)
                         }),
                         })
                         .then((res) => res.json())
@@ -121,6 +129,8 @@ useEffect(() => {
                 quantity: item.quantity,
                 price: item.price,
                 productimage: item.imagetwo,
+                productid: item.productid,
+                usid: data.data.usid
             }
         })
         const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);

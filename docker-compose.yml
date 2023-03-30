@@ -25,31 +25,40 @@ services:
     networks:
       - app_network
 
-  server:
-    build:
-      context: ./server
-      dockerfile: Dockerfile
-    container_name: server
-    restart: always
-    ports:
-      - 10000:10000
-    volumes:
-      - stripe-data:/usr/src/server/data
-      - ./server:/usr/src/server
-      - /usr/src/server/node_modules
-    networks:
-      - app_network
-    environment:
-      - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}
-      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
-      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
-      - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
-      - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
-      - RESET_PASSWORD_SECRET=${RESET_PASSWORD_SECRET}
-      - EMAIL_VERIFICATION_SECRET=${EMAIL_VERIFICATION_SECRET}
-      - SMTP_USERNAME=${SMTP_USERNAME}
-      - SMTP_PASSWORD=${SMTP_PASSWORD}
-      - DATABASE_URL_HOST=${DATABASE_URL_HOST}
+networks:
+  app_network:
+    driver: bridge
+    
+
+volumes:
+  data:
+  stripe-data:
+
+  # server:
+  #   build:
+  #     context: ./server
+  #     dockerfile: Dockerfile
+  #   container_name: server
+  #   restart: always
+  #   ports:
+  #     - 10000:10000
+  #   volumes:
+  #     - stripe-data:/usr/src/server/data
+  #     - ./server:/usr/src/server
+  #     - /usr/src/server/node_modules
+  #   networks:
+  #     - app_network
+  #   environment:
+  #     - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}
+  #     - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+  #     - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+  #     - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
+  #     - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
+  #     - RESET_PASSWORD_SECRET=${RESET_PASSWORD_SECRET}
+  #     - EMAIL_VERIFICATION_SECRET=${EMAIL_VERIFICATION_SECRET}
+  #     - SMTP_USERNAME=${SMTP_USERNAME}
+  #     - SMTP_PASSWORD=${SMTP_PASSWORD}
+  #     - DATABASE_URL_HOST=${DATABASE_URL_HOST}
 
 
   # nextjs-app:
@@ -67,11 +76,3 @@ services:
   #     - app_network
 
 
-networks:
-  app_network:
-    driver: bridge
-    
-
-volumes:
-  data:
-  stripe-data:

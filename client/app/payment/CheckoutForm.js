@@ -32,10 +32,12 @@ import { useDispatch } from 'react-redux';
         setTotal(total)
     }, [cart])
 
+
     useEffect(() => {
         if (!stripe) {
           return;
         }
+        
     
         const clientSecret = new URLSearchParams(window.location.search).get(
           "payment_intent_client_secret"
