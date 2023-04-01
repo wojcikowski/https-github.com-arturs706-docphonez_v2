@@ -79,6 +79,7 @@ useEffect(() => {
                             email: data.data.email,
                             fullname: data.data.fullname,
                             phone: data.data.mob_phone,
+                            usid: data.data.usid,
                             addtometadata: JSON.stringify(addtometadata)
                         }),
                         })
@@ -129,8 +130,7 @@ useEffect(() => {
                 quantity: item.quantity,
                 price: item.price,
                 productimage: item.imagetwo,
-                productid: item.productid,
-                usid: data.data.usid
+                productid: item.productid
             }
         })
         const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);

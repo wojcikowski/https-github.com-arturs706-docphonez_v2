@@ -63,6 +63,10 @@ export default function Page() {
       return () => window.removeEventListener("resize", handleResize);
     }, []);
 
+
+
+
+    
   return (
     <div className={styles.main}>
       <div className={styles.ovalblur}></div>
@@ -102,12 +106,40 @@ export default function Page() {
       </div>
       <div className={styles.divright}>
         <h1>Welcome {user.fullname}</h1>
-        <h2>Account Page</h2>
+        <br />
+        <br />
+         <h2>Account Page</h2>
         <br />
         <div className={styles.messagerightdiv}>Hey! This is where you can check out all your old orders, tell us what kind of emails you want to receive, and update your account deets to make checkout a breeze.</div>
-        <br/>
-        <div></div>
-        {/* {width} */}
+
+        <div className={styles.divwrpp}>
+          <Link href="/account/orders" className={styles.divobj}>
+          <div>
+            <div className={styles.headline}>Your orders</div>
+            <div className={styles.messagerightdivh2}>Check out your order history, track your deliveries, and more.</div>
+          </div>
+          </Link>
+          <Link href="/account/deliveries" className={styles.divobj}>
+          <div>
+            <div className={styles.headline}>Delivery addresses</div>
+            <div className={styles.messagerightdivh2}>Take a look at and make changes to the delivery addresses you have chosen as your favorites.</div>
+            </div>
+          </Link>
+          <Link href="/account/favourites" className={styles.divobj}>
+          <div>
+            <div className={styles.headline}>Your favourites</div>
+            <div className={styles.messagerightdivh2}>Take a moment to revisit the delightful items you have kept aside for future consideration.</div>
+          </div>
+          </Link>
+          <Link href="/account/settings" className={styles.divobj}>
+          <div>
+            <div className={styles.headline}>Your details</div>
+            <div className={styles.messagerightdivh2}>Make modifications or adjustments to the personal details associated with your account.</div>
+          </div>
+          </Link>
+
+        </div>
+
       </div>
     </div>
   );

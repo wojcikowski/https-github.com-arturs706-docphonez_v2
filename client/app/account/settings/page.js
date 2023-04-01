@@ -116,6 +116,8 @@ export default function Page() {
         </Link>
       </div>
       <div className={styles.divright}>
+        <h1>Account Settings</h1>
+
         <div className={styles.logout}>Logout</div>
         <button className={styles.logout} onClick={logout}>x</button>
       </div>

@@ -101,6 +101,8 @@ export default function Page() {
         </Link>
       </div>
       <div className={styles.divright}>
+        <h1>Deliveries</h1>
+
       </div>
     </div>
   );

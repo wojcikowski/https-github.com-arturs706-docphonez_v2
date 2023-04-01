@@ -19,6 +19,26 @@ export default function Page() {
     email: "",
     mob_phone: ""});
   const [width, setWidth] = useState(0);
+  const [currentorders, setCurrentOrders] = useState([]);
+  const [pastorders, setPastOrders] = useState([]);
+
+
+  function formatDateTime(dateStr) {
+    const dateObj = new Date(dateStr);
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const month = monthNames[dateObj.getUTCMonth()];
+    const day = dateObj.getUTCDate();
+    const year = dateObj.getUTCFullYear();
+  
+    return `${month} ${day}, ${year}`;
+  }
+
+  function addDays(dateStr, numDays) {
+    const dateObj = new Date(dateStr);
+    dateObj.setUTCDate(dateObj.getUTCDate() + numDays);
+    return dateObj.toISOString();
+  }
 
   useEffect(() => {
     fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/refresh_token', {
@@ -47,11 +67,34 @@ export default function Page() {
             })
             .then((res) => res.json())
             .then((userdata) => {
-                setUser(userdata.data)
+              setUser(userdata.data)
+              fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/orders', {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${data.accessToken}`
+                }
+              })
+              .then((res) => res.json())
+              .then((data) => {
+                const current = []
+                const past = []
+                data.orders.forEach((order) => {
+                  if (order.delivered === true) {
+                    current.push(order)
+                  } else {
+                    past.push(order)
+                  }
+                })
+                setCurrentOrders(current)
+                setPastOrders(past)
+              
+              })
             })
-        }
-    })
-}, [dispatch, router]);
+        }})
+  }, [])
+
+
 
     // create a function to get the width of the window
     useEffect(() => {
@@ -63,6 +106,7 @@ export default function Page() {
       return () => window.removeEventListener("resize", handleResize);
     }, []);
 
+    console.log(currentorders)
   return (
     <div className={styles.main}>
       <div className={styles.ovalblur}></div>
@@ -100,6 +144,56 @@ export default function Page() {
         </Link>
       </div>
       <div className={styles.divright}>
+      <h1>Order List</h1>
+        <br />
+        <br />
+         <h2>Order Page</h2>
+        <br />
+        <div className={styles.messagerightdiv}>Hey! This is where you can check out all your old orders, tell us what kind of emails you want to receive, and update your account deets to make checkout a breeze.</div>
+        <div>Current Orders</div>
+        {pastorders.map((order) => {
+          return (
+            <div key={order.orderid} className={styles.wrappper}>
+              <div className={styles.wrappdiivvv}>
+                <div className={styles.orderidstyles}>
+                <div className={styles.orderidstylesone}><h2>Order ID:</h2><div>{order.orderid}</div></div>
+                  <div className={styles.orderidstylesinvtrack}>
+                    <div className={styles.invoice}>Invoice</div>
+                    <div className={styles.invoicebtn}>Track Order</div>
+                  </div>
+                </div>
+                <div className={styles.orderdates}>
+                  <div className={styles.dateorders}>
+                  <div>Order Date: {formatDateTime(order.orderdate)}</div>
+                  <div className={styles.barru}>|</div>
+                  <div>Estimate delivery: {formatDateTime(addDays(order.orderdate, 5))}</div>
+                </div>
+          
+              </div>
+
+              </div>
+
+
+
+              {order.items.map((item) => {
+                return (
+                  <div key={item.orderitemid}>
+                    <div>
+                      
+                    </div>
+                    <div >
+                      <div>{item.productname}</div>
+                      <div>£{item.price}</div>
+                      <div>Quantity: {item.quantity}</div>
+                    </div>
+                  </div>
+                )
+              })}
+              <div>Order Total: £{order.totalcost}</div>
+              <div>Order Status: {order.delivered ? "Delivered" : "Not Delivered"}</div>
+            </div>
+          )
+        })}
       </div>
     </div>
   );
