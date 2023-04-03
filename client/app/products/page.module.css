@@ -1,235 +1,243 @@
 .pagemain {
-  width: 100%;
-  height: 100vh;
-  background-color: #000235;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  color: white;
-}
-
-  .searchdiv {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
     width: 100%;
-    height: 10%;
-    margin: 0rem 1.6rem;
-  }
-
-  .searchwrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--main-color);
-    z-index: 1;
-  }
-  .searchdivrel {
-    width: 85%;
-    height: 10%;
-    margin-top: 6rem;
-    margin-left: 1.3rem;
-    border-radius: 8px;
-    text-align: center;
-    font-size: 1.5rem;
-  }
-  .popupwindow {
-
-    width: 100%;
-    height: 80%;
-    background-color: var(--main-color);
-    z-index: 1;
-    overflow: auto;
-    margin-top: 8.5rem;
-    padding: 0rem 2.2rem 0rem 1.5rem;
-  }
-
-  .searchsdiv {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 2.5rem;
-    
-  }
-  .text {
-    width: 50%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 0.7rem;
-    color: var(--main-font-color);
-  }
-  .texttwo {
-    width: 20%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 0.9rem;
-    color: var(--main-font-color);
-  }
-
-  .searchdiv input {
-    width: 100%;
-    height: 2rem;
-    border-radius: 0.4rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border: none;
-  }
-  .searchinput {
-    background: url("../../public/searchdark.svg") no-repeat 6%;
-    background-size: 16px;
-    background-color: var(--main-font-color)
-  }
-
-  .ovalblur {
-    position: absolute;
-    width: 100%;
-    height: 90vh;
-    background: radial-gradient(ellipse at right, rgba(102, 246, 255) 15%, rgba(102, 246, 255,0.2) 15%, rgba(102, 246, 255,0) 100%);
-    filter: blur(100px);
-    z-index: 0;
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-  }
-
-
-  @media screen and (min-width: 564px) {
-    .searchdiv {
-      display: none;
-    }
-    .searchwrapper {
-      display: none;
-    }
-  }
-
-
-  .divlrgscreenwrap {
-    width: 100%;
-    height: 100%;
+    height: 100vh;
+    background-color: #000235;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     color: white;
-
-  }
-
-  .divleft {
-  min-width: 16.9rem;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  margin: 0rem 3.2rem;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  color: var(--main-font-faded);
   }
   
-.divright {
-  width: 80%;
-  height: 100vh;
-  margin-right: 3.2rem;
-  color: var(--main-font-color);
-
-}
-.topbar {
-  width: 100%;
-  height: 10%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-.righttopdiv {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.productdiv {
-  width: 100%;
-  height: 85%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 2.5rem;
-  color: var(--main-font-color);
-  display: flex;
-  flex-wrap: wrap;
-  position: relative;
-  z-index: 4;
-  overflow: auto;
-}
-.productsquare {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  color: var(--main-font-faded);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 31rem;
-  margin: 1rem 0rem;
-  min-height: 35rem;
-  justify-content: space-evenly;
-}
-.productsquare img{
-  filter: drop-shadow(12px 12px 29px #994ebc);
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-}
-.prodnamediv {
-  width: 50%;
-  color: var(--main-font-color);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  height: 6rem;
-}
-
-.prodpricediv {
-  color: var(--main-font-color);
-  position: relative;
-}
-
-.pagemain a {
-  text-decoration: none;
-  color: var(--main-font-color);
-}
-
-.actionbutton {
-  margin: 0 0.4rem;
-  border: 2px solid white;
-  padding: 0.5rem;
-  border-radius: 0.6rem;
-  cursor: pointer;
-}
+    .searchdiv {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 10%;
+      margin: 0rem 1.6rem;
+    }
+  
+    .searchwrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--main-color);
+      z-index: 1;
+    }
+    .searchdivrel {
+      width: 85%;
+      height: 10%;
+      margin-top: 6rem;
+      margin-left: 1.3rem;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    .popupwindow {
+  
+      width: 100%;
+      height: 80%;
+      background-color: var(--main-color);
+      z-index: 1;
+      overflow: auto;
+      margin-top: 8.5rem;
+      padding: 0rem 2.2rem 0rem 1.5rem;
+    }
+  
+    .searchsdiv {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2.5rem;
+      
+    }
+    .text {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--main-font-color);
+    }
+    .texttwo {
+      width: 20%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--main-font-color);
+    }
+  
+    .searchdiv input {
+      width: 100%;
+      height: 2rem;
+      border-radius: 0.4rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      border: none;
+    }
+    .searchinput {
+      background: url("../../public/searchdark.svg") no-repeat 6%;
+      background-size: 16px;
+      background-color: var(--main-font-color)
+    }
+  
+    .ovalblur {
+      position: absolute;
+      width: 100%;
+      height: 90vh;
+      background: radial-gradient(ellipse at right, rgba(102, 246, 255) 15%, rgba(102, 246, 255,0.2) 15%, rgba(102, 246, 255,0) 100%);
+      filter: blur(100px);
+      z-index: 0;
+      -webkit-backface-visibility: hidden;
+      -moz-backface-visibility: hidden;
+      -webkit-transform: translate3d(0, 0, 0);
+      -moz-transform: translate3d(0, 0, 0);
+    }
+  
+  
+    @media screen and (min-width: 564px) {
+      .searchdiv {
+        display: none;
+      }
+      .searchwrapper {
+        display: none;
+      }
+    }
+  
+  
+    .divlrgscreenwrap {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      color: white;
+  
+    }
+  
+    .divleft {
+    min-width: 16.9rem;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    margin: 0rem 3.2rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    color: var(--main-font-faded);
+    }
+    
+  .divright {
+    width: 80%;
+    height: 100vh;
+    margin-right: 3.2rem;
+    color: var(--main-font-color);
+  
+  }
+  .topbar {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .righttopdiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .productdiv {
+    width: 100%;
+    height: 85%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2.5rem;
+    color: var(--main-font-color);
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 4;
+    overflow: auto;
+  }
+  .productsquare {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    color: var(--main-font-faded);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 31rem;
+    margin: 1rem 0rem;
+    min-height: 35rem;
+    justify-content: space-evenly;
+  }
+  .productsquare img{
+    filter: drop-shadow(12px 12px 29px #994ebc);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+  }
+  .prodnamediv {
+    width: 50%;
+    color: var(--main-font-color);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 6rem;
+  }
+  
+  .prodpricediv {
+    color: var(--main-font-color);
+    position: relative;
+  }
+  
+  .pagemain a {
+    text-decoration: none;
+    color: var(--main-font-color);
+  }
+  
+  .actionbutton {
+    margin: 0 0.4rem;
+    border: 2px solid white;
+    padding: 0.5rem;
+    border-radius: 0.6rem;
+    cursor: pointer;
+  }
+  .h5heading {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--main-font-color);
+    text-align: center;
+    padding: 1rem 0rem;
+    border-bottom: 0.01px solid var(--main-font-color);
+  }

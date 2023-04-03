@@ -170,10 +170,7 @@ export default function Page() {
                 </div>
           
               </div>
-
               </div>
-
-
 
               {order.items.map((item) => {
                 return (
