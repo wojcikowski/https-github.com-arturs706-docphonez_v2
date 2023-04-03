@@ -31,22 +31,24 @@ router.get('/apple/featured', bodyParser.json(), async (req, res) => {
       }
 });
 
-const query_allproducts = `SELECT products.productid, products.prodname, products.proddescr, products.brand, products.category, 
-products.modelnr, products.availableqty, products.price, 
-productspecs.color, productspecs.productmodel, productspecs.memory, 
-productspecs.rating, productimages.imageone, productimages.imagetwo, 
-productimages.imagethree, productimages.imagefour
-FROM products
-INNER JOIN productspecs 
-ON products.modelnr  = productspecs.productmodel
-INNER JOIN productimages
-ON products.modelnr = productimages.productmodel
-ORDER BY random()
+const QUERY_ALL_PRODUCTS = `
+SELECT 
+  products.productid, products.prodname, products.proddescr, products.brand, 
+  products.category, products.modelnr, products.availableqty, products.price, 
+  productspecs.color, productspecs.productmodel, productspecs.memory, 
+  productspecs.rating, productimages.imageone, productimages.imagetwo, 
+  productimages.imagethree, productimages.imagefour
+FROM 
+  products
+INNER JOIN 
+  productspecs ON products.modelnr = productspecs.productmodel
+INNER JOIN 
+  productimages ON products.modelnr = productimages.productmodel
 `;
 
 router.get('/', bodyParser.json(), async (req, res) => {
     try {
-        const allproducts = await client.query(query_allproducts);
+        const allproducts = await client.query(QUERY_ALL_PRODUCTS);
         res.status(200).json({ products: allproducts.rows, "status": "success" });
     } catch (error) {
         console.error(error);
@@ -65,7 +67,6 @@ const query_category = `SELECT products.productid, products.prodname, products.p
     INNER JOIN productimages
     ON products.modelnr = productimages.productmodel
     where products.category = $1
-    ORDER BY random()
 `;
 
 router.get('/:category', bodyParser.json(), async (req, res) => {

@@ -3,7 +3,7 @@ POST http://localhost:10000/api/v1/login
 Content-Type: application/json
 
 {
-  "email": "aradionovs@yahoo.com",
+  "email": "21437262@student.uwl.ac.uk",
   "passwd": "1"
 }
 
@@ -21,6 +21,13 @@ Content-Type: application/json
 }
 
 
-###
-GET http://localhost:10000/api/v1/refresh_token
+### 
+GET http://localhost:10000/api/v1/orders
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjIxNDM3MjYyQHN0dWRlbnQudXdsLmFjLnVrIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjgwMzA1ODE0LCJleHAiOjE2ODAzMDY3MTR9.pKsayJ84NmCQKBT3jgt971EVGPyjOfQO-dxMuzjzVk0
+
+###
+GET http://localhost:10000/api/v1/products
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjIxNDM3MjYyQHN0dWRlbnQudXdsLmFjLnVrIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjgwMzA1ODE0LCJleHAiOjE2ODAzMDY3MTR9.pKsayJ84NmCQKBT3jgt971EVGPyjOfQO-dxMuzjzVk0
+

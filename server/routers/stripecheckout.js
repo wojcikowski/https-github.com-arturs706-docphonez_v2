@@ -4,6 +4,7 @@ const router = express.Router();
 const nodemailer = require('nodemailer');
 const Stripe = require('stripe');
 const client = require('../db/conn');
+const { session } = require('passport');
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2022-11-15',
@@ -123,8 +124,10 @@ try {
 // Handle the event
 switch (event.type) {
   case "charge.succeeded":
-    session = event.data.object;
-    console.log(session)
+  const session = event.data.object;
+  console.log(session.payment_method_details);
+
+  //check the data type of session.payment_intent
     const parseJSON = JSON.parse(session.metadata.orderdet)
     //create a new array to store the product names along with the quantities
     const products = [];
@@ -141,10 +144,24 @@ switch (event.type) {
         price: product.rows[0].price,
       });
     }
-
-    //save the order to the database session.payment_intent is the payment id from stripe
-    await client.query(`INSERT INTO userorders (orderid, userid, totalcost, orderdate) VALUES (''${session.payment_intent}', ${session.metadata.userid}', '${session.metadata.orderdet}', '${session.amount/100}', '${session.created}')`);    
-
+    
+    
+    //insert into the the userorders table the payment id, the user id and the total amount
+    if (session.payment_method_details.type === "card" && session.payment_method_details.card.wallet === null){
+    //convert session.payment_method_details.card.last4 to a string to be able to insert it into the database
+    const last4 = session.payment_method_details.card.last4.toString();
+    client.query(`insert into userorders VALUES ('${session.payment_intent}', '${session.metadata.customeremail}', '${session.amount/100}', '${session.receipt_url}', '${session.payment_method_details.card.brand}', '${last4}')`);
+    } else if (session.payment_method_details.type === "card" && session.payment_method_details.card.wallet !== null) {
+      const last4 = session.payment_method_details.card.last4.toString();
+      client.query(`insert into userorders VALUES ('${session.payment_intent}', '${session.metadata.customeremail}', '${session.amount/100}', '${session.receipt_url}', '${session.payment_method_details.card.wallet.type}', '${last4}')`);
+    }
+    else if (session.payment_method_details.type === "klarna") {
+      client.query(`insert into userorders VALUES ('${session.payment_intent}', '${session.metadata.customeremail}', '${session.amount/100}', '${session.receipt_url}', '${session.payment_method_details.type}', '${session.payment_method_details.klarna.payment_method_category}')`);}
+    for (let i = 0; i < products.length; i++) {
+      const item = products[i];
+      const itemPriceString = item.price.toString();
+      client.query(`INSERT INTO orderitems (orderid, productname, quantity, price) VALUES('${session.payment_intent}', '${item.product_name}', '${item.quantity}', '${itemPriceString}')`);
+    }
     sendEmail(session.metadata.customeremail, session.metadata.fullname, session.amount/100, products)
     break;
   default:

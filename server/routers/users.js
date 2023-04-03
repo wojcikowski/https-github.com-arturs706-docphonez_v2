@@ -96,10 +96,15 @@ router.post('/register', bodyParser.json(), async (req, res) => {
         const token = generateToken(req.body.email);
         const verificationToken = token.verificationToken;
         const user = await client.query('INSERT INTO users (usid, fullname, dob, gender, mob_phone, email, passwd, email_ver_token, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', [uuid, req.body.fullname, req.body.dob, req.body.gender, req.body.mob_phone, req.body.email, hashedPassword, verificationToken, mysqlTimestamp]);
-        if (user) {
+        if (user.rows.length > 0) {
+            // Send verification email
             sendEmail(req.body.email, req.body.fullname, verificationToken);
+            // Respond with success message
             res.status(201).json({"status": "success", "message": "Verification email has been sent"});
-        }                   
+          } else {
+            // Respond with error message
+            res.status(400).json({"status": "error", "message": "User not found."});
+          }                 
     } catch (error) {
         res.status(500).json({error : error.message});
     }

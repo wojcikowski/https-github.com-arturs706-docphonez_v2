@@ -7,6 +7,7 @@ const paymentRouter = require('./routers/stripecheckout');
 const paymentIntent = require('./routers/paymentintent');
 const usersRouter = require('./routers/users');
 const authRouter = require('./routers/auth');
+const orderRouter = require('./routers/orders');
 const productRouter = require('./routers/products');
 const cookieParser = require('cookie-parser');
 
@@ -23,6 +24,7 @@ app.use('/api/v1/', paymentRouter)
 app.use('/api/v1/', paymentIntent);
 app.use('/api/v1/', usersRouter);
 app.use('/api/v1', authRouter);
+app.use('/api/v1', orderRouter);
 app.use('/api/v1/products', productRouter);
 
 app.listen(PORT, () => {
