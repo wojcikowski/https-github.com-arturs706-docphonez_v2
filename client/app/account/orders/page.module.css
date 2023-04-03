@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  min-height: 100vh;
   width: 100%;
   background-color: var(--main-color);
   align-items: center;
@@ -10,6 +9,7 @@
 
 .main a {
   text-decoration: none;
+  color: var(--main-font-color);
 }
 
 .divleft {
@@ -30,13 +30,7 @@
   justify-content: space-evenly;
   }
 
-.divright {
-width: 80%; 
-height: 100vh;
-margin: 3.2rem;
-color: var(--main-font-color);
 
-}
 
 .divright h1 {
   font-size: 2.4rem;
@@ -54,6 +48,9 @@ color: var(--main-font-color);
   color: var(--main-font-color);
   
 }
+.messagerightdiv {
+  margin: 3rem 0rem;
+}
 
 .divwrap {
   display: flex;
@@ -62,6 +59,7 @@ color: var(--main-font-color);
   width: 100%;
   margin-top: 0.1rem;
   cursor: pointer;
+  
 }
 
 .divwrap img {
@@ -79,14 +77,16 @@ color: var(--main-font-color);
   display: flex;
   z-index: 5;
 }
+
+/* THIS MUST BE OVERFLOWN*/
 .wrappper {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100vh;
   z-index: 0;
+
 }
 .wrappdiivvv {
   display: flex;
@@ -97,7 +97,6 @@ color: var(--main-font-color);
   height: 20vh;
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
 
-  
 }
 .invoice {
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -174,6 +173,115 @@ color: var(--main-font-color);
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
 }
+.wrappp {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 20vh;
+  z-index: 0;
+
+}
+.wrapanother {
+  display: flex;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+.wrapimageprice {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+}
+.imagewrapp {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 6.15rem;
+  height: 14vh;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 7px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  border: 0.4px solid #aaa7a74d;
+  margin-right: 1rem;
+  
+}
+.colormemory {
+  font-weight: 300;
+  display: flex;
+  width: 100%;
+  color: var(--main-font-faded);
+  padding-top: 0.9rem;
+  
+}
+.rightdiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.rightdiv h5 {
+  font-weight: 300;
+  color: var(--main-font-color);
+  font-size: 0.9rem;
+  padding-top: 0.9rem;
+  
+}
+.paymentwrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 2rem;
+  
+}
+.paymentconv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 13rem;
+  
+}
+.statusdeliv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 4rem;
+  padding-bottom: 1rem;
+}
+
+
+
+@media screen and (min-width: 1001px) {
+  .divright {
+    width: 80%; 
+    height: 100vh;
+    margin: 3.2rem;
+    color: var(--main-font-color);
+    overflow-y: auto;
+    }
+  }
+
+
+
+
 
 @media screen and (max-width: 1000px) {
   .main {
@@ -183,7 +291,7 @@ color: var(--main-font-color);
     background-color: var(--main-color);
     
   }
-  
+
   .divleft {
   display: flex;
   min-width: 0rem;
@@ -201,6 +309,9 @@ color: var(--main-font-color);
   padding-right: 0rem;
   color: var(--main-font-color);
   height: 90%;
+  margin: 3.2rem;
+  
+
   }
   
   .divright h1 {

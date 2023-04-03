@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { fetchProducts } from '@/redux/reducers/productSlice';
+import { fetchProducts } from '../redux/reducers/productSlice';
 import styles from './sectiontwo.module.css';
 import Image from 'next/image';
 

@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const query = `
 SELECT products.productid, products.prodname, products.proddescr, products.brand, products.category, 
 products.modelnr, products.availableqty, products.price, 
-productspecs.color, productspecs.productmodel, productspecs.memory, 
+productspecs.color, productspecs.subcolor, productspecs.productmodel, productspecs.memory, 
 productspecs.rating, productimages.imageone, productimages.imagetwo, 
 productimages.imagethree, productimages.imagefour
 FROM products
@@ -35,7 +35,7 @@ const QUERY_ALL_PRODUCTS = `
 SELECT 
   products.productid, products.prodname, products.proddescr, products.brand, 
   products.category, products.modelnr, products.availableqty, products.price, 
-  productspecs.color, productspecs.productmodel, productspecs.memory, 
+  productspecs.color, productspecs.subcolor, productspecs.productmodel, productspecs.memory, 
   productspecs.rating, productimages.imageone, productimages.imagetwo, 
   productimages.imagethree, productimages.imagefour
 FROM 
@@ -58,7 +58,7 @@ router.get('/', bodyParser.json(), async (req, res) => {
 
 const query_category = `SELECT products.productid, products.prodname, products.proddescr, products.brand, products.category, 
     products.modelnr, products.availableqty, products.price, 
-    productspecs.color, productspecs.productmodel, productspecs.memory, 
+    productspecs.color, productspecs.subcolor, productspecs.productmodel, productspecs.memory, 
     productspecs.rating, productimages.imageone, productimages.imagetwo, 
     productimages.imagethree, productimages.imagefour
     FROM products

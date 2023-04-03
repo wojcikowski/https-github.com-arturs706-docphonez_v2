@@ -8,7 +8,7 @@ const authenticateToken = require('../middleware/authz')
 
 const RETRIEVE_ORDERS = `SELECT * from userorders WHERE useremail = $1;`
 
-const RETRIEVE_ORDER_ITEMS = `SELECT productname, quantity, price FROM orderitems WHERE orderid = $1;`
+const RETRIEVE_ORDER_ITEMS = `SELECT productname, quantity, price, color, memory, imageurl FROM orderitems WHERE orderid = $1;`
 
 router.get('/orders', authenticateToken, async (req, res) => {
     try {

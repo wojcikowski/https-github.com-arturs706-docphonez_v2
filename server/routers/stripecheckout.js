@@ -135,13 +135,26 @@ switch (event.type) {
     for (let i = 0; i < parseJSON.length; i++) {
       const item = parseJSON[i];
       //retrieve the product name and price from the database
-      const product = await client.query(`SELECT products.prodname, products.price, productimages.imagetwo FROM products INNER JOIN productimages ON products.modelnr = productimages.productmodel WHERE modelnr = '${item.modelnr}'`);
+      const product = await client.query(`SELECT 
+      products.prodname, 
+      products.price, 
+      productimages.imagetwo,
+      productspecs.color,
+      productspecs.memory
+  FROM 
+      products 
+      INNER JOIN productimages ON products.modelnr = productimages.productmodel 
+      INNER JOIN productspecs ON products.modelnr = productspecs.productmodel
+  WHERE 
+      products.modelnr = '${item.modelnr}'`);
       //add the product name, price and imagetwo to the products array along with the quantity
       products.push({
         image_url: product.rows[0].imagetwo,
         product_name: product.rows[0].prodname,
         quantity: item.quantity,
         price: product.rows[0].price,
+        color: product.rows[0].color,
+        memory: product.rows[0].memory
       });
     }
     
@@ -157,11 +170,13 @@ switch (event.type) {
     }
     else if (session.payment_method_details.type === "klarna") {
       client.query(`insert into userorders VALUES ('${session.payment_intent}', '${session.metadata.customeremail}', '${session.amount/100}', '${session.receipt_url}', '${session.payment_method_details.type}', '${session.payment_method_details.klarna.payment_method_category}')`);}
-    for (let i = 0; i < products.length; i++) {
-      const item = products[i];
-      const itemPriceString = item.price.toString();
-      client.query(`INSERT INTO orderitems (orderid, productname, quantity, price) VALUES('${session.payment_intent}', '${item.product_name}', '${item.quantity}', '${itemPriceString}')`);
-    }
+      for (let i = 0; i < products.length; i++) {
+        const item = products[i];
+        const itemPriceString = item.price.toString();
+        const itemMemory = item.memory.toString();
+        client.query(`INSERT INTO orderitems (orderid, productname, quantity, price, color, memory, imageurl) 
+                      VALUES('${session.payment_intent}', '${item.product_name}', '${item.quantity}', '${itemPriceString}', '${item.color}', '${itemMemory}', '${item.image_url}')`);
+      }
     sendEmail(session.metadata.customeremail, session.metadata.fullname, session.amount/100, products)
     break;
   default:
