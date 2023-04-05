@@ -9,6 +9,7 @@ import jwt_decode from 'jwt-decode';
 import { setProfile, setEmailAdd, setUserRole, setTokenExp, clearProfile } from '../../../redux/reducers/profileSlice'
 import Link from 'next/link';
 import { clearCart } from '../../../redux/reducers/cartSlice';
+import Loader from '@/app/Loader'
 
 
 
@@ -20,12 +21,14 @@ export default function Page() {
     const [emailAdd, setEmailAdd] = useState('');
     const [userRole, setUserRole] = useState('');
     const [tokenExp, setTokenExp] = useState(false);
+    const [loading, setLoading] = useState(true)
     const [user, setUser] = useState({
         fullname: "",
         email: "",
         mob_phone: ""});
 
   useEffect(() => {
+    setLoading(true)
     fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/refresh_token', {
     // fetch("https://pm.doctorphonez.co.uk/api/v1/refresh_token", {
     method: 'POST',
@@ -40,6 +43,7 @@ export default function Page() {
             router.push('/account/login')
         } else {
             const { token, email, exp, role } = jwt_decode(data.accessToken)
+            setUserRole(role)
             const isExpired = (exp * 1000) < new Date().getTime()
             fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/profile', {
             // fetch("https://pm.doctorphonez.co.uk/api/v1/profile", {
@@ -51,6 +55,13 @@ export default function Page() {
                 setUser(userdata.data)
                 setProfileToken(token)
                 dispatch(setProfile(data.accessToken))
+                if (role === "admin") {
+                    router.push('/account/settings/protectedroute')
+                    setLoading(false)
+
+                }
+                setLoading(false)
+
             })
 
         }
@@ -61,6 +72,7 @@ export default function Page() {
 
 
     const logout = () => {
+        setLoading(true)
         fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/logout', {
         // fetch("https://pm.doctorphonez.co.uk/api/v1/logout", {
             method: "DELETE",
@@ -73,11 +85,18 @@ export default function Page() {
                 dispatch(clearProfile())
                 dispatch(clearCart())
                 router.push('/')
+                setLoading(false)
+
             }
         })
     }
 
-
+    
+  if (loading) {
+      return (
+          <div className={styles.main}><Loader/></div>
+      )
+  } else {
   return (
     <div className={styles.main}>
       <div className={styles.ovalblur}></div>
@@ -124,4 +143,4 @@ export default function Page() {
     </div>
   );
 }
-
+}

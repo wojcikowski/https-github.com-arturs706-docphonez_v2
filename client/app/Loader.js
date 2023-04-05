@@ -14,9 +14,9 @@ const Loader = () => {
 
     const tl = gsap.timeline({ repeat: -1 });
     tl
-      .to(dot, { duration, y: -70, width: 70, height: 70, borderRadius: 10, rotation: 0, ease: Power4.easeOut, stagger })
+      .to(dot, { duration, y: -70, width: 30, height: 30, borderRadius: 10, rotation: 0, ease: Power4.easeOut, stagger })
       .to(text, { duration, opacity: 1, scale: 1, ease: Power4.easeOut, stagger }, textDelay)
-      .to(dot, { duration, y: 0, width: 50, height: 50, borderRadius: 25, rotation: -180, ease: Power4.easeOut, stagger, delay: -0.2 })
+      .to(dot, { duration, y: 0, width: 30, height: 30, borderRadius: 25, rotation: -180, ease: Power4.easeOut, stagger, delay: -0.2 })
       .to(text, { duration, opacity: 0, scale: 0, ease: Power4.easeOut, stagger }, textDelay);
 
     return () => tl.kill();

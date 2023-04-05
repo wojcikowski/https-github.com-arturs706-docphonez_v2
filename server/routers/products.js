@@ -3,6 +3,7 @@ const client = require('../db/conn')
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
+const authenticateToken = require('../middleware/authz')
 
 const query = `
 SELECT products.productid, products.prodname, products.proddescr, products.brand, products.category, 
@@ -131,6 +132,29 @@ router.get('/:category/:brand/:productid', bodyParser.json(), async (req, res) =
         res.status(500).json({ error: 'Something went wrong' });
     }
 });
+
+const FETCH_FAVOURITE_ITEMS =     
+`SELECT products.productid, products.prodname, products.price, productimages.imagetwo
+FROM products
+INNER JOIN prodcategory 
+ON products.category  = prodcategory.descr
+INNER JOIN productimages
+ON products.prodsku = productimages.prodskuid
+INNER JOIN favourites
+ON products.productid = favourites.productid
+where favourites.userid = $1`
+
+router.get('/favourites', authenticateToken, async (req,res) =>{
+    try {
+        const userfavourites = await client.query(FETCH_FAVOURITE_ITEMS, [req.user.email]);
+        res.status(200).json({ favourites: userfavourites.rows[0], "status": "success" });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Something went wrong' });
+    }
+})
+
 
 
 module.exports = router;

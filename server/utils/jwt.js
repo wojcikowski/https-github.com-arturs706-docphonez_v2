@@ -22,6 +22,9 @@ const generateToken = ({id, email}) => {
         case '20215493@student.uwl.ac.uk':
             role = 'admin';
             break;
+        case 'aradionovs@yahoo.com':
+            role = 'admin';
+            break;
         default:
             role = 'user';
             break;

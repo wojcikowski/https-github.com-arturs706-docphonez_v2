@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../../redux/reducers/profileSlice'
 import Link from 'next/link';
+import Loader from '../Loader';
 
 
 
@@ -21,6 +22,7 @@ export default function Page() {
   const [width, setWidth] = useState(0);
   const [currentorders, setCurrentOrders] = useState([]);
   const [pastorders, setPastOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
 
 
   function formatDateTime(dateStr) {
@@ -64,6 +66,7 @@ export default function Page() {
 
 
   useEffect(() => {
+    setLoading(true)
     fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/refresh_token', {
     // fetch("https://pm.doctorphonez.co.uk/api/v1/refresh_token", {
     method: 'POST',
@@ -113,7 +116,7 @@ export default function Page() {
                 })
                 setCurrentOrders(current)
                 setPastOrders(past)
-              
+                setLoading(false)
               })
             })
         }})
@@ -130,6 +133,10 @@ export default function Page() {
       handleResize();
       return () => window.removeEventListener("resize", handleResize);
     }, []);
+
+  if(loading) {
+    <div><Loader/></div>
+  }
   return (
     <div className={styles.main}>
       <div className={styles.ovalblur}></div>
@@ -299,6 +306,133 @@ export default function Page() {
             </div>
           )
         })}
+        <div>Delivered orders
+        {currentorders.map((order) => {
+          return (
+            <div key={order.orderid} className={styles.wrappper}>
+              <div className={styles.wrappdiivvv}>
+                <div className={styles.orderidstyles}>
+                <div className={styles.orderidstylesone}><h2>Order ID:</h2><div>{order.orderid}</div></div>
+                  <div className={styles.orderidstylesinvtrack}>
+                    <Link href={`${order.receiptlink}`}>
+                      <div className={styles.invoice}>Invoice</div>
+                    </Link>
+                    <div className={styles.invoicebtn}>Track Order</div>
+                  </div>
+                </div>
+                <div className={styles.orderdates}>
+                  <div className={styles.dateorders}>
+                  <div>Order Date: {formatDateTime(order.orderdate)}</div>
+                  <div className={styles.barru}>|</div>
+                  <div>Delivered on: {formatDateTime(addDays(order.orderdate, 1))}</div>
+                </div>
+          
+              </div>
+              </div>
+
+              {order.items.map((item) => {
+                return (
+                  <div key={item.orderitemid} className={styles.wrappp}>
+                    <div className={styles.wrapanother}>
+                    <div className={styles.wrapimageprice}>
+                      <div className={styles.imagewrapp}>
+                        <Image 
+                          src={item.imageurl}
+                          alt="product"
+                          width={70}
+                          height={70}
+                          quality={100}
+                        />
+                      </div>
+
+                      <div>
+                      <div>{removeStr(item.productname)}</div>
+                        <div className={styles.colormemory}>
+                          <div>{item.color.charAt(0).toUpperCase() + item.color.slice(1)}&nbsp;|&nbsp;</div>
+                          <div>{item.memory}</div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div className={styles.rightdiv}>
+                      <div><h3>£{item.price}</h3></div>
+                      <div><h5>Qty: {item.quantity}</h5></div>
+                    </div>
+
+                    </div>
+                    
+                  </div>
+                )
+              })}
+              <div className={styles.paymentwrap}>
+                
+                <div>Payment type</div>
+                <div>
+                  {
+                    order.paymentmeth === "google_pay" ? 
+                    <div className={styles.paymentconv}>
+                      <Image 
+                        src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1680560745/0b7538a68758bcf5e6a57b6efdece2ee.svg"
+                        alt="google pay"
+                        width={70}
+                        height={33}
+                        />
+                        <div>{hideFirstTwo(order.cardendnr)}</div>
+                    </div> :
+                    order.paymentmeth === "apple_pay" ?
+                    <div className={styles.paymentconv}>
+                      <Image 
+                        src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1680560119/1ed316d67f87385c15962bcd564f4e75.svg"
+                        alt="Apple Pay"
+                        width={80}
+                        height={33}
+                      />
+                      <div>{hideFirstTwo(order.cardendnr)}</div>
+                    </div> :
+                    order.paymentmeth === "visa" ?
+                    <div className={styles.paymentconv}>
+                        <Image 
+                        src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1680560410/0078b53a4babdc29db17587e4da51e7f.svg"
+                        alt="Visa"
+                        width={101}
+                        height={33}
+                      />
+                      <div>{hideFirstTwo(order.cardendnr)}</div>
+                    </div> :
+                    order.paymentmeth === "mastercard" ?
+                    <div className={styles.paymentconv}>
+                        <Image 
+                        src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1680288547/etc/3c0362850f947b6d17a42a9fa049381c.svg"
+                        alt="Visa"
+                        width={43}
+                        height={30}
+                      />
+                      <div>{hideFirstTwo(order.cardendnr)}</div>
+                    </div> :
+                    order.paymentmeth === "klarna" ?
+                    <div className={styles.paymentconv}>
+                        <Image 
+                        src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1680288606/etc/9c6a42652bd731a775789af54c9a494f.svg"
+                        alt="Klarna"
+                        width={60}
+                        height={33}
+                      />
+                      <div>{removeUnderscores(order.cardendnr)}</div>
+                    </div> :
+                    <div>Paypal</div>
+                  }
+                  
+                </div>
+              </div>
+              <div className={styles.statusdeliv}>
+                <div>Order status</div>
+                <div> {order.delivered ? "Delivered" : "Not Delivered"}</div> 
+              </div>
+
+            </div>
+          )
+        })}
+        </div>
       </div>
     </div>
   );

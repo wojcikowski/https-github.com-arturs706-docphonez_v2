@@ -31,3 +31,10 @@ GET http://localhost:10000/api/v1/products
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjIxNDM3MjYyQHN0dWRlbnQudXdsLmFjLnVrIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjgwMzA1ODE0LCJleHAiOjE2ODAzMDY3MTR9.pKsayJ84NmCQKBT3jgt971EVGPyjOfQO-dxMuzjzVk0
 
+
+###
+GET http://localhost:10000/api/v1/products/favourites
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyYWRpb25vdnNAeWFob28uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjgwNjM1NzQ1LCJleHAiOjE2ODA2MzY2NDV9.IBvdsIBF70ePzsUpH8CGsjyoQREf4Ee4YoW95tw_160
+
+
