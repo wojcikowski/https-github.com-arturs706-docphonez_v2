@@ -18,7 +18,6 @@ export default function Page() {
     fullname: "",
     email: "",
     mob_phone: ""});
-  const [width, setWidth] = useState(0);
 
   useEffect(() => {
     fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/refresh_token', {
@@ -52,19 +51,6 @@ export default function Page() {
         }
     })
   }, [dispatch, router]);
-
-    // create a function to get the width of the window
-    useEffect(() => {
-      function handleResize() {
-        setWidth(window.innerWidth);
-      }
-      window.addEventListener("resize", handleResize);
-      handleResize();
-      return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-
-
 
     
   return (

@@ -6,29 +6,25 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import jwt_decode from 'jwt-decode';
-import { setProfile, setEmailAdd, setUserRole, setTokenExp, clearProfile } from '../../../redux/reducers/profileSlice'
+import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../../redux/reducers/profileSlice'
 import Link from 'next/link';
-import { clearCart } from '../../../redux/reducers/cartSlice';
-import Loader from '@/app/Loader'
-
 
 
 
 export default function Page() {
-    const dispatch = useDispatch()
-    const router = useRouter()
-    const [profileToken, setProfileToken] = useState('');
-    const [emailAdd, setEmailAdd] = useState('');
-    const [userRole, setUserRole] = useState('');
-    const [tokenExp, setTokenExp] = useState(false);
-    const [loading, setLoading] = useState(true)
-    const [user, setUser] = useState({
-        fullname: "",
-        email: "",
-        mob_phone: ""});
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const [user, setUser] = useState({
+    fullname: "",
+    email: "",
+    mob_phone: ""
+  
+  });
+  const [roleCheck, setRoleCheck] = useState("");
+  const [width, setWidth] = useState(0);
+
 
   useEffect(() => {
-    setLoading(true)
     fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/refresh_token', {
     // fetch("https://pm.doctorphonez.co.uk/api/v1/refresh_token", {
     method: 'POST',
@@ -42,9 +38,13 @@ export default function Page() {
         if (data.err === "jwt must be provided") {
             router.push('/account/login')
         } else {
-            const { token, email, exp, role } = jwt_decode(data.accessToken)
-            setUserRole(role)
+            const { email, exp, role } = jwt_decode(data.accessToken)
+            dispatch(setProfile(data.accessToken))
+            dispatch(setEmailAdd(email))
+            dispatch(setUserRole(role))
+            setRoleCheck(role)
             const isExpired = (exp * 1000) < new Date().getTime()
+            dispatch(setTokenExp(isExpired))
             fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/profile', {
             // fetch("https://pm.doctorphonez.co.uk/api/v1/profile", {
                 method: "GET",
@@ -53,50 +53,25 @@ export default function Page() {
             .then((res) => res.json())
             .then((userdata) => {
                 setUser(userdata.data)
-                setProfileToken(token)
-                dispatch(setProfile(data.accessToken))
-                if (role === "admin") {
-                    router.push('/account/settings/protectedroute')
-                    setLoading(false)
-
-                }
-                setLoading(false)
-
             })
-
         }
-        
     })
-}, [dispatch, router]);
+  }, [dispatch, router]);
+
+    // create a function to get the width of the window
+    useEffect(() => {
+      function handleResize() {
+        setWidth(window.innerWidth);
+      }
+      window.addEventListener("resize", handleResize);
+      handleResize();
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
 
 
-    const logout = () => {
-        setLoading(true)
-        fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/logout', {
-        // fetch("https://pm.doctorphonez.co.uk/api/v1/logout", {
-            method: "DELETE",
-            credentials: 'include',
-            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${profileToken}` },
-        })
-        .then((res) => res.json())
-        .then((data) => {
-            if (data.message === "Logged out successfully") {
-                dispatch(clearProfile())
-                dispatch(clearCart())
-                router.push('/')
-                setLoading(false)
-
-            }
-        })
-    }
 
     
-  if (loading) {
-      return (
-          <div className={styles.main}><Loader/></div>
-      )
-  } else {
   return (
     <div className={styles.main}>
       <div className={styles.ovalblur}></div>
@@ -135,12 +110,59 @@ export default function Page() {
         </Link>
       </div>
       <div className={styles.divright}>
-        <h1>Account Settings</h1>
+        <h1>Account Page</h1>
+        <br />
+        <br />
+         <h2>Profile Settings</h2>
+        <br />
+        <br />
+        <div className={styles.messagerightdiv}>Manage your personal details easily and securely.</div>
 
-        <div className={styles.logout}>Logout</div>
-        <button className={styles.logout} onClick={logout}>x</button>
+        <div className={styles.divwrpp}>
+        <Link href="/account/settings/updategeneral" className={styles.divobj}>
+          <div>
+            <div className={styles.headline}>Change general account details</div>
+            <div className={styles.messagerightdivh2}>Change your fullname, gender or date of birth </div>
+          </div>
+          </Link>
+          <Link href="/account/settings/updatecontacts" className={styles.divobj}>
+          <div>
+            <div className={styles.headline}>Change your contact details</div>
+            <div className={styles.messagerightdivh2}>Change your email address or mobile phone number</div>
+            </div>
+          </Link>
+          <Link href="/account/settings/updatepassword" className={styles.divobj}>
+          <div>
+            <div className={styles.headline}>Change your password</div>
+            <div className={styles.messagerightdivh2}>Change your current password</div>
+          </div>
+          </Link>
+          <Link href="/account/settings/manageaccount" className={styles.divobj}>
+          <div>
+            <div className={styles.headline}>Account Management</div>
+            <div className={styles.messagerightdivh2}>Logout from the account or delete account</div>
+          </div>
+          </Link>
+          {
+            roleCheck === "admin" ? (
+              <Link href="/account/settings/protectedroute" className={styles.divobj}>
+              <div>
+                <div className={styles.headline}>Admin Panel</div>
+                <div className={styles.messagerightdivh2}>Manage your store</div>
+              </div>
+              </Link>
+            ) : (
+              null
+            )
+
+          }
+          
+        
+
+        </div>
+
       </div>
     </div>
   );
 }
-}
+

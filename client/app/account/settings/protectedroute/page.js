@@ -63,11 +63,17 @@ export default function Page() {
 
     if (loading) {
         return (
-            <div className={styles.main}><Loader/></div>
+            <div className={styles.main}>
+                <div className={styles.ovalblurtwo}></div>
+                <Loader/>
+            </div>
         )
     }
     
   return (
-    <div className={styles.main}>Welcome to the protected route</div>
+    <div className={styles.main}>
+    <div className={styles.ovalblurtwo}></div>
+    Welcome to the protected route
+    </div>
   )
 }
