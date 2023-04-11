@@ -47,6 +47,7 @@ export default function Page() {
             .then((res) => res.json())
             .then((userdata) => {
                 setUser(userdata.data)
+                console.log(userdata)
             })
         }
     })
@@ -71,7 +72,7 @@ export default function Page() {
           <h5 className={styles.inactiveh5}>Orders</h5>
         </div>
         </Link>
-        <Link href="/account/favourites">
+        <Link href="/account/favourites/[id]" as={`/account/favourites/${user.usid}`}>
           <div className={styles.divwrap}>
           <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1679950827/etc/favourites_dwalys.svg" alt="icon" width={30} height={30} />
             <h5 className={styles.inactiveh5}>Wishlist</h5>
@@ -111,7 +112,8 @@ export default function Page() {
             <div className={styles.messagerightdivh2}>Take a look at and make changes to the delivery addresses you have chosen as your favorites.</div>
             </div>
           </Link>
-          <Link href="/account/favourites" className={styles.divobj}>
+
+          <Link href="/account/favourites/[id]" as={`/account/favourites/${user.usid}`} className={styles.divobj}>
           <div>
             <div className={styles.headline}>Your favourites</div>
             <div className={styles.messagerightdivh2}>Take a moment to revisit the delightful items you have kept aside for future consideration.</div>

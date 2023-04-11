@@ -10,7 +10,6 @@ import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../../redu
 import Link from 'next/link';
 
 
-
 export default function Page() {
   const dispatch = useDispatch()
   const router = useRouter()
@@ -21,7 +20,6 @@ export default function Page() {
   
   });
   const [roleCheck, setRoleCheck] = useState("");
-  const [width, setWidth] = useState(0);
 
 
   useEffect(() => {
@@ -58,20 +56,6 @@ export default function Page() {
     })
   }, [dispatch, router]);
 
-    // create a function to get the width of the window
-    useEffect(() => {
-      function handleResize() {
-        setWidth(window.innerWidth);
-      }
-      window.addEventListener("resize", handleResize);
-      handleResize();
-      return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-
-
-
-    
   return (
     <div className={styles.main}>
       <div className={styles.ovalblur}></div>
@@ -90,7 +74,7 @@ export default function Page() {
           <h5 className={styles.inactiveh5}>Orders</h5>
         </div>
         </Link>
-        <Link href="/account/favourites">
+        <Link href="/account/favourites/[id]" as={`/account/favourites/${user.usid}`}>
           <div className={styles.divwrap}>
           <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1679950827/etc/favourites_dwalys.svg" alt="icon" width={30} height={30} />
             <h5 className={styles.inactiveh5}>Wishlist</h5>
@@ -127,8 +111,14 @@ export default function Page() {
           </Link>
           <Link href="/account/settings/updatecontacts" className={styles.divobj}>
           <div>
-            <div className={styles.headline}>Change your contact details</div>
-            <div className={styles.messagerightdivh2}>Change your email address or mobile phone number</div>
+            <div className={styles.headline}>Change your email address</div>
+            <div className={styles.messagerightdivh2}>Change your email address</div>
+            </div>
+          </Link>
+          <Link href="/account/settings/updatemobile" className={styles.divobj}>
+          <div>
+            <div className={styles.headline}>Change your mobile phone number</div>
+            <div className={styles.messagerightdivh2}>Change your mobile phone number</div>
             </div>
           </Link>
           <Link href="/account/settings/updatepassword" className={styles.divobj}>
@@ -157,8 +147,6 @@ export default function Page() {
 
           }
           
-        
-
         </div>
 
       </div>

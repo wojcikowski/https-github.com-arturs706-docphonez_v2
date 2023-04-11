@@ -1,11 +1,13 @@
 "use client";
 
 import {useState, useEffect} from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./page.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import refreshToken from '../../checkCr';
+import { useRouter } from 'next/navigation'
+import jwt_decode from "jwt-decode";
+import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../redux/reducers/profileSlice'
 
 
 const ProductTable = ({ products }) => {
@@ -13,29 +15,101 @@ const ProductTable = ({ products }) => {
     const [brandFilter, setBrandFilter] = useState([]);
     const [colorFilter, setColorFilter] = useState([]);
     const [ratingFilter, setRatingFilter] = useState([]);
+    const [favouriteList, setFavouriteList] = useState([]);
     const [sort, setSort] = useState("price-asc");
     const dispatch = useDispatch();
     const [width, setWidth] = useState(0);
+    const router = useRouter();
+    const { token } = useSelector((state) => state.profile);
+    const [userid, setUserid] = useState("");
 
 
     useEffect(() => {
-        async function checkRefreshToken() {
-          await refreshToken(dispatch);
-        }
-        checkRefreshToken();
-      }, [dispatch]);
+      fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/refresh_token', {
+      // fetch("https://pm.doctorphonez.co.uk/api/v1/refresh_token", {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+      })
+      .then((res) => res.json())
+      .then((data) => {
+          if (data.err === "jwt must be provided") {
+              router.push('/account/login')
+          } else {
+              const { email, exp, role } = jwt_decode(data.accessToken)
+              dispatch(setProfile(data.accessToken))
+              dispatch(setEmailAdd(email))
+              dispatch(setUserRole(role))
+              const isExpired = (exp * 1000) < new Date().getTime()
+              dispatch(setTokenExp(isExpired))
+              fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/profile', {
+              // fetch("https://pm.doctorphonez.co.uk/api/v1/profile", {
+                  method: "GET",
+                  headers: { "Content-Type": "application/json", "Authorization": `Bearer ${data.accessToken}` },
+              })
+              .then((res) => res.json())
+              .then((userdata) => {
+                  // setUser(userdata.data.usid)
+                  fetch(process.env.NEXT_PUBLIC_API_URL + `api/v1/favourites/${userdata.data.usid}`, {
+                  // fetch("https://pm.doctorphonez.co.uk/api/v1/profile", {
+                      method: "GET",
+                      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${data.accessToken}` },
+                  })
+                  .then((res) => res.json())
+                  .then((favourites) => {
+                      setFavouriteList(favourites.favouriteitems)
+                      setUserid(userdata.data.usid)
+                  })
+              })
+          }
+      })
+    }, [dispatch, router]);
 
-    // create a function to get the width of the window
-    useEffect(() => {
-        function handleResize() {
-          setWidth(window.innerWidth);
-        }
-        window.addEventListener("resize", handleResize);
-        handleResize();
-        return () => window.removeEventListener("resize", handleResize);
-      }, []);
-  
+    const handleremovefavourite = (productid) => {
+      fetch(process.env.NEXT_PUBLIC_API_URL + `api/v1/favourites/removefromfavourites`, {
+      // fetch("https://pm.doctorphonez.co.uk/api/v1/favourites/addtofavourites", {
+        method: "DELETE",
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          productid: productid,
+          userid: userid,
+        }),
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        alert(data.message)
+      })
+    }
+    
+    const handleaddfavourite = (productid) => {
+      fetch(process.env.NEXT_PUBLIC_API_URL + `api/v1/favourites/addtofavourites`, {
+      // fetch("https://pm.doctorphonez.co.uk/api/v1/favourites/addtofavourites", {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          productid: productid,
+          userid: userid,
+        }),
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+      })
+    }
 
+
+
+    
 
     // define a function to sort the products by price
     const sortProducts = (products, sort) => {
@@ -49,10 +123,6 @@ const ProductTable = ({ products }) => {
             return products;
         }
     };
-
-
-
-   
 
       const productFilter = (products, priceRanges, brands, colors, rating) => {
         let filteredProducts = products;
@@ -85,8 +155,6 @@ const ProductTable = ({ products }) => {
         return filteredProducts;
       };
       
-    
-
     return (
         <div className={styles.pagemain}>
           <div className={styles.ovalblur}></div>
@@ -442,54 +510,76 @@ const ProductTable = ({ products }) => {
               </div>
               <div className={styles.productdiv}>
                 
-              {productFilter(products, priceFilters, brandFilter, colorFilter, ratingFilter).map(product => (
-                <Link key={product.productid} href={`/products/${product.category}/${product.brand}/${product.productid}` }>
-                <div key={product.productid} className={styles.productsquare}>
-                  {
-                    product.brand === "apple" && width < 812 ? 
-                    <Image
-                    src={product.imagetwo}
-                    alt={product.prodname}
-                    width={182}
-                    height={238}
-                  />
-                  : product.brand === "apple" && width > 812 ? 
-                  <Image
-                  src={product.imagetwo}
-                  alt={product.prodname}
-                  width={275}
-                  height={360}
-                />
-                  
-                  : product.brand === "samsung" && width > 812 ? 
-                  <Image
-                  src={product.imagetwo}
-                  alt={product.prodname}
-                  width={327}
-                  height={360}
-                />
-                :
-                  <Image
-                  src={product.imagetwo}
-                  alt={product.prodname}
-                  width={216}
-                  height={238}
-                />
-                  }
-                  <div className={styles.prodnamediv}>
-                    {product.prodname}
-                    <Image 
-                      src={`https://res.cloudinary.com/dyvgcv5se/image/upload/v1679991563/etc/${product.color}active.svg`}
-                      alt="Main image"
-                      width={32}
-                      height={31}
-                    />
-    
+              {productFilter(products, priceFilters, brandFilter, colorFilter, ratingFilter).map(product => {
+                const isFavourite = favouriteList?.length > 0 && favouriteList.some(favProduct => favProduct.productid === product.productid);
+                return (
+                  <div key={product.productid} className={styles.productsquare}>
+                    {product.brand === "apple" && width < 812 ? (
+                      <Link key={product.productid} href={`/products/${product.category}/${product.brand}/${product.productid}`}>
+                      <Image src={product.imagetwo} alt={product.prodname} width={182} height={238} />
+                      </Link>
+                    ) : product.brand === "apple" && width > 812 ? (
+                      <Link key={product.productid} href={`/products/${product.category}/${product.brand}/${product.productid}`}>
+                      <Image src={product.imagetwo} alt={product.prodname} width={275} height={360} />
+                      </Link>
+                    ) : product.brand === "samsung" && width > 812 ? (
+                      <Link key={product.productid} href={`/products/${product.category}/${product.brand}/${product.productid}`}>
+                      <Image src={product.imagetwo} alt={product.prodname} width={327} height={360} />
+                      </Link>
+                    ) : (
+                      <Link key={product.productid} href={`/products/${product.category}/${product.brand}/${product.productid}`}>
+                      <Image src={product.imagetwo} alt={product.prodname} width={216} height={238} />
+                      </Link>
+                    )}
+                    <div className={styles.prodnamediv}>
+                      {product.prodname}
+                      <div className={styles.favouritescolor}>
+                        <Image src={`https://res.cloudinary.com/dyvgcv5se/image/upload/v1679991563/etc/${product.color}active.svg`} 
+                        alt="Main image" 
+                        width={32} 
+                        height={31}
+                    
+                          
+                        />
+                        {isFavourite ? ( 
+                        <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1681151573/etc/17407a98b6f5c8df1225d96ec436a572.svg" 
+                        alt="Main image" 
+                        width={32} 
+                        height={31}
+                        className={styles.favouriteimage}
+                        onClick={() => {
+                          handleremovefavourite(product.productid);
+                          setFavouriteList(prevFavouriteList => {
+                            return prevFavouriteList.filter(favProduct => favProduct.productid !== product.productid);
+                          });
+                        }}
+                        
+                        />) : (
+                        <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1681151573/etc/f2fe3af9ab7aa085b345fb7f3dc9fef2.svg" 
+                        alt="Main image" 
+                        width={32} 
+                        height={31} 
+                        className={styles.favouriteimage}
+                        onClick={() => {
+                          handleaddfavourite(product.productid);
+                          setFavouriteList(prevFavouriteList => {
+                            const newList = prevFavouriteList && typeof prevFavouriteList[Symbol.iterator] === 'function'
+                              ? [...prevFavouriteList, product]
+                              : [product];
+                            return newList;
+                          });
+                        }}
+
+                        
+                        /> )
+                        }
+                      </div>
+
+                    </div>
+                    <div className={styles.prodpricediv}>£{product.price}</div>
                   </div>
-                  <div className={styles.prodpricediv}>£{product.price}</div>
-                  </div>
-                </Link>
-              ))}
+              );
+            })}
             </div>
             </div>
           </div>

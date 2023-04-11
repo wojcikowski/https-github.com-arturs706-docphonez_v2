@@ -23,6 +23,7 @@ export default function Page() {
       }
       checkRefreshToken();
       dispatch(clearCart());
+      localStorage.removeItem('shippingDetails')
     }, [dispatch]);
 
 

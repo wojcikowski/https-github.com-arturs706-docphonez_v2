@@ -107,13 +107,6 @@
     right: 0.9rem;
   }
 
-
-
-
-  /* .btn.clicked {
-    background-color: #f2f2f2;
-  } */
-  
   .divright {
     width: 50%;
     height: 100%;
@@ -142,8 +135,10 @@
     padding-bottom: 2rem;
   }
   .binwrapp img {
-
     cursor: pointer;
+  }
+  .binwrapp img:active {
+    transform: scale(0.95);
   }
   .itemqtywrap {
     display: flex;
@@ -164,6 +159,9 @@
     border: 1px solid var(--main-font-faded);
     padding: 0.3rem 0.7rem;
     cursor: pointer;
+  }
+  .addremoveitm:active {
+    transform: scale(0.95);
   }
   .totalline {
     display: flex;

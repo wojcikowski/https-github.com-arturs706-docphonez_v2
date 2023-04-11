@@ -137,6 +137,12 @@
     justify-content: space-between;
     height: 6rem;
   }
+  .favouritescolor {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 5rem;
+  }
   
   .prodpricediv {
     color: var(--main-font-color);
@@ -153,6 +159,9 @@
     border: 2px solid white;
     padding: 0.5rem;
     border-radius: 0.6rem;
+    cursor: pointer;
+  }
+  .favouriteimage { 
     cursor: pointer;
   }
   .h5heading {

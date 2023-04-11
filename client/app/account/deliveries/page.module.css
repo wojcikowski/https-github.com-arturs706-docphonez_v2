@@ -11,7 +11,24 @@
   .main a {
     text-decoration: none;
   }
-  
+  .errormessage {
+    color: red;
+    font-size: 0.8rem;
+    font-weight: 300;
+    margin-top: 0.5rem;
+    text-align: center;
+    width: 25rem;
+}
+.successmessage {
+  color: rgb(21, 250, 21);
+  font-size: 0.8rem;
+  font-weight: 300;
+  margin-top: 0.5rem;
+  text-align: center;
+  width: 25rem;
+}
+
+
   .divleft {
     min-width: 15.8rem;
     height: 28rem;
@@ -35,7 +52,6 @@
   height: 100vh;
   margin: 3.2rem;
   color: var(--main-font-color);
-  
   }
   
   .divright h1 {
@@ -74,11 +90,7 @@
   .inactiveh5 {
     color: var(--main-font-faded);
   }
-  
-  
-  
-  
-  
+
   .ovalblur {
     position: absolute;
     width: 100%;
@@ -91,6 +103,85 @@
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
   }
+  .changediv {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    padding-top: 1rem;
+    margin-bottom: 5rem;
+  }
+  .wrappinput {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 25rem;
+
+  }
+  .changediv label {
+    font-weight: 300;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .changediv input {
+    height: 3rem;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 7px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    border: 0.4px solid #aaa7a74d;
+    font-size: 0.8rem;
+    font-weight: 300;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--main-font-color)
+  }
+  .changediv input:focus {
+    margin-left: 0.1rem;
+   
+  }
+  .main button {
+    border: 2px solid white;
+    padding: 0.7rem;
+    border-radius: 0.6rem;
+    cursor: pointer;
+    background-color: transparent;
+    color: var(--main-font-color);
+    position: relative;
+    z-index: 4;
+  }
+  .main button:active {
+    transform: scale(0.95);
+  }
+  .buttontosave {
+    width: 25rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+
+  }
+  .divright {
+    width: 80%; 
+    height: 100vh;
+    margin: 3.2rem;
+    color: var(--main-font-color);
+    }
+
+@media screen and (min-width: 1001px) {
+  .divright {
+    overflow: auto;
+    }
+  
+}
   
 @media screen and (max-width: 1000px) {
   .main {

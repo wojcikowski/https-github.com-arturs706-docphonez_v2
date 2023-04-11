@@ -78,7 +78,9 @@
   text-decoration: none;
   color: white;
 }
-
+.button a:active {
+  transform: scale(0.95);
+}
 
 
 .gradient-border-button:hover {

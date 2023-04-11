@@ -8,7 +8,7 @@
     align-items: flex-start;
     color: var(--main-font-color)
   }
-
+  
   .mainloadingmessage {
     display: flex;
     flex-direction: column;
@@ -19,38 +19,38 @@
     background-color: var(--main-color);
     color: var(--main-font-color)
   }
-
-.changedivwrapper {
+  
+  .changedivwrapper {
     margin: 3.1rem;
     position: relative;
     z-index: 4;
-}
-.changedivwrapper h4{
+  }
+  .changedivwrapper h4{
     font-weight: 300;
-}
-.changediv {
+  }
+  .changediv {
     display: flex;
     flex-direction: column;
     margin-top: 3rem;
     
-}
-.mainwrapplabel {
+  }
+  .mainwrapplabel {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-}
-.inputlabelwrapp {
+  }
+  .inputlabelwrapp {
     display: flex;
     flex-direction: column;
     width: 45%;
-}
-.changediv label {
+  }
+  .changediv label {
     font-weight: 300;
     font-size: 0.8rem;
     margin-bottom: 1rem;
-
-}
-.changediv input {
+  
+  }
+  .changediv input {
     height: 3rem;
     border: none;
     background: rgba(255, 255, 255, 0.2);
@@ -67,8 +67,8 @@
     padding: 0.5rem;
     margin-bottom: 1rem;
     color: var(--main-font-color)
-}
-.savebtn {
+  }
+  .savebtn {
     padding: 0.92rem;
     margin-top: 0.94rem;
     width: 10rem;
@@ -82,16 +82,16 @@
     align-items: center;
     position: relative;
     z-index: 2;
-}
-.buttonwrapper {
+  }
+  .buttonwrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 1rem;
-}
-
-
-.main button {
+  }
+  
+  
+  .main button {
     margin: 0 0.4rem;
     border: 2px solid white;
     padding: 0.7rem;
@@ -99,19 +99,41 @@
     cursor: pointer;
     background-color: transparent;
     color: var(--main-font-color);
-}
-.main button:active {
+  }
+  .main button:active {
     transform: scale(0.95);
   }
-.errormessage {
+  .squareinput {
+    width: 3rem;
+    margin-right: 1rem;
+    text-align: center;
+  }
+  .mainwrapplabeltwo {
+    font-weight: 300;
+    font-size: 0.8rem;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+  }
+  .errormessage {
     color: red;
     font-size: 0.8rem;
     font-weight: 300;
     margin-top: 0.5rem;
     text-align: center;
-}
-
-.ovalblurtwo {
+  }
+  .squarewrapp {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+ 
+  
+  .ovalblurtwo {
     position: absolute;
     width: 100%;
     height: 90vh;
@@ -123,12 +145,12 @@
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
   }
-
+  
   @media screen and (max-width: 412px) {
     .changedivwrapper {
         margin-left: 1.48rem;
         width: 100%;
         margin-right: 1.97rem;
-
+  
     }
   }

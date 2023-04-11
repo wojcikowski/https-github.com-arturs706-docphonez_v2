@@ -69,7 +69,7 @@ export default function Page() {
     }
   }
 
-    const handleName = (e) => {
+  const handleName = (e) => {
     setFullname(e.target.value);
     };
   const handleDob = (e) => {

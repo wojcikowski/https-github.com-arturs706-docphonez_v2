@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import jwt_decode from 'jwt-decode';
-import { setProfile } from '../../../../redux/reducers/profileSlice'
+import { setProfile } from '../../../../../redux/reducers/profileSlice'
 import Link from 'next/link';
 import Loader from '@/app/Loader'
 
@@ -80,7 +80,7 @@ if (loading) {
         <Link href="/account/settings/protectedroute">
           <div className={styles.divwrap}>
             <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1679950884/etc/homeicon_xfx8h8.svg" alt="icon" width={30} height={30} />
-            <h5 className={styles.activeh5}>General</h5>
+            <h5 className={styles.inactiveh5}>General</h5>
           </div>
         </Link>
         <Link href="/account/settings/protectedroute/allorders">
@@ -104,44 +104,20 @@ if (loading) {
         <Link href="/account/settings/protectedroute/salesreport">
           <div className={styles.divwrap}>
             <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1680858086/etc/526231ade32fbcfb19048d8156ff5337.svg" alt="icon" width={30} height={30} />
-            <h5 className={styles.inactiveh5}>Sales report</h5>
+            <h5 className={styles.activeh5}>Sales report</h5>
           </div>
         </Link>
       </div>
       <div className={styles.divright}>
-        <h1>Admin page</h1>
+        <h1>Sales page</h1>
         <br />
         <br />
-         <h2>Admin dashboard</h2>
+         <h2>Sales report</h2>
         <br />
         <br />
-        <div className={styles.messagerightdiv}>Analyse the reports and manage the products</div>
+        <div className={styles.messagerightdiv}>Check sales</div>
 
         <div className={styles.divwrpp}>
-        <Link href="/account/settings/protectedroute/allorders" className={styles.divobj}>
-          <div>
-            <div className={styles.headline}>Inspect all user orders</div>
-            <div className={styles.messagerightdivh2}>Efficiently manage user orders with thorough inspection</div>
-          </div>
-          </Link>
-          <Link href="/account/settings/protectedroute/allusers" className={styles.divobj}>
-          <div>
-            <div className={styles.headline}>Check all user details</div>
-            <div className={styles.messagerightdivh2}>Efficiently manage user details with thorough checks</div>
-            </div>
-          </Link>
-          <Link href="/account/settings/protectedroute/addproduct" className={styles.divobj}>
-          <div>
-            <div className={styles.headline}>Add a new product</div>
-            <div className={styles.messagerightdivh2}>Easily add a new product to your inventory</div>
-          </div>
-          </Link>
-          <Link href="/account/settings/protectedroute/salesreport" className={styles.divobj}>
-          <div>
-            <div className={styles.headline}>Boost sales with comprehensive inspection</div>
-            <div className={styles.messagerightdivh2}>Analyze sales data to optimize business performance</div>
-          </div>
-          </Link>
           
         </div>
 

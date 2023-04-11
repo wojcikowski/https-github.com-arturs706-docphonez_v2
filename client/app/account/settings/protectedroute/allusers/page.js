@@ -6,22 +6,33 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import jwt_decode from 'jwt-decode';
-import { setProfile } from '../../../../redux/reducers/profileSlice'
+import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../../../../redux/reducers/profileSlice'
 import Link from 'next/link';
-import Loader from '@/app/Loader'
+import Loader from '../../../Loader';
+
 
 
 export default function Page() {
-    const dispatch = useDispatch()
-    const router = useRouter()
-    const [roleCheck, setRoleCheck] = useState(false)
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const [user, setUser] = useState({
+    fullname: "",
+    email: "",
+    mob_phone: ""});
+  const [alluserlist, setAlluserlist] = useState([]);
+  const [loading, setLoading] = useState(false);
 
 
-    const [loading, setLoading] = useState(true)
-    const [user, setUser] = useState({
-        fullname: "",
-        email: "",
-        mob_phone: ""});
+  function formatDateTime(dateStr) {
+    const dateObj = new Date(dateStr);
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const month = monthNames[dateObj.getUTCMonth()];
+    const day = dateObj.getUTCDate();
+    const year = dateObj.getUTCFullYear();
+  
+    return `${month} ${day}, ${year}`;
+  }
 
 
   useEffect(() => {
@@ -39,8 +50,15 @@ export default function Page() {
         if (data.err === "jwt must be provided") {
             router.push('/account/login')
         } else {
-            const { token, email, exp, role } = jwt_decode(data.accessToken)
+            const { email, exp, role } = jwt_decode(data.accessToken)
+            dispatch(setProfile(data.accessToken))
+            dispatch(setEmailAdd(email))
+            dispatch(setUserRole(role))
+            if (role !== "admin") {
+              router.push('/')
+            }
             const isExpired = (exp * 1000) < new Date().getTime()
+            dispatch(setTokenExp(isExpired))
             fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/profile', {
             // fetch("https://pm.doctorphonez.co.uk/api/v1/profile", {
                 method: "GET",
@@ -48,39 +66,42 @@ export default function Page() {
             })
             .then((res) => res.json())
             .then((userdata) => {
-                setUser(userdata.data)
-                dispatch(setProfile(data.accessToken))
-                if (role !== "admin") {
-                    router.push('/')
+              setUser(userdata.data)
+              fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/users', {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${data.accessToken}`
                 }
-                setRoleCheck(role)
+              })
+              .then((res) => res.json())
+              .then((data) => {
                 setLoading(false)
+                setAlluserlist(data.users)
+                data.users.map((user) => {
+                  console.log(user)
+                })
+                
+              })
             })
-
         }
-        
     })
-}, [dispatch, router]);
+  }, [])
 
-if (loading) {
-    return (
-        <div className={styles.main}>
-            <div className={styles.ovalblurtwo}></div>
-            <Loader/>
-        </div>
-    )
-} else if (roleCheck === "admin" && !loading) {
 
+                
+  if(loading) {
+    <div><Loader/></div>
+  }
   return (
     <div className={styles.main}>
       <div className={styles.ovalblur}></div>
       <div className={styles.divleft}>
         <div className={styles.profileH}>Admin</div>
-
         <Link href="/account/settings/protectedroute">
           <div className={styles.divwrap}>
             <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1679950884/etc/homeicon_xfx8h8.svg" alt="icon" width={30} height={30} />
-            <h5 className={styles.activeh5}>General</h5>
+            <h5 className={styles.inactiveh5}>General</h5>
           </div>
         </Link>
         <Link href="/account/settings/protectedroute/allorders">
@@ -92,7 +113,7 @@ if (loading) {
         <Link href="/account/settings/protectedroute/allusers">
           <div className={styles.divwrap}>
           <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1679950789/etc/account_isgany.svg" alt="icon" width={30} height={30} />
-            <h5 className={styles.inactiveh5}>All Users</h5>
+            <h5 className={styles.activeh5}>All Users</h5>
           </div>
         </Link>
         <Link href="/account/settings/protectedroute/addproduct">
@@ -109,45 +130,40 @@ if (loading) {
         </Link>
       </div>
       <div className={styles.divright}>
-        <h1>Admin page</h1>
+      <h1>All users</h1>
         <br />
         <br />
-         <h2>Admin dashboard</h2>
+         <h2>User list</h2>
         <br />
-        <br />
-        <div className={styles.messagerightdiv}>Analyse the reports and manage the products</div>
+        <div className={styles.messagerightdiv}>Check all user details</div>
+      
+        
+        {alluserlist.map((user) => {
+          return (
+            <div key={user.usid} className={styles.wrappper}>
+              <div className={styles.wrappdiivvv}>
+                <div className={styles.orderidstyles}>
+                <div className={styles.orderidstylesone}><h2>User ID:</h2><div className={styles.idnumber}>{user.usid}</div></div>
+                  <div className={styles.orderidstylesinvtrack}>
+                    <div className={styles.invoicebtn}>Delete</div>
+                  </div>
+                </div>
+                <div className={styles.customeridemail}><h2>Customer fullname:</h2><div>{user.fullname}</div></div>
+                <div className={styles.customeridemail}><h2>Customer email:</h2><div>{user.email}</div></div>
+                <div className={styles.customeridemail}><h2>Customer mobile phone:</h2><div>{user.mob_phone}</div></div>
 
-        <div className={styles.divwrpp}>
-        <Link href="/account/settings/protectedroute/allorders" className={styles.divobj}>
-          <div>
-            <div className={styles.headline}>Inspect all user orders</div>
-            <div className={styles.messagerightdivh2}>Efficiently manage user orders with thorough inspection</div>
-          </div>
-          </Link>
-          <Link href="/account/settings/protectedroute/allusers" className={styles.divobj}>
-          <div>
-            <div className={styles.headline}>Check all user details</div>
-            <div className={styles.messagerightdivh2}>Efficiently manage user details with thorough checks</div>
-            </div>
-          </Link>
-          <Link href="/account/settings/protectedroute/addproduct" className={styles.divobj}>
-          <div>
-            <div className={styles.headline}>Add a new product</div>
-            <div className={styles.messagerightdivh2}>Easily add a new product to your inventory</div>
-          </div>
-          </Link>
-          <Link href="/account/settings/protectedroute/salesreport" className={styles.divobj}>
-          <div>
-            <div className={styles.headline}>Boost sales with comprehensive inspection</div>
-            <div className={styles.messagerightdivh2}>Analyze sales data to optimize business performance</div>
-          </div>
-          </Link>
+
+                <div className={styles.orderdates}>
+                  <div className={styles.dateorders}>
+                  <div>Registration Date: {formatDateTime(user.created_at)}</div>
+                </div>
           
-        </div>
-
+              </div>
+              </div>
+            </div>
+          )
+        })}
       </div>
     </div>
-  );
+  )
 }
-}
-

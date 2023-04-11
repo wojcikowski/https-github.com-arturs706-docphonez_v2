@@ -50,6 +50,8 @@
 }
 .messagerightdiv {
   margin: 3rem 0rem;
+  font-weight: 300;
+  
 }
 
 .divwrap {
@@ -64,9 +66,11 @@
 
 .divwrap img {
   margin: 0.8rem;
+  
 }
 .activeh5 {
   color: var(--main-font-color);
+  
 }
 .inactiveh5 {
   color: var(--main-font-faded);
@@ -76,6 +80,7 @@
   position: relative;
   display: flex;
   z-index: 5;
+  
 }
 
 /* THIS MUST BE OVERFLOWN*/
@@ -94,8 +99,10 @@
   justify-content: space-evenly;
   align-items: center;
   width: 100%;
-  height: 20vh;
+  height: 44vh;
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
 
 }
 .invoice {
@@ -108,9 +115,6 @@
   width: 6.5rem;
   cursor: pointer;
   margin-right: 2rem;
-}
-.invoice:active {
-  transform: scale(0.95);
 }
 .orderidstyles {
   display: flex;
@@ -132,7 +136,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 23rem;
+  width: 27rem;
   justify-content: space-between;
 }
 
@@ -152,6 +156,7 @@
 .invoicebtn:active {
   transform: scale(0.95);
 }
+
 
 .orderdates {
   display: flex;
@@ -203,46 +208,10 @@
   align-items: center;
 
 }
-.imagewrapp {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 6.15rem;
-  height: 14vh;
-  padding: 0.8rem;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 7px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  border: 0.4px solid #aaa7a74d;
-  margin-right: 1rem;
-}
-.colormemory {
-  font-weight: 300;
-  display: flex;
-  width: 100%;
-  color: var(--main-font-faded);
-  padding-top: 0.9rem;
-  
-}
-.rightdiv {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-.rightdiv h5 {
-  font-weight: 300;
-  color: var(--main-font-color);
-  font-size: 0.9rem;
-  padding-top: 0.9rem;
-  
-}
+
+
+
+
 .paymentwrap {
   display: flex;
   flex-direction: row;
@@ -270,6 +239,14 @@
   width: 100%;
   margin-bottom: 4rem;
   padding-bottom: 1rem;
+}
+.customeridemail {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 1rem 0rem;
 }
 
 
@@ -477,7 +454,7 @@
       width: 81.9%;
     }
     .wrappdiivvv {
-      height: 18rem;
+      height: 50vhrem;
     }
     .orderidstyles {
       margin-bottom: 1rem;
@@ -538,6 +515,14 @@
         flex-direction: column;
         justify-content: space-evenly;
         height: 5rem;
+      }
+      .customeridemail h2 {
+        font-size: 1.2rem;
+      }
+
+      .idnumber {
+        margin-top: 2rem;
+        font-size: 1.2rem;
       }
       
   }

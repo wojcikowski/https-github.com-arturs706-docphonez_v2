@@ -8,7 +8,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import jwt_decode from 'jwt-decode';
 import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../redux/reducers/profileSlice'
-
+import Loader from '@/app/Loader';
 
 export default function Page() {
     const cart = useSelector(state => state.counter);
@@ -17,17 +17,35 @@ export default function Page() {
     const [message, setMessage] = useState('')
     const dispatch = useDispatch()
     const router = useRouter()
-    const [user, setUser] = useState({
-        fullname: "",
-        email: "",
-        mob_phone: ""});
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [mobilePhone, setMobilePhone] = useState('')
+    const [email, setEmail] = useState('')
+    const [firstLine, setFirstLine] = useState('')
+    const [secondLine, setSecondLine] = useState('')
+    const [town, setTown] = useState('')
+    const [postcode, setPostcode] = useState('')
+    const [loading, setLoading] = useState(false)
+
+
+   
 
     const handleClick = () => {
         router.push('/payment');
+        // save the shipping details to the local storage
+        localStorage.setItem('shippingDetails', JSON.stringify({
+            firstName: firstName,
+            lastName: lastName,
+            firstLine: firstLine,
+            secondLine: secondLine,
+            town: town,
+            postcode: postcode
+        }))
       };
     
 
       useEffect(() => {
+        setLoading(true)
         fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/refresh_token', {
         // fetch("https://pm.doctorphonez.co.uk/api/v1/refresh_token", {
         method: 'POST',
@@ -54,24 +72,49 @@ export default function Page() {
                 })
                 .then((res) => res.json())
                 .then((userdata) => {
-                    setUser(userdata.data)
+                    const splitName = userdata.data.fullname.split(' ');
+                    setFirstName(splitName[0])
+                    setLastName(splitName[splitName.length -1])
+                    setMobilePhone(userdata.data.mob_phone)
+                    setEmail(userdata.data.email)
+                    setLoading(true)
+                    fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/getprimaryaddress', {
+                    // fetch("https://pm.doctorphonez.co.uk/api/v1/getprimaryaddress", {
+                        method: "GET",
+                        credentials: 'include',
+                        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${data.accessToken}` },
+                    })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        if(data.status !== "error") {
+                            setFirstLine(data.data.firstline)
+                            setSecondLine(data.data.secondline)
+                            setTown(data.data.city)
+                            setPostcode(data.data.postcode)
+                            setLoading(false)
+                        } else {
+                            setFirstLine("")
+                            setSecondLine("")
+                            setTown("")
+                            setPostcode("")
+                            setLoading(false)
+                        }
+                    })
+                    
+
                 })
             }
         })
     }, [dispatch, router]);
-
-      //create a function that returns user back to the previous page when they click on the back button
         const handleBack = () => {
             router.back();
         }
-
     //create a function that returns no items in the cart when the cart is empty
         useEffect(() => {
             if (cart.length === 0) {
                 setMessage('No items in cart')
             }
         }, [cart])
-
 
 
       function printFifthDay() {
@@ -87,6 +130,8 @@ export default function Page() {
       
         return `Arrives by ${date}${suffix} of ${monthOfYear}`;
       }
+
+    
       
       
 
@@ -136,6 +181,29 @@ export default function Page() {
         )
     }
 
+    const handleFirstName = (e) => {
+        setFirstName(e.target.value)
+    }
+    const handleLastName = (e) => {
+        setLastName(e.target.value)
+    }
+    const handleFirstLine = (e) => {
+        setFirstLine(e.target.value)
+    }
+    const handleSecondLine = (e) => {
+        setSecondLine(e.target.value)
+    }
+    const handleTown = (e) => {
+        setTown(e.target.value)
+    }
+    const handlePostcode = (e) => {
+        setPostcode(e.target.value)
+    }
+
+
+if (loading) {
+    <div className={styles.cartmain}><Loader/></div>
+}
 
 
     return (
@@ -219,21 +287,21 @@ export default function Page() {
                             <div className={styles.frminputs}>
                             <div className={styles.forminputs}>
                                 <label>First Name</label>
-                                <input type="text" placeholder="First Name"/>
+                                <input type="text" placeholder="First Name" defaultValue={firstName} onChange={handleFirstName}/>
                             </div>
                             <div className={styles.forminputs}>
                                 <label>Last Name</label>
-                                <input type="text" placeholder="Last Name"/>
+                                <input type="text" placeholder="Last Name" defaultValue={lastName} onChange={handleLastName}/>
                             </div>
                             </div>
                             <div className={styles.frminputs}>
                             <div className={styles.forminputs}>
                                 <label>Email address</label>
-                                <input type="email" placeholder="Email address"/>
+                                <input type="email" placeholder="Email address" defaultValue={email} disabled/>
                             </div>
                             <div className={styles.forminputs}>
                                 <label>Mobile phone</label>
-                                <input type="number" placeholder="Mobile phone"/>
+                                <input type="number" placeholder="Mobile phone" defaultValue={mobilePhone} disabled/>
                             </div>
                             </div>
                   
@@ -247,21 +315,21 @@ export default function Page() {
                             <div className={styles.frminputs}>
                             <div className={styles.forminputs}>
                                 <label>First line of the address</label>
-                                <input type="text" placeholder="First line of the address"/>
+                                <input type="text" placeholder="First line of the address" defaultValue={firstLine} onChange={handleFirstLine}/>
                             </div>
                             <div className={styles.forminputs}>
                                 <label>Second line of the address</label>
-                                <input type="text" placeholder="Second line of the address"/>
+                                <input type="text" placeholder="Second line of the address" defaultValue={secondLine} onChange={handleSecondLine}/>
                             </div>
                             </div>
                             <div className={styles.frminputs}>
-                            <div className={styles.forminputs}>
+                            <div className={styles.forminputs}>     
                                 <label>City</label>
-                                <input type="text" placeholder="City"/>
+                                <input type="text" placeholder="City" defaultValue={town} onChange={handleTown}/>
                             </div>
                             <div className={styles.forminputs}>
                                 <label>Post code</label>
-                                <input type="text" placeholder="Post code"/>
+                                <input type="text" placeholder="Post code" defaultValue={postcode} onChange={handlePostcode}/>
                             </div>
                             </div>
                   
@@ -323,21 +391,21 @@ export default function Page() {
                             <div className={styles.frminputs}>
                             <div className={styles.forminputs}>
                                 <label>First Name</label>
-                                <input type="text" placeholder="First Name"/>
+                                <input type="text" placeholder="First Name" defaultValue={firstName} onChange={handleFirstName}/>
                             </div>
                             <div className={styles.forminputs}>
                                 <label>Last Name</label>
-                                <input type="text" placeholder="Last Name"/>
+                                <input type="text" placeholder="Last Name" defaultValue={lastName} onChange={handleLastName}/>
                             </div>
                             </div>
                             <div className={styles.frminputs}>
                             <div className={styles.forminputs}>
                                 <label>Email address</label>
-                                <input type="email" placeholder="Email address"/>
+                                <input type="email" placeholder="Email address" defaultValue={email} disabled/>
                             </div>
                             <div className={styles.forminputs}>
                                 <label>Mobile phone</label>
-                                <input type="number" placeholder="Mobile phone"/>
+                                <input type="number" placeholder="Mobile phone" defaultValue={mobilePhone} disabled/>
                             </div>
                             </div>
                   
@@ -351,21 +419,21 @@ export default function Page() {
                             <div className={styles.frminputs}>
                             <div className={styles.forminputs}>
                                 <label>First line of the address</label>
-                                <input type="text" placeholder="First line of the address"/>
+                                <input type="text" placeholder="First line of the address" defaultValue={firstLine} onChange={handleFirstLine}/>
                             </div>
                             <div className={styles.forminputs}>
                                 <label>Second line of the address</label>
-                                <input type="text" placeholder="Second line of the address"/>
+                                <input type="text" placeholder="Second line of the address" defaultValue={secondLine} onChange={handleSecondLine}/>
                             </div>
                             </div>
                             <div className={styles.frminputs}>
                             <div className={styles.forminputs}>
                                 <label>City</label>
-                                <input type="text" placeholder="City"/>
+                                <input type="text" placeholder="City" defaultValue={town} onChange={handleTown}/>
                             </div>
                             <div className={styles.forminputs}>
                                 <label>Post code</label>
-                                <input type="text" placeholder="Post code"/>
+                                <input type="text" placeholder="Post code" defaultValue={postcode} onChange={handlePostcode}/>
                             </div>
                             </div>
                   
@@ -374,23 +442,7 @@ export default function Page() {
                         
                     </div>
 
-
-
-
-
-
-
-
-
-                    
-                  
                 </div>
-
-
-
-
-
-
 
                     <h2 className={styles.tiyle}>Your order</h2>
                     <div className={styles.productwrapp}>
@@ -448,7 +500,7 @@ export default function Page() {
                         </div>
                         <div className={styles.btntwo}>
                             <Image
-                                src = "vehilce.svg"
+                                src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1681211173/etc/1320f511169f9b3a7391de182e5e61ce.svg"
                                 alt = "delivery"
                                 width = {20}
                                 height = {20}

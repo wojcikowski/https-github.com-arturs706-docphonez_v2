@@ -87,6 +87,11 @@
     border-radius: 0.6rem;
     cursor: pointer;
 }
+
+.actionbutton:active {
+  transform: scale(0.95);
+}
+
 .hiddh2 {
   display: none;
 }

@@ -62,6 +62,7 @@ useEffect(() => {
                 .then((res) => res.json())
                 .then((data) => {
                     if (data.status === "success") {
+
                         const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
                         const addtometadata = cart.map((item) => {
                             return {
@@ -69,6 +70,11 @@ useEffect(() => {
                                 quantity: item.quantity,
                             }
                         })
+                        const shippingDetails = JSON.parse(localStorage.getItem('shippingDetails'))
+                        console.log(shippingDetails)
+                        const fullnameconcat = shippingDetails.firstName + " " + shippingDetails.lastName
+                        
+
                         // fetch("https://pm.doctorphonez.co.uk/api/v1/create-payment-intent", {
                         fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/create-payment-intent', {
                             
@@ -77,14 +83,24 @@ useEffect(() => {
                         body: JSON.stringify({
                             amount: total,
                             email: data.data.email,
-                            fullname: data.data.fullname,
+                            fullname: fullnameconcat,
                             phone: data.data.mob_phone,
                             usid: data.data.usid,
-                            addtometadata: JSON.stringify(addtometadata)
+                            addtometadata: JSON.stringify(addtometadata),
+                            address: JSON.stringify({
+                                "firstline": shippingDetails.firstLine,
+                                "secondline": shippingDetails.secondLine,
+                                "city": shippingDetails.town,
+                                "postcode": shippingDetails.postcode
+                            })
+
                         }),
                         })
                         .then((res) => res.json())
-                        .then((data) => setClientSecret(data.clientSecret));
+                        .then((data) => 
+                        setClientSecret(data.clientSecret),
+                        
+                        );
                     }
                 });
         }
@@ -98,8 +114,8 @@ useEffect(() => {
         theme: 'night',
         variables: {
           colorPrimary: '#000235',
-          colorBackground: '#ffffff',
-          colorText: '#000235',
+          colorBackground: '#3c466d',
+          colorText: '#f5f5ff',
         },
       };
       const options = {
@@ -245,14 +261,6 @@ useEffect(() => {
                 </div>
 
                 <div className={styles.divright}>
-  
-
-
-
-
-
-
-
                     <h2 className={styles.tiyle}>Your order</h2>
                     <div className={styles.productwrapp}>
                     {data.map((item, index) => (

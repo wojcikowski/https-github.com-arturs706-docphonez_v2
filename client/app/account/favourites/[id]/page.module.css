@@ -35,7 +35,8 @@
   height: 100vh;
   margin: 3.2rem;
   color: var(--main-font-color);
-  
+  overflow: auto;
+
   }
   
   .divright h1 {
@@ -53,6 +54,10 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     color: var(--main-font-color);
     
+  }
+
+  .messagerightdiv {
+    margin: 3rem 0rem;
   }
   
   .divwrap {
@@ -91,7 +96,78 @@
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
   }
-  
+
+  .wrappp {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 20vh;
+    z-index: 0;
+    justify-content: space-between;
+    flex-direction: row;
+  }
+  .imagewrapp {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 6.15rem;
+    height: 14vh;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 7px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    border: 0.4px solid #aaa7a74d;
+    margin-right: 1rem;
+  }
+  .divtextwrpp {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+    padding: 0.8rem;
+  }
+  .divtextwrpp h5 {
+    font-weight: 300;
+    color: var(--main-font-color);
+    margin: 0.2rem;
+    font-size: 0.8rem;
+  }
+  .colormemory {
+    display: flex;
+    flex-direction: row;
+  }
+  .pricediv h4 {
+    font-weight: 300;
+    color: var(--main-font-color);
+    margin: 0.2rem;
+    font-size: 1rem;
+  }
+  .rightdiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 18rem;
+  }
+  .rightdiv h5{
+    font-weight: 300;
+    color: var(--main-font-color);
+    margin: 0.2rem;
+    font-size: 0.8rem;
+  }
+  .rightdiv img{
+    cursor: pointer;
+  }
+
 @media screen and (max-width: 1000px) {
   .main {
     display: inline-block ;
@@ -243,6 +319,14 @@
     .divleft {
       width: 83%;
       }
+    .rightdiv {
+      justify-content: flex-end;
+      width: 3rem;
+    }
+    .rightdiv h5 {
+      display: none;
+    }
+  
   }
   @media screen and (max-width: 563px) {
     .divwrap {

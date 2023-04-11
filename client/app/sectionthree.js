@@ -8,8 +8,8 @@ import Link from 'next/link';
 async function getRecentIphone() {
   return await (await fetch (process.env.NEXT_PUBLIC_API_URL + `api/v1/products/apple/featured`)).json();
   // return await (await fetch ('https://pm.doctorphonez.co.uk/api/v1/products/apple/featured')).json();
-
 }
+
 
 
 export const metadata = {
@@ -26,6 +26,8 @@ export default function Sectionthree() {
   const [w, setW] = useState(0);
   const [h, setH] = useState(0);
   const [errormessage, setErrormessage] = useState('');
+
+
 
 
   useEffect(() => {
@@ -83,6 +85,7 @@ export default function Sectionthree() {
                       quality={100}
                       priority={true}
                   />
+
                 <span>{item.prodname}</span>
                 <span className={styles.pricespan}>{"£"+ item.price}</span>
                 <div className={styles.button}>

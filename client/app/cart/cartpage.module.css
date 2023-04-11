@@ -113,6 +113,7 @@
   .cartpage label {
     font-size: 0.8rem;
     padding-bottom: 1rem;
+    font-weight: 300;
 
   }
   .forminputs {
@@ -122,13 +123,22 @@
   .forminputs input {
     height: 2rem;
     border-radius: 0.4rem;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     border: none;
     width: 12rem;
+    color: var(--main-font-color);
+    
   }
+
   .frminputs {
     display: flex;
     flex-direction: row;
@@ -149,9 +159,10 @@
     color: var(--main-font-color);
     cursor: pointer;
   }
-  /* .btn.clicked {
-    background-color: #f2f2f2;
-  } */
+  .btn:active {
+    transform: scale(0.95);
+  }
+  
   
   .divright {
     width: 50%;
@@ -184,6 +195,10 @@
 
     cursor: pointer;
   }
+  .binwrapp img:active {
+    transform: scale(0.95);
+  }
+  
   .itemqtywrap {
     display: flex;
     flex-direction: row;
@@ -203,6 +218,9 @@
     border: 1px solid var(--main-font-faded);
     padding: 0.3rem 0.7rem;
     cursor: pointer;
+  }
+  .addremoveitm:active {
+    transform: scale(0.95);
   }
   .totalline {
     display: flex;

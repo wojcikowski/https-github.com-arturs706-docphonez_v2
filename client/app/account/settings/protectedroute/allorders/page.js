@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import jwt_decode from 'jwt-decode';
-import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../../redux/reducers/profileSlice'
+import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../../../../redux/reducers/profileSlice'
 import Link from 'next/link';
-import Loader from '../Loader';
+import Loader from '../../../Loader';
 
 
 
@@ -94,39 +94,36 @@ export default function Page() {
             .then((res) => res.json())
             .then((userdata) => {
               setUser(userdata.data)
-              console.log(userdata.data.usid)
-              fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/orders', {
+              fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/allorders', {
                 method: "GET",
                 headers: {
                   "Content-Type": "application/json",
-                  "Authorization": `Bearer ${data.accessToken}`,
-                  "usid": `${userdata.data.usid}`,
-                },
-              })
-                        
-            
-            .then((res) => res.json())
-            .then((data) => {
-              const current = []
-              const past = []
-              data.orders.forEach((order) => {
-                if (order.delivered === true) {
-                  current.push(order)
-
-                } else {
-                  past.push(order)
+                  "Authorization": `Bearer ${data.accessToken}`
                 }
               })
-              setCurrentOrders(current)
-              setPastOrders(past)
-              setLoading(false)
+              .then((res) => res.json())
+              .then((data) => {
+                console.log(data)
+                const current = []
+                const past = []
+                data.orders.forEach((order) => {
+                  if (order.delivered === true) {
+                    current.push(order)
+
+                  } else {
+                    past.push(order)
+                  }
+                })
+                setCurrentOrders(current)
+                setPastOrders(past)
+                setLoading(false)
+              })
             })
-          })
-      }})
-}, [])
+        }})
+  }, [])
 
-
-
+console.log(currentorders)
+console.log(pastorders)
 
     // create a function to get the width of the window
     useEffect(() => {
@@ -145,45 +142,45 @@ export default function Page() {
     <div className={styles.main}>
       <div className={styles.ovalblur}></div>
       <div className={styles.divleft}>
-        <div className={styles.profileH}>Profile</div>
-        <Link href="/account">
+        <div className={styles.profileH}>Admin</div>
+        <Link href="/account/settings/protectedroute">
           <div className={styles.divwrap}>
             <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1679950884/etc/homeicon_xfx8h8.svg" alt="icon" width={30} height={30} />
             <h5 className={styles.inactiveh5}>General</h5>
           </div>
         </Link>
-        <Link href="/account/orders">
+        <Link href="/account/settings/protectedroute/allorders">
         <div className={styles.divwrap}>
           <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1679950827/etc/delivery_xr7qev.svg" alt="icon" width={30} height={30} />
-          <h5 className={styles.activeh5}>Orders</h5>
+          <h5 className={styles.activeh5}>All Orders</h5>
         </div>
         </Link>
-        <Link href="/account/favourites/[id]" as={`/account/favourites/${user.usid}`}>
+        <Link href="/account/settings/protectedroute/allusers">
           <div className={styles.divwrap}>
-          <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1679950827/etc/favourites_dwalys.svg" alt="icon" width={30} height={30} />
-            <h5 className={styles.inactiveh5}>Wishlist</h5>
+          <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1679950789/etc/account_isgany.svg" alt="icon" width={30} height={30} />
+            <h5 className={styles.inactiveh5}>All Users</h5>
           </div>
         </Link>
-        <Link href="/account/deliveries">
+        <Link href="/account/settings/protectedroute/addproduct">
           <div className={styles.divwrap}>
-            <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1679950827/etc/deliveries_zzqyjk.svg"alt="icon" width={30} height={30} />
-            <h5 className={styles.inactiveh5}>Delivery Addresses</h5>
+          <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1680857485/etc/f3f7ec5a3ff37407cec506b786e72c7e.svg" alt="icon" width={30} height={30} />
+            <h5 className={styles.inactiveh5}>Add product</h5>
           </div>
         </Link>
-        <Link href="/account/settings">
+        <Link href="/account/settings/protectedroute/salesreport">
           <div className={styles.divwrap}>
-            <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1679950789/etc/account_isgany.svg" alt="icon" width={30} height={30} />
-            <h5 className={styles.inactiveh5}>Account details</h5>
+            <Image src="https://res.cloudinary.com/dttaprmbu/image/upload/v1680858086/etc/526231ade32fbcfb19048d8156ff5337.svg" alt="icon" width={30} height={30} />
+            <h5 className={styles.inactiveh5}>Sales report</h5>
           </div>
         </Link>
       </div>
       <div className={styles.divright}>
-      <h1>Order List</h1>
+      <h1>All orders</h1>
         <br />
         <br />
-         <h2>Order Page</h2>
+         <h2>Order List</h2>
         <br />
-        <div className={styles.messagerightdiv}>Hey! This is where you can check out all your old orders, tell us what kind of emails you want to receive, and update your account deets to make checkout a breeze.</div>
+        <div className={styles.messagerightdiv}>Check all user orders</div>
         <div>Current Orders</div>
         {pastorders.map((order) => {
           return (
@@ -198,15 +195,20 @@ export default function Page() {
                     <div className={styles.invoicebtn}>Track Order</div>
                   </div>
                 </div>
+                <div className={styles.customeridemail}><h2>Customer email:</h2><div>{order.useremail}</div></div>
+
                 <div className={styles.orderdates}>
                   <div className={styles.dateorders}>
                   <div>Order Date: {formatDateTime(order.orderdate)}</div>
                   <div className={styles.barru}>|</div>
                   <div>Estimate delivery: {formatDateTime(addDays(order.orderdate, 5))}</div>
                 </div>
+          
               </div>
               </div>
+
               {order.items.map((item) => {
+                console.log(item)
                 return (
                   <div key={item.orderitemid} className={styles.wrappp}>
                     <div className={styles.wrapanother}>
@@ -314,6 +316,7 @@ export default function Page() {
               <div className={styles.wrappdiivvv}>
                 <div className={styles.orderidstyles}>
                 <div className={styles.orderidstylesone}><h2>Order ID:</h2><div>{order.orderid}</div></div>
+
                   <div className={styles.orderidstylesinvtrack}>
                     <Link href={`${order.receiptlink}`}>
                       <div className={styles.invoice}>Invoice</div>
@@ -321,11 +324,13 @@ export default function Page() {
                     <div className={styles.invoicebtn}>Track Order</div>
                   </div>
                 </div>
+                <div className={styles.customeridemail}><h2>Customer email:</h2><div>{order.useremail}</div></div>
+
                 <div className={styles.orderdates}>
                   <div className={styles.dateorders}>
                   <div>Order Date: {formatDateTime(order.orderdate)}</div>
                   <div className={styles.barru}>|</div>
-                  <div>Delivered on: {formatDateTime(addDays(order.orderdate, 1))}</div>
+                  <div>Delivered on: {formatDateTime(addDays(order.orderdate, 5))}</div>
                 </div>
           
               </div>
