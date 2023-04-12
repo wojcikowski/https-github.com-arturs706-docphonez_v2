@@ -1,6 +1,6 @@
 "use client"; // this is a client component 👈🏽
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './success.module.css';
 import { useSearchParams } from 'next/navigation';
 import { useDispatch } from 'react-redux';
@@ -16,6 +16,11 @@ export default function Page() {
   const search = searchParams.get('payment_intent');
 
 
+  //create a function to check the size of the screen and change the widht and height of the image
+
+
+  
+
 
   useEffect(() => {
       async function checkRefreshToken() {
@@ -26,9 +31,6 @@ export default function Page() {
       localStorage.removeItem('shippingDetails')
     }, [dispatch]);
 
-
-
-
     
   return (
     <div className={styles.successmain}>
@@ -38,39 +40,39 @@ export default function Page() {
           <Image 
               src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1679855139/etc/1_eimweq.svg"
               alt = "1"
-              width = {60}
-              height = {60}
+              width = {50}
+              height = {50}
           />
           <div className={styles.nameof}>Delivery</div>
           </div>
           <Image
               src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1679855139/etc/active_qbtztb.svg"
               alt = "2"
-              width = {100}
-              height = {60}
+              width = {80}
+              height = {50}
           />
           
           <div className={styles.imgwrap}>
           <Image 
               src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1679855139/etc/2_tgnnar.svg"
               alt = "1"
-              width = {60}
-              height = {60}
+              width = {50}
+              height = {50}
           />
           <div className={styles.nameof}>Payment</div>
           </div>
           <Image
               src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1679855139/etc/active_qbtztb.svg"
               alt = "2"
-              width = {100}
-              height = {60}
+              width = {80}
+              height = {50}
           />
           <div className={styles.imgwrap}>
           <Image 
               src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1679855139/etc/3_xiolbe.svg"
               alt = "1"
-              width = {60}
-              height = {60}
+              width = {50}
+              height = {50}
           />
           <div className={styles.nameofthree}>Confirmation</div>
           </div>

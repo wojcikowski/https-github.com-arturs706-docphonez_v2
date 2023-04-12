@@ -288,7 +288,10 @@ const handleAltCountry = (e) => {
             <input type="text" placeholder="City" className={styles.input} defaultValue={town} onChange={handleTown}/>
             <input type="text" placeholder="Postcode" className={styles.input} defaultValue={postcode} onChange={handlePostcode}/>
           </div>
+          <div className={styles.wrappinput}>
+
           <input type="text" placeholder="Country" className={styles.input} defaultValue={country} onChange={handleCountry}/>
+          </div>
           {setResponseMessage && <div className={styles.successmessage}>{setResponseMessage}</div>}
           {errorMessage && <div className={styles.errormessage}>{errorMessage}</div>}
           <div className={styles.buttontosave}>
@@ -310,7 +313,9 @@ const handleAltCountry = (e) => {
             <input type="text" placeholder="City" className={styles.input} defaultValue={altTown} onChange={handleAltTown}/>
             <input type="text" placeholder="Postcode" className={styles.input} defaultValue={altPostcode} onChange={handleAltPostcode}/>
           </div>
+          <div className={styles.wrappinput}>
           <input type="text" placeholder="Country" className={styles.input} defaultValue={altCountry} onChange={handleAltCountry}/>
+          </div>
           {setResponseMessageTwo && <div className={styles.successmessage}>{setResponseMessageTwo}</div>}
           {errorMessageTwo && <div className={styles.errormessage}>{errorMessageTwo}</div>}
           <div className={styles.buttontosave}>

@@ -103,6 +103,7 @@
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
   }
+
   .changediv {
     display: flex;
     flex-direction: column;
@@ -111,6 +112,7 @@
     width: 100%;
     padding-top: 1rem;
     margin-bottom: 5rem;
+
   }
   .wrappinput {
     display: flex;
@@ -384,5 +386,33 @@
       .divwrap img {
         margin: 1rem;
       }
+      .divright{
+        margin: 0rem;
+        width: 100%;
+        padding-right: 1.5rem;
+      
+
+      }
+      .divright h2 {
+        padding-left: 1.4rem;
+
+      }
+      .messagerightdiv {
+        padding-left: 1.4rem;
+
+      }
+      .changediv h5{
+        padding-left: 1.4rem;
+        max-width: 10rem;
+
+      }
+      .wrappinput {
+        padding-left: 1.4rem;
+        padding-right: 1rem;
+
+      }
+   
+
+  
   }
 

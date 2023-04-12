@@ -5,8 +5,8 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 
 
-router.post('/create-payment-intent',bodyParser.json(), async (req, res) => {
-  const { amount, email, fullname, phone, addtometadata} = req.body;
+router.post('/create-payment-intent', bodyParser.json(), async (req, res) => {
+  const { amount, email, fullname, phone, addtometadata, usid, address} = req.body;
   const roundedAmount = Math.round(amount * 100);
 
   const customercreated = await stripe.customers.create({
@@ -14,10 +14,11 @@ router.post('/create-payment-intent',bodyParser.json(), async (req, res) => {
     name: fullname,
     phone: phone,
     address: {
-      line1: '123 Test Street',
-      city: 'London',
-      country: 'GB',
-      postal_code: 'E1 4AA',
+      line1: address.firstline,
+      secondLine: address.secondline,
+      city: address.city,
+      postcode: address.postcode,
+      country: address.country
     },
   });
 
@@ -29,9 +30,8 @@ router.post('/create-payment-intent',bodyParser.json(), async (req, res) => {
     automatic_payment_methods: {
       enabled: true,
     },
-    metadata: {fullname: fullname, customeremail: email , orderdet: addtometadata},
+    metadata: {fullname: fullname, customeremail: email , orderdet: addtometadata, userid: usid, address: address},
     customer: customercreated.id,
-    // metadata: {userid: userid, productid: productid, productqty: productqty},
   });
   res.send({
     clientSecret: paymentIntent.client_secret,

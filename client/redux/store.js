@@ -3,6 +3,7 @@ import counterReducer from '../redux/reducers/cartSlice'
 import profileReducer from '../redux/reducers/profileSlice'
 import { HYDRATE } from 'next-redux-wrapper'
 import productReducer from '../redux/reducers/productSlice';
+import navigationReducer from '../redux/reducers/navigationSlice';
 
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
     counter: counterReducer,
     profile: profileReducer,
     products: productReducer,
+    navigation: navigationReducer,
     },
   devTools: true,
   middleware: (getDefaultMiddleware) =>

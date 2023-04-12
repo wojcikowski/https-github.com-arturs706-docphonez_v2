@@ -10,6 +10,8 @@ const authRouter = require('./routers/auth');
 const orderRouter = require('./routers/orders');
 const productRouter = require('./routers/products');
 const cookieParser = require('cookie-parser');
+const favourites = require('./routers/favourites');
+
 
 
 const corsOptions = {
@@ -26,6 +28,7 @@ app.use('/api/v1/', usersRouter);
 app.use('/api/v1', authRouter);
 app.use('/api/v1', orderRouter);
 app.use('/api/v1/products', productRouter);
+app.use('/api/v1/favourites', favourites);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ` + PORT);
@@ -33,3 +36,4 @@ app.listen(PORT, () => {
 );
 
 
+ 

@@ -3,6 +3,14 @@ POST http://localhost:10000/api/v1/login
 Content-Type: application/json
 
 {
+  "email": "art20@inbox.lv",
+  "passwd": "1"
+}
+###
+POST http://localhost:10000/api/v1/login
+Content-Type: application/json
+
+{
   "email": "aradionovs@yahoo.com",
   "passwd": "1"
 }
@@ -24,17 +32,66 @@ Content-Type: application/json
 ### 
 GET http://localhost:10000/api/v1/orders
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyYWRpb25vdnNAeWFob28uY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2ODA1NDg5OTEsImV4cCI6MTY4MDU0OTg5MX0.C-5UDWcq0tVsZOCgLSqXhu7JTvmrzNwTVNk_gL-1cks
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyYWRpb25vdnNAeWFob28uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjgwOTA5MTg3LCJleHAiOjE2ODA5MTAwODd9.NluoFJYN3Wg4ZyRwxQXDhhAXWxHXZGsVLhvUk5Rpl5A
 
 ###
 GET http://localhost:10000/api/v1/products
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjIxNDM3MjYyQHN0dWRlbnQudXdsLmFjLnVrIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjgwMzA1ODE0LCJleHAiOjE2ODAzMDY3MTR9.pKsayJ84NmCQKBT3jgt971EVGPyjOfQO-dxMuzjzVk0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyYWRpb25vdnNAeWFob28uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjgwOTM2NDM3LCJleHAiOjE2ODA5MzczMzd9.tQAqMGdIMIaelxjrvvLW0AUBwtvpSOKibd8r4AqnHcA
 
 
 ###
 GET http://localhost:10000/api/v1/products/favourites
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyYWRpb25vdnNAeWFob28uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjgwNjM1NzQ1LCJleHAiOjE2ODA2MzY2NDV9.IBvdsIBF70ePzsUpH8CGsjyoQREf4Ee4YoW95tw_160
+
+###
+POST http://localhost:10000/api/v1/products/uploadproduct
+Content-Type: application/json
+
+{
+    "prodname": "test",
+    "proddescr": "test",
+    "brand": "test",
+    "category": "test",
+    "modelnr": "test",
+    "availableqty": 1,
+    "price": "11111",
+    "color": "test",
+    "subcolor": "test",
+    "productmodel": "test",
+    "memory": "test"
+}
+
+###
+
+GET http://localhost:10000/api/v1/orders
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyYWRpb25vdnNAeWFob28uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjgwODYxNjExLCJleHAiOjE2ODA4NjI1MTF9.IWd5OS4iB9skBxWLcd2cOkwjEEetVXTIJtE_0hlcbsU
+
+
+###
+POST http://localhost:10000/api/v1/updateprofile/contactdetails
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFydDIwQGluYm94Lmx2Iiwicm9sZSI6InVzZXIiLCJpYXQiOjE2ODEwNTc2NzQsImV4cCI6MTY4MTA1ODU3NH0.90U6YzNMtvLs_6JGJ9IqBq7fKnTfjqdtXhvMfqASlBk
+
+{
+  "email": "aradionovs@yahoo.com",
+  "passwd": "1"
+}
+###
+POST http://localhost:10000/api/v1/updateprofile/contactdetails
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFydDIwQGluYm94Lmx2Iiwicm9sZSI6InVzZXIiLCJpYXQiOjE2ODEwNTc2NzQsImV4cCI6MTY4MTA1ODU3NH0.90U6YzNMtvLs_6JGJ9IqBq7fKnTfjqdtXhvMfqASlBk
+
+{
+  "email": "art20@inbox.lv",
+  "passwd": "1"
+}
+
+###
+GET http://localhost:10000/api/v1/getprimaryaddress
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyYWRpb25vdnNAeWFob28uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjgxMTk0OTIxLCJleHAiOjE2ODExOTU4MjF9.6a8R4akpjzAAXfIki4c9OHwfSkWANF-yrMGVmbkHSdI
 
 

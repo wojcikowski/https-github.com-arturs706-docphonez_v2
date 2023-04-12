@@ -1,2 +1,5 @@
 ###
 PUT http://localhost:10000/api/v1/register/success/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzk1OTI2ODYsImV4cCI6MTY3OTU5Mjc0Nn0.X3YNrMha5vYGh9o6nDWWZXuEZQXeMeHnGYTV_wpsWGM
+
+###
+GET http://localhost:10000/api/v1/favourites/78a2c06e-aba8-449e-9454-eb2940ba7eab

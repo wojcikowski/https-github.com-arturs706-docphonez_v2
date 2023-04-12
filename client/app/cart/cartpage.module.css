@@ -32,6 +32,7 @@
     align-items: center;
     position: relative;
     z-index: 5;
+
   }
   .top{
     width: 100%;
@@ -40,13 +41,15 @@
     justify-content: space-evenly;
     padding-left: 3.2rem;
     flex-direction: column;
-    
+
   }
   .wrapp {
     display: flex;
     width: 12rem;
     justify-content: space-between;
     align-items: center;
+    
+
   }
   .wrapp img {
     cursor: pointer;
@@ -68,6 +71,7 @@
     width: 100%;
     height: 86%;
     display: flex;
+
   }
 
   .divleft {
@@ -77,6 +81,7 @@
     flex-direction: column;
     position: relative;
     z-index: 2;
+
   }
 
   .stepper {
@@ -97,7 +102,9 @@
   }
   .nameoftow {
     padding-top: 1rem;
-    color: var(--main-font-faded)
+    color: var(--main-font-faded);
+
+    
   }
   .nameofthree {
     padding-top: 1rem;
@@ -206,6 +213,7 @@
     justify-content: space-between;
     padding: 1.4rem 0rem;
     align-items: center;
+    
  
   }
   .quantity {
@@ -213,6 +221,7 @@
     flex-direction: column;
     align-items: flex-end;
     padding-right: 2.9rem;
+    
   }
   .addremoveitm {
     border: 1px solid var(--main-font-faded);
@@ -228,6 +237,7 @@
     justify-content: space-between;
     padding-right: 2.9rem;
     padding-top: 1rem;
+
   }
   .btntwo {
     padding: 0.75rem;
@@ -376,10 +386,31 @@
     .cartpage h2 {
       margin-top: 0;
       padding-top: 0;
+      
     }
     .cartpage:nth-child(3) h2 {
       margin-top: 2rem;
+      
     }
+    .top {
+      padding-left: 1.5rem;
+    }
+    .wrapp {
+      width: 14.2rem;
+    }
+
+    .frminputs {
+      padding: 0.75rem 0rem;
+    }
+    .total {
+      width: 96%;
+    }
+    .tiyle {
+      padding-right: 4rem;
+    }
+
+ 
+
   }
 
 

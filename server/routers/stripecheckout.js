@@ -126,6 +126,8 @@ switch (event.type) {
   case "charge.succeeded":
   const session = event.data.object;
   console.log(session.payment_method_details);
+  console.log(session.metadata.orderdet);
+  const parseAddress = JSON.parse(session.metadata.address);
 
   //check the data type of session.payment_intent
     const parseJSON = JSON.parse(session.metadata.orderdet)
@@ -159,17 +161,18 @@ switch (event.type) {
     }
     
     
+    
     //insert into the the userorders table the payment id, the user id and the total amount
     if (session.payment_method_details.type === "card" && session.payment_method_details.card.wallet === null){
     //convert session.payment_method_details.card.last4 to a string to be able to insert it into the database
     const last4 = session.payment_method_details.card.last4.toString();
-    client.query(`insert into userorders VALUES ('${session.payment_intent}', '${session.metadata.customeremail}', '${session.amount/100}', '${session.receipt_url}', '${session.payment_method_details.card.brand}', '${last4}')`);
+    client.query(`insert into userorders VALUES ('${session.payment_intent}', '${session.metadata.userid}', '${session.metadata.customeremail}', '${session.amount/100}', '${session.receipt_url}', '${session.payment_method_details.card.brand}', '${last4}')`);
     } else if (session.payment_method_details.type === "card" && session.payment_method_details.card.wallet !== null) {
       const last4 = session.payment_method_details.card.last4.toString();
-      client.query(`insert into userorders VALUES ('${session.payment_intent}', '${session.metadata.customeremail}', '${session.amount/100}', '${session.receipt_url}', '${session.payment_method_details.card.wallet.type}', '${last4}')`);
+      client.query(`insert into userorders VALUES ('${session.payment_intent}', '${session.metadata.userid}', '${session.metadata.customeremail}', '${session.amount/100}', '${session.receipt_url}', '${session.payment_method_details.card.wallet.type}', '${last4}')`);
     }
     else if (session.payment_method_details.type === "klarna") {
-      client.query(`insert into userorders VALUES ('${session.payment_intent}', '${session.metadata.customeremail}', '${session.amount/100}', '${session.receipt_url}', '${session.payment_method_details.type}', '${session.payment_method_details.klarna.payment_method_category}')`);}
+      client.query(`insert into userorders VALUES ('${session.payment_intent}', '${session.metadata.userid}', '${session.metadata.customeremail}', '${session.amount/100}', '${session.receipt_url}', '${session.payment_method_details.type}', '${session.payment_method_details.klarna.payment_method_category}')`);}
       for (let i = 0; i < products.length; i++) {
         const item = products[i];
         const itemPriceString = item.price.toString();
@@ -177,6 +180,7 @@ switch (event.type) {
         client.query(`INSERT INTO orderitems (orderid, productname, quantity, price, color, memory, imageurl) 
                       VALUES('${session.payment_intent}', '${item.product_name}', '${item.quantity}', '${itemPriceString}', '${item.color}', '${itemMemory}', '${item.image_url}')`);
       }
+    client.query(`insert into shippingaddress(orderid, firstline, secondline, city, postcode) VALUES ('${session.payment_intent}', '${parseAddress.firstline}', '${parseAddress.secondline}', '${parseAddress.city}', '${parseAddress.postcode}')`);
     sendEmail(session.metadata.customeremail, session.metadata.fullname, session.amount/100, products)
     break;
   default:
@@ -187,3 +191,8 @@ response.send();
 });
 
 module.exports = router;
+
+
+
+
+

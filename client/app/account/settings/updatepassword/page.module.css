@@ -146,11 +146,18 @@
   -moz-transform: translate3d(0, 0, 0);
 }
 
-@media screen and (max-width: 412px) {
+@media screen and (max-width: 428px) {
   .changedivwrapper {
-      margin-left: 1.48rem;
+      margin-left: 1.4rem;
       width: 100%;
-      margin-right: 1.97rem;
-
+      margin-right: 1.9rem;
   }
+  .changediv {
+      display: flex;
+      flex-direction: column;
+  }
+  .changediv input {
+      width: 100%;
+  }
+
 }

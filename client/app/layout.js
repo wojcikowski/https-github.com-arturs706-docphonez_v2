@@ -20,7 +20,11 @@ const roboto = Roboto({
 })
 
 
-export default function RootLayout({ children }) {
+
+export default async function RootLayout({ children }) {
+  const res = await fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/products', { next: { revalidate: 10 }})
+  const data = await res.json();
+  const productlist = data.products
   
   return (
     
@@ -28,7 +32,7 @@ export default function RootLayout({ children }) {
       <head />
       <Providers>
         <body className={roboto.className}>
-          <Nav />
+          <Nav products={productlist}/>
               {children}
           <Footer />
         </body>

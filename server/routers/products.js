@@ -4,6 +4,11 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const authenticateToken = require('../middleware/authz')
+const { v4: uuidv4 } = require('uuid');
+var moment = require('moment'); 
+const cloudinary = require('cloudinary').v2;
+
+
 
 const query = `
 SELECT products.productid, products.prodname, products.proddescr, products.brand, products.category, 
@@ -133,28 +138,120 @@ router.get('/:category/:brand/:productid', bodyParser.json(), async (req, res) =
     }
 });
 
-const FETCH_FAVOURITE_ITEMS =     
-`SELECT products.productid, products.prodname, products.price, productimages.imagetwo
-FROM products
-INNER JOIN prodcategory 
-ON products.category  = prodcategory.descr
-INNER JOIN productimages
-ON products.prodsku = productimages.prodskuid
-INNER JOIN favourites
-ON products.productid = favourites.productid
-where favourites.userid = $1`
 
-router.get('/favourites', authenticateToken, async (req,res) =>{
+router.post('/uploadproduct', bodyParser.json({ limit: '50mb' }), async (req, res) => {
+    const mysqlTimestamp = moment().format('YYYY-MM-DD HH:mm:ss');
+    const productid = uuidv4();
+    const specid = uuidv4();
+    const productimgid = uuidv4();
+    const {
+        prodname,
+        proddescr,
+        brand,
+        category,
+        modelnr,
+        availableqty,
+        price,
+        color,
+        subcolor,
+        memory,
+        imageone,
+        imagetwo,
+        imagethree,
+        imagefour,
+    } = req.body;
+    const availablequantity = parseInt(availableqty);
+
+    const INSERT_PRODUCT = `INSERT INTO products (productid, prodname, proddescr, brand, category, modelnr, availableqty, price, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
+    const INSERT_PRODUCT_SPEC = `INSERT INTO productspecs (specid, color, subcolor, productmodel, memory) VALUES ($1, $2, $3, $4, $5)`;
+    const INSERT_PRODUCT_IMAGE = `INSERT INTO productimages (productimgid, productmodel, imageone, imagetwo, imagethree, imagefour) VALUES ($1, $2, $3, $4, $5, $6)`;
+
+    cloudinary.config(process.env.CLOUDINARY_URL);
+
     try {
-        const userfavourites = await client.query(FETCH_FAVOURITE_ITEMS, [req.user.email]);
-        res.status(200).json({ favourites: userfavourites.rows[0], "status": "success" });
+        const [uploadresone, uploadrestwo, uploadresthree, uploadresfour] = await Promise.all([
+            cloudinary.uploader.upload(imageone, {
+                upload_preset: 'l7gdiaso',
+                transformation: [
+                    { width: 635, height: 866, crop: "fit" },
+                    { background: "transparent", width: 635, height: 866, gravity: "center" }
+                ],
+            }),
+            cloudinary.uploader.upload(imagetwo, {
+                upload_preset: 'l7gdiaso',
+                transformation: [
+                    { width: 635, height: 866, crop: "fit" },
+                    { background: "transparent", width: 635, height: 866, gravity: "center" }
+                ],
+            }),
+            cloudinary.uploader.upload(imagethree, {
+                upload_preset: 'l7gdiaso',
+                transformation: [
+                    { width: 635, height: 866, crop: "fit" },
+                    { background: "transparent", width: 635, height: 866, gravity: "center" }
+                ],
+            }),
+            cloudinary.uploader.upload(imagefour, {
+                upload_preset: 'l7gdiaso',
+                transformation: [
+                    { width: 635, height: 866, crop: "fit" },
+                    { background: "transparent", width: 635, height: 866, gravity: "center" }
+                ],
+            }),
+        ]).then((result) => {
+            return result;
+        }).catch((error) => {
+            console.error(error);
+            throw error;
+        });
 
+        if (uploadresone && uploadrestwo && uploadresthree && uploadresfour) {
+            const firstImage = uploadresone.secure_url;
+            const secondImage = uploadrestwo.secure_url;
+            const thirdImage = uploadresthree.secure_url;
+            const fourthImage = uploadresfour.secure_url;
+
+            await client.query(INSERT_PRODUCT, [
+                productid,
+                prodname,
+                proddescr,
+                (brand).toLowerCase(),
+                (category).toLowerCase(),
+                modelnr,
+                availablequantity,
+                price,
+                mysqlTimestamp,
+            ]);
+            await client.query(INSERT_PRODUCT_SPEC, [specid, color, subcolor, modelnr, memory]);
+            await client.query(INSERT_PRODUCT_IMAGE, [
+                productimgid,
+                modelnr,
+                firstImage,
+                secondImage,
+                thirdImage,
+                fourthImage,
+            ]);
+            res.status(200).json({ message: 'Product created successfully'});
+        } else {
+            res.status(500).json({ error: 'Something went wrong' });
+            return;
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Something went wrong' });
+        return;
     }
 })
 
+
+
+
+
+
+//create a route that will delete a particular product
+// router.delete('/deleteproduct/:productid', async (req, res) => {
+//     const productid = req.params.productid;
+//     const DELETE_PRODUCT = `DELETE FROM products WHERE productid = $1`;
 
 
 module.exports = router;

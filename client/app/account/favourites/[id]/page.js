@@ -103,8 +103,9 @@ function removeStr(str) {
 }
 if (loading) {
   return (
-    <div className={styles.main}>
+    <div className={styles.mainloader}>
       <Loader />
+      <div className={styles.ovalblur}></div>
     </div>
   )
 }

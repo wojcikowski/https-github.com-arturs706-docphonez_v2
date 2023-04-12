@@ -7,13 +7,24 @@ import Navpage from './navpage';
 import Image from 'next/image'
 import { useSelector } from 'react-redux'
 import jwt_decode from "jwt-decode";
+import Modal from '@/app/Modal';
+import { useDispatch } from 'react-redux';
+import { toggleHamburger } from '@/redux/reducers/navigationSlice';
 
 
-export default function Nav() {
-    const [isOpen, setIsOpen] = useState(false);
+
+export default function Nav({products}) {
+    const [ isModalOpen, setIsModalOpen ] = useState(false);
     const cart = useSelector(state => state.counter);
     const [totalItems, setTotalItems] = useState(0)
     const token = useSelector(state => state.profile.token);
+    const dispatch = useDispatch();
+    const { isHamburgerOpen } = useSelector(state => state.navigation);
+
+    const handleHamburgerToggle = () => {
+      dispatch(toggleHamburger());
+    };
+
 
     //check if the token is valid
     const checkToken = () => {
@@ -30,23 +41,34 @@ export default function Nav() {
       }
     };
 
-    
 
     useEffect(() => {
       const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
       setTotalItems(totalItems);
     }, [cart]);
 
-    const handleToggle = () => {
-        setIsOpen(!isOpen);
+      const handleModalToggle = () => {
+        setIsModalOpen(!isModalOpen);
+      };
+    
+      const handleModalClose = () => {
+        setIsModalOpen(false);
+      };
+
+    useEffect(() => {
+      if (isHamburgerOpen) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "unset";
       }
+    }, [isHamburgerOpen]);
       
     return (
         <div className={styles.nav}>
           <div className={styles.wrapperone}>
             <div className={styles.burger}>
-                <Hamburger isOpen={isOpen} handleToggle={handleToggle} />
-                {isOpen && <Navpage />}
+                <Hamburger onClick={handleHamburgerToggle}/>
+                {isHamburgerOpen && <Navpage />}
               <div className={styles.logo}><Link href="/"><h1>Doctor Phonez</h1></Link></div>
             </div>
             <div className={styles.linetwo}>
@@ -62,7 +84,12 @@ export default function Nav() {
             <h3>Trustpilot</h3>
           </div>
           <div className={styles.linetwoicons}>
-            <Image className={styles.img} src="/search.svg" alt="Search" width={25} height={25} />
+          <div>
+            <div onClick={handleModalToggle}>
+              <Image className={styles.img} src="/search.svg" alt="Search" width={25} height={25} />
+            </div>
+            <Modal isModalOpen={isModalOpen} handleClose={handleModalClose} productdata={products}/>
+          </div>
             {checkToken() ? <Link href="/account"><Image className={styles.img} src="/user.svg" alt="User" width={25} height={25} /></Link> : <Link href="/account/login"><Image className={styles.img} src="/user.svg" alt="User" width={25} height={25} /></Link>}
             <div className={styles.cartstatus}>
               <Link href="/cart">
