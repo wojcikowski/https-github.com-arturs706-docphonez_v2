@@ -5,6 +5,7 @@
     flex-direction: column;
     color: var(--main-font-color);
     background-color: var(--main-color);
+    
   }
   .backbutton {
     padding: 0.92rem;
@@ -20,6 +21,7 @@
     align-items: center;
     position: relative;
     z-index: 2;
+    
   }
   .cartmainnoprod {
     width: 100%;
@@ -55,13 +57,16 @@
     cursor: pointer;
     position: relative;
     z-index: 2;
+    
   }
 
   .links {
     display: flex;
+    
   }
   .checkoutpg {
-    color: var(--main-font-faded)
+    color: var(--main-font-faded);
+
   }
 
   .top h1 {
@@ -96,6 +101,7 @@
   .imgwrap {
     display: flex;
     flex-direction: column;
+    
   }
   .nameof {
     padding-top: 1rem;
@@ -116,6 +122,7 @@
     font-size: 1.5rem;
     padding-left: 3rem;
     padding-top: 3rem;
+    
   }
   .cartpage label {
     font-size: 0.8rem;
@@ -183,7 +190,6 @@
     padding-bottom: 2rem;
   }
   .productwrapp {
-    height: 60%;
     overflow: auto;
   }
   .total {
@@ -268,6 +274,7 @@
 
   .divright .btn {
     display: none;
+    
   }
   .divleftsmallsize {
     display: none;
@@ -280,6 +287,7 @@
       width: 100%;
       justify-content: center;
       align-items: center;
+      
     }
 
     .frminputs {
@@ -290,6 +298,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      
     }
 
     .divright .btn {
@@ -297,6 +306,7 @@
       margin-top: 3rem;
       width: 70%;
       margin-left: 0;
+      
 
     }
     .frminputs input {
@@ -312,6 +322,7 @@
       width: 100%;
       flex-direction: column;
       align-items: center;
+      
     }
     .divright .btn{
       width: 90%;
@@ -324,6 +335,7 @@
     .total {
       width: 36rem;
       padding-left: 0;
+
     }
     .tiyle {
       padding-bottom: 2rem;
@@ -394,19 +406,28 @@
     }
     .top {
       padding-left: 1.5rem;
+      height: 30vh;
+
     }
     .wrapp {
       width: 14.2rem;
     }
 
-    .frminputs {
+    .fxqfrminputs {
       padding: 0.75rem 0rem;
+
     }
     .total {
       width: 96%;
+      
     }
     .tiyle {
       padding-right: 4rem;
+      
+    }
+    .productwrapp {
+      min-height: 18%;
+  
     }
 
  

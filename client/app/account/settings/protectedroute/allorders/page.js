@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../../../../redux/reducers/profileSlice'
 import Link from 'next/link';
-import Loader from '../../../Loader';
+import Loader from '@/app/Loader'
 
 
 
@@ -135,9 +135,16 @@ console.log(pastorders)
       return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-  if(loading) {
-    <div><Loader/></div>
-  }
+    if (loading) {
+      return (
+        <div className={styles.mainloader}>
+          <Loader />
+          <div className={styles.ovalblur}></div>
+        </div>
+      )
+    }
+
+  
   return (
     <div className={styles.main}>
       <div className={styles.ovalblur}></div>

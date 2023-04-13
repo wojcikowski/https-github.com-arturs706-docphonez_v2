@@ -224,13 +224,14 @@ const handleAltCountry = (e) => {
 }
 
 
-  if (loading) {
-    return (
-      <div className={styles.main}>
-        <Loader />
-      </div>
-    )
-  }
+if (loading) {
+  return (
+    <div className={styles.mainloader}>
+      <Loader />
+      <div className={styles.ovalblur}></div>
+    </div>
+  )
+}
 
   return (
     <div className={styles.main}>

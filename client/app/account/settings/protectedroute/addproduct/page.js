@@ -265,10 +265,10 @@ const handleSubmit = async (e) => {
 
 if (loading) {
   return (
-      <div className={styles.main}>
-          <div className={styles.ovalblurtwo}></div>
-          <Loader/>
-      </div>
+    <div className={styles.mainloader}>
+      <Loader />
+      <div className={styles.ovalblur}></div>
+    </div>
   )
 }
 

@@ -11,7 +11,16 @@
 .main a {
   text-decoration: none;
 }
-
+.mainloader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--main-color);
+  color: var(--main-font-color)
+}
 .divleft {
 min-width: 15.8rem;
 height: 28rem;

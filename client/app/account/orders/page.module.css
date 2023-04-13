@@ -11,6 +11,16 @@
   text-decoration: none;
   color: var(--main-font-color);
 }
+.mainloader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--main-color);
+  color: var(--main-font-color)
+}
 
 .divleft {
   min-width: 15.8rem;

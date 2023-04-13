@@ -6,7 +6,16 @@
     background-color: var(--main-color);
     align-items: center;
   }
-  
+  .mainloader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background-color: var(--main-color);
+    color: var(--main-font-color)
+  }
   .main a {
     text-decoration: none;
     color: var(--main-font-color);

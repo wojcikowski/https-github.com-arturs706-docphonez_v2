@@ -62,14 +62,16 @@ export default function Page() {
     })
 }, [dispatch, router]);
 
+                
 if (loading) {
-    return (
-        <div className={styles.main}>
-            <div className={styles.ovalblurtwo}></div>
-            <Loader/>
-        </div>
-    )
-} else if (roleCheck === "admin" && !loading) {
+  return (
+    <div className={styles.mainloader}>
+      <Loader />
+      <div className={styles.ovalblur}></div>
+    </div>
+  )
+}
+else if (roleCheck === "admin" && !loading) {
 
   return (
     <div className={styles.main}>
