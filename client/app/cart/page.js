@@ -512,7 +512,16 @@ if (loading) {
 
                     </div>
   
+                    <div className={styles.btnthree}>
+                            <Image
+                                src = "https://res.cloudinary.com/dttaprmbu/image/upload/v1681211173/etc/1320f511169f9b3a7391de182e5e61ce.svg"
+                                alt = "delivery"
+                                width = {20}
+                                height = {20}
+                            />
 
+                            <h5>{printFifthDay()}</h5>
+                        </div>
 
                 </div>
             </div>

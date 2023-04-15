@@ -7,7 +7,6 @@ import { addToCart } from '../../../../../redux/reducers/cartSlice'
 import Loader from './Loader';
 import refreshToken from '../../../../../checkCr';
 
-
 export default function Home({ products }) {
   const dispatch = useDispatch()
 
@@ -39,12 +38,12 @@ export default function Home({ products }) {
           <div className={styles.pagedyn}>
           <div className={styles.phoneprice}>          
             <Image 
-            src={dataretrvieved.product.imagetwo}
+            src={dataretrvieved.product.imageone}
             alt="Main image"
             width={354}
             height={438}
           />
-          <h2>£{dataretrvieved.product.price}</h2>
+          <h3>£{dataretrvieved.product.price}</h3>
           </div>
           <div className={styles.descript}>
             <h4>{dataretrvieved.product.prodname}</h4>
@@ -72,3 +71,4 @@ export default function Home({ products }) {
     )
   }
 }
+

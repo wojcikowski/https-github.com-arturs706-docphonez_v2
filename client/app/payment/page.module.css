@@ -5,7 +5,11 @@
   flex-direction: column;
   color: var(--main-font-color);
   background-color: var(--main-color);
+  justify-content: center;
+  align-items: center;
+  
 }
+
 .backbutton {
   padding: 0.92rem;
   margin-top: 0.94rem;
@@ -22,6 +26,7 @@
   position: relative;
   z-index: 2;
 }
+
 .cartmainnoprod {
   width: 100%;
   height: 100vh;
@@ -41,7 +46,8 @@
   justify-content: space-evenly;
   padding-left: 3.2rem;
   flex-direction: column;
-  
+  max-width: 1440px;
+
 }
 .wrapp {
   display: flex;
@@ -69,6 +75,8 @@
   width: 100%;
   height: 86%;
   display: flex;
+  max-width: 1440px;
+
 }
 
 .divleft {
@@ -98,7 +106,7 @@
 }
 .nameoftow {
   padding-top: 1rem;
-  color: var(--main-font-faded)
+  color: var(--main-font-faded);
 }
 .nameofthree {
   padding-top: 1rem;
@@ -118,14 +126,8 @@
 .tiyle {
   padding-bottom: 2rem;
 }
-.productwrapp {
-  height: 60%;
-  overflow: auto;
-}
-.total {
-  padding-top: 2rem;
-  height: 40%;
-}
+
+
 .binwrapp {
   display: flex;
   flex-direction: row;
@@ -179,9 +181,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  order: 1;
+  margin-top: auto;
 }
 .btntwo img {
   margin-right: 1rem;
+  
 }
 
 .ovalblur {
@@ -219,6 +224,46 @@
   height: 100%;
   padding: 0 3rem;
 }
+.form form{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+.form form button {
+  padding: 0.92rem;
+  width: 25rem;
+  border: none;
+  border-radius: 0.4rem;
+  background: linear-gradient(to bottom right, #66F6FF, #143DA9);
+  color: var(--main-font-color);
+  cursor: pointer;
+  order: 1;
+  margin-top: auto;
+}
+
+
+
+
+@media screen and (min-width: 991px) {
+
+.productwrapp {
+height: 60%;
+overflow: auto;
+scrollbar-width: none; 
+}
+.productwrapp::-webkit-scrollbar {
+  display: none;
+}
+
+
+.total {
+  padding-top: 2rem;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+}
+}
 
 @media screen and (max-width: 990px) {
 
@@ -227,6 +272,14 @@
     margin-top: 3rem;
     margin-left: 0;
   }
+  .productwrapp {
+    overflow: auto;
+    width: 31rem;
+  }
+  .productwrapp::-webkit-scrollbar {
+    display: none;
+  }
+  
 
   .cartmain {
     height: 120vh;
@@ -269,6 +322,7 @@
 
 }
 
+
 @media screen and (max-width: 840px) {
   .divleft {
       display: none;
@@ -277,7 +331,7 @@
     width: 100%;
   }
   .cartmain {
-      height: 280vh;
+    min-height: 220vh;
     }
   .divleftsmall {
     display: block;
@@ -285,6 +339,22 @@
   .stepper {
       width: 100%;
       justify-content: center;
+  }
+  .form form{
+    display: flex;
+    flex-direction: column;
+    height: 65%;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+  }
+  .form {
+        align-items: center;
+
+  }
+  .total {
+    width: 30.7rem;
+    padding-top: 3rem;
+
   }
 }
 
@@ -298,6 +368,27 @@
 
 
 @media screen and (max-width: 475px) {
+  .form form button {
+    padding: 0.92rem;
+    width: 20.4rem;
+    border: none;
+    border-radius: 0.4rem;
+    background: linear-gradient(to bottom right, #66F6FF, #143DA9);
+    color: var(--main-font-color);
+    cursor: pointer;
+    order: 1;
+    margin-top: auto;
+  }
+  .btntwo {
+    width: 87%;
+    margin-top: 3.6rem;
+  }
+  .form form{
+    height: 100%;
+  }
+  .total {
+    width: 93%;
+  }
 
   .divleft h2 {
     text-align: center;
@@ -309,18 +400,25 @@
     margin-top: 4rem;
 }
 .divleftsmall {
-    min-height: 210px;
+  margin-bottom: 2rem;
+
 }
-.cartmain {
-    height: 180vh;
-  }
-  .top {
-    padding-left: 1.5rem;
-  }
+.top {
+  padding-left: 1.4rem;
+}
+.wrapp {
+  width: 14.2rem;
+  margin-top: 2.2rem;
+  margin-left: 0.25rem;
+
+}
 .tiyle {
   padding-right: 4rem;
 }
+.productwrapp {
+  width: 27rem;
+  padding-left: 3.55rem;
 }
 
-
+}
 

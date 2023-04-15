@@ -21,7 +21,7 @@ INNER JOIN productspecs
 ON products.modelnr  = productspecs.productmodel
 INNER JOIN productimages
 ON products.modelnr = productimages.productmodel
-WHERE products.prodname LIKE '%SIM Free iPhone 14 Pro Max 5G Mobile Phone%'
+WHERE products.prodname LIKE '%SIM Free iPhone 14 Pro Max 5G 256GB Mobile Phone%'
 ORDER BY random()
 LIMIT 2;
 `;
@@ -171,39 +171,90 @@ router.post('/uploadproduct', bodyParser.json({ limit: '50mb' }), async (req, re
     try {
         const [uploadresone, uploadrestwo, uploadresthree, uploadresfour] = await Promise.all([
             cloudinary.uploader.upload(imageone, {
-                upload_preset: 'l7gdiaso',
+                upload_preset: "l7gdiaso",
                 transformation: [
-                    { width: 635, height: 866, crop: "fit" },
-                    { background: "transparent", width: 635, height: 866, gravity: "center" }
-                ],
-            }),
-            cloudinary.uploader.upload(imagetwo, {
-                upload_preset: 'l7gdiaso',
+                    {
+                      width: 635,
+                      height: 866,
+                      crop: "scale",
+                      aspect_ratio: "635:866"
+                    },
+                    {
+                      width: 635,
+                      height: 866,
+                      crop: "fill",
+                      gravity: "center",
+                      background: "transparent"
+                    }
+                  ],
+              }),
+              cloudinary.uploader.upload(imagetwo, {
+                upload_preset: "l7gdiaso",
                 transformation: [
-                    { width: 635, height: 866, crop: "fit" },
-                    { background: "transparent", width: 635, height: 866, gravity: "center" }
-                ],
-            }),
-            cloudinary.uploader.upload(imagethree, {
-                upload_preset: 'l7gdiaso',
+                    {
+                      width: 635,
+                      height: 866,
+                      crop: "scale",
+                      aspect_ratio: "635:866"
+                    },
+                    {
+                      width: 635,
+                      height: 866,
+                      crop: "fill",
+                      gravity: "center",
+                      background: "transparent"
+                    }
+                  ],
+              }),
+              cloudinary.uploader.upload(imagethree, {
+                upload_preset: "l7gdiaso",
                 transformation: [
-                    { width: 635, height: 866, crop: "fit" },
-                    { background: "transparent", width: 635, height: 866, gravity: "center" }
-                ],
-            }),
-            cloudinary.uploader.upload(imagefour, {
-                upload_preset: 'l7gdiaso',
+                    {
+                      width: 635,
+                      height: 866,
+                      crop: "scale",
+                      aspect_ratio: "635:866"
+                    },
+                    {
+                      width: 635,
+                      height: 866,
+                      crop: "fill",
+                      gravity: "center",
+                      background: "transparent"
+                    }
+                  ],
+              }),
+              cloudinary.uploader.upload(imagefour, {
+                upload_preset: "l7gdiaso",
                 transformation: [
-                    { width: 635, height: 866, crop: "fit" },
-                    { background: "transparent", width: 635, height: 866, gravity: "center" }
-                ],
-            }),
+                    {
+                      width: 635,
+                      height: 866,
+                      crop: "scale",
+                      aspect_ratio: "635:866"
+                    },
+                    {
+                      width: 635,
+                      height: 866,
+                      crop: "fill",
+                      gravity: "center",
+                      background: "transparent"
+                    }
+                  ],
+              }),
+            
         ]).then((result) => {
             return result;
-        }).catch((error) => {
-            console.error(error);
-            throw error;
-        });
+          }).catch((error) => {
+            if (error) {
+              console.error(error);
+                res.status(500).json({ error: 'Something went wrong' });
+            }
+            });
+
+            
+
+
 
         if (uploadresone && uploadrestwo && uploadresthree && uploadresfour) {
             const firstImage = uploadresone.secure_url;

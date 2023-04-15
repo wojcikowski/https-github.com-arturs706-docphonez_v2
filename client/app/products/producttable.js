@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation'
 import jwt_decode from "jwt-decode";
 import { setProfile, setEmailAdd, setUserRole, setTokenExp } from '../../redux/reducers/profileSlice'
 
-
 const ProductTable = ({ products }) => {
     const [priceFilters, setPriceFilters] = useState([]);
     const [brandFilter, setBrandFilter] = useState([]);
@@ -22,7 +21,6 @@ const ProductTable = ({ products }) => {
     const router = useRouter();
     const { token } = useSelector((state) => state.profile);
     const [userid, setUserid] = useState("");
-
 
     useEffect(() => {
       fetch(process.env.NEXT_PUBLIC_API_URL + 'api/v1/refresh_token', {
@@ -106,7 +104,6 @@ const ProductTable = ({ products }) => {
         console.log(data)
       })
     }
-
 
 
     
@@ -514,21 +511,13 @@ const ProductTable = ({ products }) => {
                 const isFavourite = favouriteList?.length > 0 && favouriteList.some(favProduct => favProduct.productid === product.productid);
                 return (
                   <div key={product.productid} className={styles.productsquare}>
-                    {product.brand === "apple" && width < 812 ? (
+                    {width < 812 ? (
                       <Link key={product.productid} href={`/products/${product.category}/${product.brand}/${product.productid}`}>
-                      <Image src={product.imagetwo} alt={product.prodname} width={182} height={238} />
-                      </Link>
-                    ) : product.brand === "apple" && width > 812 ? (
-                      <Link key={product.productid} href={`/products/${product.category}/${product.brand}/${product.productid}`}>
-                      <Image src={product.imagetwo} alt={product.prodname} width={275} height={360} />
-                      </Link>
-                    ) : product.brand === "samsung" && width > 812 ? (
-                      <Link key={product.productid} href={`/products/${product.category}/${product.brand}/${product.productid}`}>
-                      <Image src={product.imagetwo} alt={product.prodname} width={327} height={360} />
+                      <Image src={product.imageone} alt={product.prodname} width={182} height={238} />
                       </Link>
                     ) : (
                       <Link key={product.productid} href={`/products/${product.category}/${product.brand}/${product.productid}`}>
-                      <Image src={product.imagetwo} alt={product.prodname} width={216} height={238} />
+                      <Image src={product.imageone} alt={product.prodname} width={275} height={360} />
                       </Link>
                     )}
                     <div className={styles.prodnamediv}>
@@ -588,3 +577,4 @@ const ProductTable = ({ products }) => {
     }
 
 export default ProductTable;
+

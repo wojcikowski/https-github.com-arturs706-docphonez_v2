@@ -48,8 +48,8 @@ export default function Sectionfive() {
                 <Link href="/products/[category]/[brand]/[id]" as={`/products/${item.category}/${item.brand}/${item.productid}`}>
 
                 <Image
-                    src = {item.imagetwo}
-                    alt = {item.prodname}
+                      src={item.imageone}
+                      alt = {item.prodname}
                     width={230}
                     height={300}
                     quality={100}

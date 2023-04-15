@@ -90,7 +90,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFydDIwQ
 }
 
 ###
-GET http://localhost:10000/api/v1/getprimaryaddress
+GET http://localhost:10000/api/v1/products/apple/featured
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyYWRpb25vdnNAeWFob28uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjgxMTk0OTIxLCJleHAiOjE2ODExOTU4MjF9.6a8R4akpjzAAXfIki4c9OHwfSkWANF-yrMGVmbkHSdI
 

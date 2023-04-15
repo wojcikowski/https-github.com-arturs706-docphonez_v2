@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './footer.module.css'
 import Image from 'next/image'
+import Link from 'next/link'
 
 
 
@@ -63,7 +64,9 @@ export default function Footer() {
             width={10}
             height={10}
           />
-          <span>Apple</span>
+          <Link href="/products/mobilephones/apple">
+            <span>Apple</span>
+          </Link>
         </div>
         <div className={styles.category}>
           <Image 
@@ -72,7 +75,9 @@ export default function Footer() {
             width={10}
             height={10}
           />
-          <span>Samsung</span>
+            <Link href="/products/mobilephones/samsung">
+              <span>Samsung</span>
+            </Link>
         </div>
         <div className={styles.category}>
           <Image 
@@ -81,7 +86,9 @@ export default function Footer() {
             width={10}
             height={10}
           />
-          <span>Retro</span>
+            <Link href="/products/mobilephones/xiaomi">
+              <span>Xiaomi</span>
+            </Link>
         </div>
         <div className={styles.category}>
           <Image 

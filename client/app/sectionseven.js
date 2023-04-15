@@ -52,10 +52,10 @@ export default function Sectionseven() {
                 <Link href="/products/[category]/[brand]/[id]" as={`/products/${item.category}/${item.brand}/${item.productid}`}>
 
                 <Image
-                    src = {item.imagetwo}
+                    src = {item.imageone}
                     alt = {item.prodname}
-                    width={245}
-                    height={280}
+                    width={230}
+                    height={300}
                     quality={100}
                 />
                 </Link>

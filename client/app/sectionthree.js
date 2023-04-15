@@ -78,7 +78,7 @@ export default function Sectionthree() {
           <div key={index} className={styles.glassmorphdiv}>
               <div className={styles.imgdiv}>
                   <Image
-                      src={item.imagetwo}
+                      src={item.imageone}
                       alt="Picture of the author"
                       width={w}
                       height={h}
