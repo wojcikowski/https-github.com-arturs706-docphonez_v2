@@ -36,14 +36,39 @@ export default function Home({ products }) {
         <div className={styles.pagemaindyn}>
           <div className={styles.ovalblurdyn}></div>
           <div className={styles.pagedyn}>
-          <div className={styles.phoneprice}>          
-            <Image 
+          <div className={styles.phoneprice}>  
+          <div className={styles.singleimagewrapp}>
+          <Image 
             src={dataretrvieved.product.imageone}
             alt="Main image"
             width={354}
             height={438}
           />
-          <h3>£{dataretrvieved.product.price}</h3>
+            <h3>£{dataretrvieved.product.price}</h3>
+
+            </div>        
+
+          <div className={styles.threeimagewrapp}>
+          <Image 
+            src={dataretrvieved.product.imagetwo}
+            alt="Main image"
+            width={354/4.1}
+            height={438/4.1}
+          />
+          <Image 
+            src={dataretrvieved.product.imagethree}
+            alt="Main image"
+            width={354/4}
+            height={438/4}
+          />
+                  <Image 
+            src={dataretrvieved.product.imagethree}
+            alt="Main image"
+            width={354/4}
+            height={438/4}
+          />
+          </div>
+          
           </div>
           <div className={styles.descript}>
             <h4>{dataretrvieved.product.prodname}</h4>

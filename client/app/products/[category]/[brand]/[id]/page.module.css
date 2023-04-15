@@ -9,7 +9,7 @@
     color: white;
   }
 
-  
+  /* MAIN PAGE DIV */
   .pagedyn {
       display: flex;
       align-items: center;
@@ -19,6 +19,10 @@
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
       backdrop-filter: blur(5px); */
       /* border: 1px solid rgba(255, 255, 255, 0.3); */
+      /* -webkit-backface-visibility: hidden;
+      -moz-backface-visibility: hidden;
+      -webkit-transform: translate3d(0, 0, 0);
+      -moz-transform: translate3d(0, 0, 0); */
       width : 100%;
       padding-left: 2.5rem;
       height : 80vh;
@@ -29,25 +33,43 @@
       margin-bottom: 2rem;
       flex-direction: row;
       font-weight: 300;
-      -webkit-backface-visibility: hidden;
-      -moz-backface-visibility: hidden;
-      -webkit-transform: translate3d(0, 0, 0);
-      -moz-transform: translate3d(0, 0, 0);
+
       font-size: 0.9rem;
   }
   
   .phoneprice {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-evenly;
     width: 50%;
     height: 100%;
     position: relative;
     z-index: 1;
   }
-  .phoneprice h3 {
-    font-size: 1.5rem;
+  .singleimagewrapp {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 70%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+
+  }
+  /* .singleimagewrapp h3 {
+    margin: 0 auto; 
     font-weight: 300;
+  } */
+
+  .threeimagewrapp {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 30%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    padding-right: 4rem;
   }
   
   .descript {
