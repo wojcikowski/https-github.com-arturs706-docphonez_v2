@@ -54,7 +54,7 @@ const Modal = (props) => {
             <div className={styles.imagewrapp}>
             <Link href={`/products/${item.category}/${item.brand}/${item.productid}`}>
             <Image 
-            src={item.imagetwo} 
+            src={item.imageone} 
             alt={item.prodname} 
             className={styles.productimage} 
             width={70}

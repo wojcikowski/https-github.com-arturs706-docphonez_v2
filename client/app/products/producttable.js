@@ -34,7 +34,8 @@ const ProductTable = ({ products }) => {
       .then((res) => res.json())
       .then((data) => {
           if (data.err === "jwt must be provided") {
-              router.push('/account/login')
+            setFavouriteList([])
+            setUserid("")
           } else {
               const { email, exp, role } = jwt_decode(data.accessToken)
               dispatch(setProfile(data.accessToken))

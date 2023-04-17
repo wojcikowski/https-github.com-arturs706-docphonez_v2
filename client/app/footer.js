@@ -97,7 +97,9 @@ export default function Footer() {
             width={10}
             height={10}
           />
-          <span>Accessories</span>
+             <Link href="/products/accessories">
+              <span>Accessories</span>
+            </Link>
         </div>
         </div>
      
@@ -113,7 +115,9 @@ export default function Footer() {
             width={10}
             height={10}
           />
-          <span>Apple</span>
+            <Link href="/products/tablets/apple">
+              <span>Apple</span>
+            </Link>
         </div>
         <div className={styles.category}>
           <Image 
@@ -122,7 +126,9 @@ export default function Footer() {
             width={10}
             height={10}
           />
-          <span>Samsung</span>
+            <Link href="/products/tablets/samsung">
+              <span>Samsung</span>
+            </Link>
         </div>
         <div className={styles.category}>
           <Image 
@@ -131,7 +137,9 @@ export default function Footer() {
             width={10}
             height={10}
           />
-          <span>Microsoft</span>
+            <Link href="/products/tablets/lenovo">
+              <span>Lenovo</span>
+            </Link>
         </div>
         <div className={styles.category}>
           <Image 
@@ -140,7 +148,9 @@ export default function Footer() {
             width={10}
             height={10}
           />
-          <span>Accessories</span>
+            <Link href="/products/accessories">
+              <span>Accessories</span>
+            </Link>
         </div>
         </div>
  
@@ -155,7 +165,9 @@ export default function Footer() {
             width={10}
             height={10}
           />
-          <span>About Us</span>
+            <Link href="/aboutus">
+              <span>About Us</span>
+            </Link>
         </div>
         <div className={styles.category}>
           <Image 
@@ -164,7 +176,9 @@ export default function Footer() {
             width={10}
             height={10}
           />
-          <span>Contact Us</span>
+            <Link href="/contactus">
+              <span>Contact Us</span>
+            </Link>
         </div>
         <div className={styles.category}>
           <Image 
@@ -173,7 +187,9 @@ export default function Footer() {
             width={10}
             height={10}
           />
-          <span>Terms & C`&apos;`s</span>
+            <Link href="/tcs">
+              <span>Terms & C`&apos;`s</span>
+            </Link>
         </div>
         <div className={styles.category}>
           <Image 
@@ -182,7 +198,9 @@ export default function Footer() {
             width={10}
             height={10}
           />
-          <span>Privacy</span>
+            <Link href="/privacy">
+              <span>Privacy</span>
+            </Link>
         </div>
         </div>
      

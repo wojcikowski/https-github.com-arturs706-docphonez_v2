@@ -28,7 +28,6 @@ export default function Page() {
     const [loading, setLoading] = useState(false)
 
 
-   
 
     const handleClick = () => {
         router.push('/payment');
@@ -58,6 +57,7 @@ export default function Page() {
         .then((data) => {
             if (data.err === "jwt must be provided") {
                 router.push('/account/login')
+
             } else {
                 const { email, exp, role } = jwt_decode(data.accessToken)
                 dispatch(setProfile(data.accessToken))
@@ -200,10 +200,11 @@ export default function Page() {
         setPostcode(e.target.value)
     }
 
-
-if (loading) {
-    <div className={styles.cartmain}><Loader/></div>
-}
+    if (loading) {
+    return (
+        <div className={styles.cartmain}><Loader/></div>
+    )
+} else {
 
 
     return (
@@ -527,5 +528,6 @@ if (loading) {
             </div>
         </div>
     )
+}
 }
 

@@ -52,7 +52,7 @@ export default function Home({ products }) {
           <Image 
             src={dataretrvieved.product.imagetwo}
             alt="Main image"
-            width={354/4.1}
+            width={354/5}
             height={438/4.1}
           />
           <Image 
@@ -62,33 +62,43 @@ export default function Home({ products }) {
             height={438/4}
           />
                   <Image 
-            src={dataretrvieved.product.imagethree}
+            src={dataretrvieved.product.imagefour}
             alt="Main image"
             width={354/4}
             height={438/4}
           />
           </div>
-          
+          <h3 className={styles.smallscprice}>£{dataretrvieved.product.price}</h3>
+
           </div>
           <div className={styles.descript}>
             <h4>{dataretrvieved.product.prodname}</h4>
             <span>{dataretrvieved.product.proddescr}</span>
-            <div className={styles.descripttwo}>            
-              <h2>{dataretrvieved.product.memory}</h2>
-              <Image 
+            <div className={styles.descripttwo}>   
+            <div>
+              <h2>Memory: {dataretrvieved.product.memory}</h2>
+            </div>         
+            <div className={styles.memorycolor}>
+            <h2>Colour:</h2>
+            <Image 
                 src={`https://res.cloudinary.com/dyvgcv5se/image/upload/v1679991563/etc/${dataretrvieved.product.color}active.svg`}
                 alt="Main image"
                 width={32}
                 height={31}
               />
+            </div>
+  
 
             </div>
             <h3>{dataretrvieved.product.prodname}</h3>
 
             <h2 className={styles.hiddh2}>{dataretrvieved.product.proddescr}</h2>
+            <div className={styles.btnwrapper}> 
             <div className={styles.actionbutton} onClick={() => dispatch(addToCart(dataretrvieved.product))}>
               Add to cart
             </div>
+            </div>
+        
           </div>
           </div>
         </div>

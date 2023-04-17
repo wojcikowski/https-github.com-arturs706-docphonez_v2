@@ -1,0 +1,48 @@
+.main {
+    min-height: 100vh;
+    background-color: var(--main-color);
+    color: var(--main-font-color);
+  }
+.aboutus{
+    padding: 3rem;
+}
+.aboutus h1 {
+    font-weight: 300;
+}
+.ourmission h1 {
+    font-weight: 300;
+}
+.ourmission {
+    padding-top: 3rem;
+    padding-left: 3rem;
+    font-weight: 300;
+}
+  
+  .textContainer {
+    position: relative;
+    top: 0%;
+    transform: translateY(-500%);
+    z-index: 1;
+  }
+  
+  .textContainer h3 {
+    font-weight: 300;
+    max-width: 50%;
+    margin: 0 auto;
+    text-align: justify;
+
+  }
+  
+  .imageContainer {
+    position: relative;
+  }
+  
+  .imageContainer img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: brightness(50%) contrast(120%) sepia(30%);
+    padding-left: 3rem;
+    padding-right: 3rem;
+
+  }

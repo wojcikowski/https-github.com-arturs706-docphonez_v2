@@ -1,0 +1,17 @@
+.main {
+    min-height: 100vh;
+    background-color: var(--main-color);
+    color: var(--main-font-color);
+}
+.ovalblurdyn {
+    position: absolute;
+    width: 100%;
+    height: 90vh;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    background: radial-gradient(ellipse at center, rgba(102, 246, 255) 15%, rgba(102, 246, 255,0.2) 15%, rgba(102, 246, 255,0) 100%);
+    filter: blur(100px);
+    z-index: 1;
+  }
